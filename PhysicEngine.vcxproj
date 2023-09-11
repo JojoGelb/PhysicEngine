@@ -76,7 +76,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)External Librairies\Vulkan\Include;$(ProjectDir)External Librairies\glm;$(ProjectDir)External Librairies\GLFW\include;$(ProjectDir)Headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)External Librairies\Vulkan\Include;$(ProjectDir)External Librairies\glm;$(ProjectDir)External Librairies\GLFW\include;$(ProjectDir)Headers;$(ProjectDir)External Librairies\IMGUI;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -93,7 +93,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)External Librairies\Vulkan\Include;$(ProjectDir)External Librairies\glm;$(ProjectDir)External Librairies\GLFW\include;$(ProjectDir)Headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)External Librairies\Vulkan\Include;$(ProjectDir)External Librairies\glm;$(ProjectDir)External Librairies\GLFW\include;$(ProjectDir)Headers;$(ProjectDir)External Librairies\IMGUI;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -110,7 +110,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)External Librairies\Vulkan\Include;$(ProjectDir)External Librairies\glm;$(ProjectDir)External Librairies\GLFW\include;$(ProjectDir)Headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)External Librairies\Vulkan\Include;$(ProjectDir)External Librairies\glm;$(ProjectDir)External Librairies\GLFW\include;$(ProjectDir)Headers;$(ProjectDir)External Librairies\IMGUI;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -127,7 +127,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)External Librairies\Vulkan\Include;$(ProjectDir)External Librairies\glm;$(ProjectDir)External Librairies\GLFW\include;$(ProjectDir)Headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)External Librairies\Vulkan\Include;$(ProjectDir)External Librairies\glm;$(ProjectDir)External Librairies\GLFW\include;$(ProjectDir)Headers;$(ProjectDir)External Librairies\IMGUI;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -139,12 +139,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="External Librairies\IMGUI\imgui.cpp" />
+    <ClCompile Include="External Librairies\IMGUI\imgui_demo.cpp" />
+    <ClCompile Include="External Librairies\IMGUI\imgui_draw.cpp" />
+    <ClCompile Include="External Librairies\IMGUI\imgui_impl_glfw.cpp" />
+    <ClCompile Include="External Librairies\IMGUI\imgui_impl_vulkan.cpp" />
+    <ClCompile Include="External Librairies\IMGUI\imgui_tables.cpp" />
+    <ClCompile Include="External Librairies\IMGUI\imgui_widgets.cpp" />
     <ClCompile Include="Sources\FirstApp.cpp" />
     <ClCompile Include="Sources\LvePipeline.cpp" />
     <ClCompile Include="Sources\LveWindow.cpp" />
     <ClCompile Include="Sources\main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="External Librairies\IMGUI\imconfig.h" />
+    <ClInclude Include="External Librairies\IMGUI\imgui.h" />
+    <ClInclude Include="External Librairies\IMGUI\imgui_impl_glfw.h" />
+    <ClInclude Include="External Librairies\IMGUI\imgui_impl_vulkan.h" />
+    <ClInclude Include="External Librairies\IMGUI\imgui_internal.h" />
+    <ClInclude Include="External Librairies\IMGUI\imstb_textedit.h" />
     <ClInclude Include="Headers\FirstApp.h" />
     <ClInclude Include="Headers\LvePipeline.h" />
     <ClInclude Include="Headers\LveWindow.h" />
