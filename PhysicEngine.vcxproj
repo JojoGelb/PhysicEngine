@@ -152,6 +152,7 @@
     <ClCompile Include="Sources\LvePipeline.cpp" />
     <ClCompile Include="Sources\LveWindow.cpp" />
     <ClCompile Include="Sources\main.cpp" />
+    <ClCompile Include="Sources\WindowContext.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="External Librairies\IMGUI\imconfig.h" />
@@ -165,6 +166,7 @@
     <ClInclude Include="Headers\ImGuiEngine.h" />
     <ClInclude Include="Headers\LvePipeline.h" />
     <ClInclude Include="Headers\LveWindow.h" />
+    <ClInclude Include="Headers\WindowContext.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
