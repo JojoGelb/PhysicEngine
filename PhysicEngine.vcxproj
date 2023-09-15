@@ -147,6 +147,8 @@
     <ClCompile Include="External Librairies\IMGUI\imgui_tables.cpp" />
     <ClCompile Include="External Librairies\IMGUI\imgui_widgets.cpp" />
     <ClCompile Include="Sources\FirstApp.cpp" />
+    <ClCompile Include="Sources\GraphicEngine.cpp" />
+    <ClCompile Include="Sources\ImGuiEngine.cpp" />
     <ClCompile Include="Sources\LvePipeline.cpp" />
     <ClCompile Include="Sources\LveWindow.cpp" />
     <ClCompile Include="Sources\main.cpp" />
@@ -159,6 +161,8 @@
     <ClInclude Include="External Librairies\IMGUI\imgui_internal.h" />
     <ClInclude Include="External Librairies\IMGUI\imstb_textedit.h" />
     <ClInclude Include="Headers\FirstApp.h" />
+    <ClInclude Include="Headers\GraphicEngine.h" />
+    <ClInclude Include="Headers\ImGuiEngine.h" />
     <ClInclude Include="Headers\LvePipeline.h" />
     <ClInclude Include="Headers\LveWindow.h" />
   </ItemGroup>
