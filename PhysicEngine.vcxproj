@@ -150,6 +150,7 @@
     <ClCompile Include="Sources\LvePipeline.cpp" />
     <ClCompile Include="Sources\LveWindow.cpp" />
     <ClCompile Include="Sources\main.cpp" />
+    <ClCompile Include="Sources\Vecteur3D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="External Librairies\IMGUI\imconfig.h" />
@@ -161,6 +162,7 @@
     <ClInclude Include="Headers\FirstApp.h" />
     <ClInclude Include="Headers\LvePipeline.h" />
     <ClInclude Include="Headers\LveWindow.h" />
+    <ClInclude Include="Headers\Vecteur3D.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

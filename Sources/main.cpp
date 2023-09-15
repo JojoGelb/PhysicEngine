@@ -1,3 +1,14 @@
+#include <Vecteur3D.h>
+
+int main() {
+    Vecteur3D vec1 = Vecteur3D(1, 2, 3);
+    Vecteur3D vec2 = Vecteur3D(vec1);
+
+    vec1 = vec1 + vec2;
+
+    vec1.Display();
+}
+
 /*#define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
 
@@ -52,7 +63,7 @@ int main() {
     return 0;
 }
 */
-
+/*
 // Dear ImGui: standalone example application for Glfw + Vulkan
 
 // Learn about Dear ImGui:
@@ -644,3 +655,4 @@ int main(int, char**)
 
     return 0;
 }
+*/
