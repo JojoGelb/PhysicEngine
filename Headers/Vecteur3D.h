@@ -12,6 +12,24 @@ public:
 	void Display();
 
 	Vecteur3D operator+(const Vecteur3D& other) const;
+	Vecteur3D operator+=(const Vecteur3D& other);
+	Vecteur3D operator-(const Vecteur3D& other) const;
+	Vecteur3D operator-=(const Vecteur3D& other);
+	Vecteur3D operator*(float scalar) const;
+	Vecteur3D operator*=(float scalar);
+	Vecteur3D operator/(float scalar) const;
+	Vecteur3D operator/=(float scalar);
+	Vecteur3D& operator=(const Vecteur3D& other);
+
+	bool operator==(const Vecteur3D& other) const;
+
+	bool Equal(const Vecteur3D& other, float epsilon = 1e-3) const;
+
+	float DotProduct(const Vecteur3D& other);
+
+	Vecteur3D CrossProduct(const Vecteur3D& other);
+
+
 
 	friend std::ostream& operator<<(std::ostream& os, const Vecteur3D& v) {
 		os << "(" << v.x << ", " << v.y << ", " << v.z << ")";
