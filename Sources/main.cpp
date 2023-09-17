@@ -1,12 +1,20 @@
 #include <Vecteur3D.h>
+#include <iostream>
+
+void TestVector3D() {
+    Vector3D position = Vector3D();
+    Vector3D vitesse = Vector3D();
+    Vector3D acceleration = Vector3D(1, 0, 0);
+
+    while (position.x < 100) {
+        vitesse += acceleration;
+        std::cout << "\n--------------\n" << "Position: " << position << "\n" << "Vitesse" << vitesse;
+        position += vitesse;
+    }
+}
 
 int main() {
-    Vecteur3D vec1 = Vecteur3D(1, 2, 3);
-    Vecteur3D vec2 = Vecteur3D(vec1);
-
-    vec1 = vec1 + vec2;
-
-    vec1.Display();
+    TestVector3D();
 }
 
 /*#define GLFW_INCLUDE_VULKAN
