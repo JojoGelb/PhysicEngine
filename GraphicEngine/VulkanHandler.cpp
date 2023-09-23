@@ -80,8 +80,9 @@ void VulkanHandler::LoadGameObjects()
 	gameObject.transform.scale = { .5f, .5f, .5f };
 	gameObjects.push_back(std::move(gameObject));
 
+	std::shared_ptr<Model> lveModel3 = Model::CreateModelFromFile(graphicDevice, "Models/smooth_vase.obj");
 	gameObject = GameObject::CreateGameObject();
-	gameObject.model = lveModel;
+	gameObject.model = lveModel3;
 	gameObject.transform.translation = { 4.0f, .0f, 2.5f };
 	gameObject.transform.scale = { .5f, .5f, .5f };
 	gameObjects.push_back(std::move(gameObject));

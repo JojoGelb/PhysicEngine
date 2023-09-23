@@ -12,7 +12,7 @@
 
 struct SimplePushConstantData {
 	glm::mat4 transform{ 1.f };
-	alignas(16) glm::vec3 color;
+	glm::mat4 normalMatrix{ 1.f };
 };
 
 SimpleRenderSystem::SimpleRenderSystem(GraphicDevice& device, VkRenderPass renderPass): graphicDevice(device)
@@ -73,7 +73,9 @@ void SimpleRenderSystem::RenderGameObjects(VkCommandBuffer commandBuffer, std::v
 
 	for (auto& obj : gameObjects) {
 		SimplePushConstantData push{};
-		push.color = obj.color;
+		auto modelMatrix = obj.transform.Mat4();
+		push.transform = projectionView * modelMatrix;
+		push.normalMatrix = obj.transform.NormalMatrix();
 		push.transform = projectionView * obj.transform.Mat4();
 
 		vkCmdPushConstants(

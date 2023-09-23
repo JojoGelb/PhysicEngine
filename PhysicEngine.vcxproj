@@ -151,6 +151,7 @@
     <ClCompile Include="External Librairies\IMGUI\imgui_tables.cpp" />
     <ClCompile Include="External Librairies\IMGUI\imgui_widgets.cpp" />
     <ClCompile Include="GraphicEngine\Camera.cpp" />
+    <ClCompile Include="GraphicEngine\GameObject.cpp" />
     <ClCompile Include="GraphicEngine\GraphicDevice.cpp" />
     <ClCompile Include="GraphicEngine\GraphicsMotor.cpp" />
     <ClCompile Include="GraphicEngine\KeyboardInput.cpp" />
