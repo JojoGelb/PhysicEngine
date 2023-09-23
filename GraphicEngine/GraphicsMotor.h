@@ -2,7 +2,6 @@
 
 #include "Window.h"
 #include "VulkanHandler.h"
-#include <IMGUIHandler.h>
 
 class GraphicsMotor {
 
@@ -24,5 +23,4 @@ public:
 private:
 	Window window;
 	VulkanHandler vulkanHandler;
-	//IMGUIHandler imguiHandler;
 };
