@@ -36,3 +36,13 @@ void KeyboardInput::MoveInPlaneXZ(
         gameObject.transform.translation += moveSpeed * dt * glm::normalize(moveDir);
     }
 }
+
+void KeyboardInput::ImGuiControls(
+    GLFWwindow* window, bool &visibilityTrigger) {
+
+    if (glfwGetKey(window, keys.closeWindow) == GLFW_PRESS) glfwSetWindowShouldClose(window, true);
+    
+    int nextState = glfwGetKey(window, keys.imGuiVisibilityTrigger);
+    visibilityTrigger = lastStateImGuiVisibilityTrigger != nextState && nextState == GLFW_PRESS;
+    lastStateImGuiVisibilityTrigger = nextState;
+}

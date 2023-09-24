@@ -20,6 +20,7 @@ public:
 
 	bool ExitCondition();
 
+	GLFWwindow* GetGLFWWindow();
 private:
 	Window window;
 	VulkanHandler vulkanHandler;

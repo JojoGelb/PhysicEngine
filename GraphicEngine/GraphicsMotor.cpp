@@ -31,3 +31,8 @@ bool GraphicsMotor::ExitCondition()
 {
 	return window.ShouldClose();
 }
+
+GLFWwindow* GraphicsMotor::GetGLFWWindow()
+{
+	return window.GetWindow();
+}

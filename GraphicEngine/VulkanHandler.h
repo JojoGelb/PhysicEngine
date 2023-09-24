@@ -33,7 +33,10 @@ public:
 	ParticulesData* particulesData;
 private:
 	void LoadGameObjects();
-
+	void InitImGui();//ImGui
+	void ShutdownImGui(); //ImGui
+	VkDescriptorPool imguiPool; //ImGui
+	static void check_vk_result(VkResult err);//ImGui
 	GraphicDevice graphicDevice;
 	Renderer renderer;
 	std::vector<GameObject> gameObjects;

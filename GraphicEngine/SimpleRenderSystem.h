@@ -19,7 +19,7 @@ public:
 	~SimpleRenderSystem();
 
 	void RenderGameObjects(VkCommandBuffer commandBuffer, std::vector<GameObject>& gameObjects, const Camera& camera);
-
+	void RenderImGui(VkCommandBuffer commandBuffer);
 private:
 	void CreatePipelineLayout();
 	void CreatePipeline(VkRenderPass renderPass);
