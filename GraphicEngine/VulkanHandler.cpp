@@ -86,7 +86,7 @@ GraphicDevice& VulkanHandler::GetGraphicDevice()
 
 void VulkanHandler::InitialLoadGameObjects()
 {
-    /*
+    
 	std::shared_ptr<Model> lveModel = Model::CreateModelFromFile(graphicDevice, "Models/colored_cube.obj");
 	auto gameObject = GameObject::CreateGameObject();
 	gameObject.model = lveModel;
@@ -94,22 +94,26 @@ void VulkanHandler::InitialLoadGameObjects()
 	gameObject.transform.scale = { .5f, .5f, .5f };
 	gameObjects.push_back(std::move(gameObject));
 	objectData->gameObjects.push_back(std::move(gameObject));
-    */
+    objectData->names.push_back("ColoredCube1");
     
-	/*
+	
 	std::shared_ptr<Model> lveModel2 = Model::CreateModelFromFile(graphicDevice, "Models/flat_vase.obj");
 	gameObject = GameObject::CreateGameObject();
 	gameObject.model = lveModel2;
 	gameObject.transform.translation = { .0f, 4.0f, 2.5f };
 	gameObject.transform.scale = { .5f, .5f, .5f };
 	gameObjects.push_back(std::move(gameObject));
+    objectData->gameObjects.push_back(std::move(gameObject));
+    objectData->names.push_back("FlatVase");
 
 	
 	gameObject = GameObject::CreateGameObject();
 	gameObject.model = lveModel;
 	gameObject.transform.translation = { .0f, .0f, 2.5f };
 	gameObject.transform.scale = { .5f, .5f, .5f };
-	gameObjects.push_back(std::move(gameObject));*/
+	gameObjects.push_back(std::move(gameObject));
+    objectData->gameObjects.push_back(std::move(gameObject));
+    objectData->names.push_back("ColoredCube2");
 
 	
 }
