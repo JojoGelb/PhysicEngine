@@ -75,10 +75,10 @@
     <ClCompile Include="GraphicEngine\Window.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="ParticulesData.cpp">
+    <ClCompile Include="ObjectData.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="Particule.cpp">
+    <ClCompile Include="Particle.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
     <ClCompile Include="MathPhysicEngine.cpp">
@@ -152,10 +152,10 @@
     <ClInclude Include="MathPhysicEngine.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="ParticulesData.h">
+    <ClInclude Include="ObjectData.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="Particule.h">
+    <ClInclude Include="Particle.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="ImGuiEngine.h">

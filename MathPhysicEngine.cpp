@@ -4,16 +4,14 @@
 void MathPhysicsEngine::Init()
 {
 
-	
-	for (int i = 0; i < particulesData->gameObjects.size(); i++) {
+	//Initialisation of pre-existing gameObjects
+	for (int i = 0; i < objectData->gameObjects.size(); i++) {
 
-		Particule particule = Particule();
-		particule.SetTest();
-		particule.SetMass(200);
+		Particle particle = Particle();
 
-		particule.position = Vector3D(particulesData->gameObjects[i].transform.translation.x, particulesData->gameObjects[i].transform.translation.y, particulesData->gameObjects[i].transform.translation.z);
+		particle.position = Vector3D(objectData->gameObjects[i].transform.translation.x, objectData->gameObjects[i].transform.translation.y, objectData->gameObjects[i].transform.translation.z);
 
-		particulesData->Particules.push_back(particule);
+		objectData->particles.push_back(particle);
 	}
 }
 
@@ -21,15 +19,15 @@ void MathPhysicsEngine::Update(double t,float frameTime)
 {
 	
 	 //std::cout << frameTime << "\n";
-	for (int i = 0; i < particulesData->Particules.size(); i++) {
+	for (int i = 0; i < objectData->particles.size(); i++) {
 
-		//particulesData->Particules[i].position += Vector3D(0.0f,0.0f,0.01f);
-		particulesData->Particules[i].SemiImpliciteEulerIntegration(t, (double)frameTime);
+		//objectData->particles[i].position += Vector3D(0.0f,0.0f,0.01f);
+		objectData->particles[i].SemiImpliciteEulerIntegration(t, (double)frameTime);
 	}
 }
 
 
-MathPhysicsEngine::MathPhysicsEngine(ParticulesData* particulesData)
-	: particulesData(particulesData)
+MathPhysicsEngine::MathPhysicsEngine(ObjectData* _objectData)
+	: objectData(_objectData)
 {
 }

@@ -163,8 +163,8 @@
     <ClCompile Include="GraphicEngine\Window.cpp" />
     <ClCompile Include="ImGuiEngine.cpp" />
     <ClCompile Include="MathPhysicEngine.cpp" />
-    <ClCompile Include="Particule.cpp" />
-    <ClCompile Include="ParticulesData.cpp" />
+    <ClCompile Include="Particle.cpp" />
+    <ClCompile Include="ObjectData.cpp" />
     <ClCompile Include="Sources\main.cpp" />
     <ClCompile Include="Sources\Vecteur3D.cpp" />
   </ItemGroup>
@@ -191,8 +191,8 @@
     <ClInclude Include="Headers\Vecteur3D.h" />
     <ClInclude Include="ImGuiEngine.h" />
     <ClInclude Include="MathPhysicEngine.h" />
-    <ClInclude Include="Particule.h" />
-    <ClInclude Include="ParticulesData.h" />
+    <ClInclude Include="Particle.h" />
+    <ClInclude Include="ObjectData.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="GraphicEngine\Readme.txt" />

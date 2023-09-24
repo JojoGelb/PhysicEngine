@@ -12,9 +12,9 @@
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_vulkan.h>
 
-VulkanHandler::VulkanHandler(Window& _window, ParticulesData* _particulesData) :
+VulkanHandler::VulkanHandler(Window& _window, ObjectData* _objectData) :
 	graphicDevice(_window),
-	particulesData(_particulesData),
+	objectData(_objectData),
 	renderer(_window, graphicDevice),
 	window(_window),
 	renderSystem(graphicDevice, renderer.GetSwapChainRenderPass()),
@@ -25,7 +25,7 @@ VulkanHandler::VulkanHandler(Window& _window, ParticulesData* _particulesData) :
 	//camera.setViewDirection(glm::vec3(0.f), glm::vec3(0.5f,0.1f,1.f));
 	//camera.setViewTarget(glm::vec3(-1.f, -2.f, -2.f), glm::vec3(0.f, 0.f, 2.5f));
     InitImGui();
-	LoadGameObjects();
+	InitialLoadGameObjects();
 }
 
 VulkanHandler::~VulkanHandler()
@@ -48,11 +48,15 @@ void VulkanHandler::Update(float frameTime)
 		//obj.transform.rotation.x = glm::mod(obj.transform.rotation.x + 0.005f, glm::two_pi<float>());
 	}*/
 
+    for (int i = objectData->gameObjects.size(); i < objectData->particles.size(); i++) {
+        LoadGameObject(objectData->particles[i]);
+    }
+
 	for (int i = 0; i < gameObjects.size(); i++) {
 		
-		gameObjects[i].transform.translation.x = particulesData->Particules[i].position.x;
-		gameObjects[i].transform.translation.x = particulesData->Particules[i].position.y;
-		gameObjects[i].transform.translation.x = particulesData->Particules[i].position.z;
+		gameObjects[i].transform.translation.x = objectData->particles[i].position.x;
+		gameObjects[i].transform.translation.y = -objectData->particles[i].position.y;
+		gameObjects[i].transform.translation.z = objectData->particles[i].position.z;
 
 	}
 }
@@ -80,17 +84,18 @@ GraphicDevice& VulkanHandler::GetGraphicDevice()
 	return graphicDevice;
 }
 
-void VulkanHandler::LoadGameObjects()
+void VulkanHandler::InitialLoadGameObjects()
 {
+    /*
 	std::shared_ptr<Model> lveModel = Model::CreateModelFromFile(graphicDevice, "Models/colored_cube.obj");
 	auto gameObject = GameObject::CreateGameObject();
 	gameObject.model = lveModel;
-	gameObject.transform.translation = { 4.0f, .0f, 2.5f };
+	gameObject.transform.translation = { 5.0f, .0f, 0.0f };
 	gameObject.transform.scale = { .5f, .5f, .5f };
 	gameObjects.push_back(std::move(gameObject));
-	particulesData->gameObjects.push_back(std::move(gameObject));
-
-
+	objectData->gameObjects.push_back(std::move(gameObject));
+    */
+    
 	/*
 	std::shared_ptr<Model> lveModel2 = Model::CreateModelFromFile(graphicDevice, "Models/flat_vase.obj");
 	gameObject = GameObject::CreateGameObject();
@@ -107,6 +112,17 @@ void VulkanHandler::LoadGameObjects()
 	gameObjects.push_back(std::move(gameObject));*/
 
 	
+}
+
+void VulkanHandler::LoadGameObject(Particle particle)
+{
+	std::shared_ptr<Model> lveModel = Model::CreateModelFromFile(graphicDevice, "Models/colored_cube.obj");
+	auto gameObject = GameObject::CreateGameObject();
+	gameObject.model = lveModel;
+    gameObject.transform.translation = {particle.position.x,particle.position.y,particle.position.z};
+	gameObject.transform.scale = { .5f, .5f, .5f }; //HardCoded
+	gameObjects.push_back(std::move(gameObject));
+	objectData->gameObjects.push_back(std::move(gameObject));
 }
 
 void VulkanHandler::InitImGui()

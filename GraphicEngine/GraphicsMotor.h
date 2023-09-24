@@ -7,7 +7,7 @@ class GraphicsMotor {
 
 public:
 
-	GraphicsMotor(ParticulesData* _particulesData);
+	GraphicsMotor(ObjectData* _objectData);
 	~GraphicsMotor();
 
 	GraphicsMotor(const GraphicsMotor&) = delete;

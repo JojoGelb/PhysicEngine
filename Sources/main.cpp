@@ -5,11 +5,11 @@
 
 int main() {
 
-    ParticulesData* particulesData = new ParticulesData();
+    ObjectData* objectData = new ObjectData();
 
-    GraphicsMotor graphicsMotor = GraphicsMotor(particulesData);
-    MathPhysicsEngine mathPhysics = MathPhysicsEngine(particulesData);
-    ImGuiEngine imGuiEngine = ImGuiEngine(graphicsMotor.GetGLFWWindow());
+    GraphicsMotor graphicsMotor = GraphicsMotor(objectData);
+    MathPhysicsEngine mathPhysics = MathPhysicsEngine(objectData);
+    ImGuiEngine imGuiEngine = ImGuiEngine(graphicsMotor.GetGLFWWindow(),objectData);
     mathPhysics.Init();
 
     double t = 0.0f;

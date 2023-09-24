@@ -12,14 +12,14 @@
 #include "Camera.h"
 #include <SimpleRenderSystem.h>
 #include <KeyboardInput.h>
-#include "../ParticulesData.h"
+#include "../ObjectData.h"
 
 class Window;
 
 class VulkanHandler
 {
 public:
-	VulkanHandler(Window & _window, ParticulesData* _particulesData);
+	VulkanHandler(Window & _window, ObjectData* _objectData);
 
 	~VulkanHandler();
 
@@ -30,9 +30,10 @@ public:
 
 	GraphicDevice & GetGraphicDevice();
 
-	ParticulesData* particulesData;
+	ObjectData* objectData;
 private:
-	void LoadGameObjects();
+	void InitialLoadGameObjects();
+	void LoadGameObject(Particle particle);
 	void InitImGui();//ImGui
 	void ShutdownImGui(); //ImGui
 	VkDescriptorPool imguiPool; //ImGui

@@ -1,11 +1,11 @@
 #pragma once
-#include "ParticulesData.h"
+#include "ObjectData.h"
 #include "Vecteur3D.h"
 class MathPhysicsEngine {
 
 public:
 
-	ParticulesData* particulesData;
+	ObjectData* objectData;
 
 	void Init();
 	void Update(double t, float frameTime);
@@ -13,5 +13,5 @@ public:
 
 
 
-	MathPhysicsEngine(ParticulesData* particulesData);
+	MathPhysicsEngine(ObjectData* _objectData);
 };

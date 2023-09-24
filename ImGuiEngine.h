@@ -7,6 +7,7 @@
 #include <stdlib.h>         // abort
 #include <vector> 
 #include <KeyboardInput.h>
+#include "ObjectData.h"
 
 
 
@@ -24,13 +25,15 @@ private:
 	GLFWwindow* window;
 
 	void ShowDemoImGui();
+	void ShowEngineImGui();
+
 	void SetVisible(bool _visible);
 
 
 	KeyboardInput ImGuiInput;
-
+	ObjectData* objectData;
 public:
-	ImGuiEngine(GLFWwindow* _window);
+	ImGuiEngine(GLFWwindow* _window, ObjectData* _objectData);
 	~ImGuiEngine();
 
 	void Update();
