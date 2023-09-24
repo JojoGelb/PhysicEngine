@@ -7,7 +7,7 @@ class GraphicsMotor {
 
 public:
 
-	GraphicsMotor();
+	GraphicsMotor(ObjectData* _objectData);
 	~GraphicsMotor();
 
 	GraphicsMotor(const GraphicsMotor&) = delete;
@@ -20,6 +20,7 @@ public:
 
 	bool ExitCondition();
 
+	GLFWwindow* GetGLFWWindow();
 private:
 	Window window;
 	VulkanHandler vulkanHandler;

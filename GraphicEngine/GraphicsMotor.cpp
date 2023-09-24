@@ -1,8 +1,8 @@
 #include "GraphicsMotor.h"
 
 
-GraphicsMotor::GraphicsMotor() : window(800, 600, "Test"),
-								 vulkanHandler(window) 
+GraphicsMotor::GraphicsMotor(ObjectData* _objectData) : window(800, 600, "Test"),
+								 vulkanHandler(window, _objectData)
 								 /*imguiHandler(window.GetWindow(), vulkanHandler) */{};
 
 GraphicsMotor::~GraphicsMotor()
@@ -30,4 +30,9 @@ void GraphicsMotor::Shutdown()
 bool GraphicsMotor::ExitCondition()
 {
 	return window.ShouldClose();
+}
+
+GLFWwindow* GraphicsMotor::GetGLFWWindow()
+{
+	return window.GetWindow();
 }

@@ -16,11 +16,16 @@ public:
         int lookRight = GLFW_KEY_RIGHT;
         int lookUp = GLFW_KEY_UP;
         int lookDown = GLFW_KEY_DOWN;
+        int closeWindow = GLFW_KEY_ESCAPE;
+        int imGuiVisibilityTrigger = GLFW_KEY_I;
     };
 
     void MoveInPlaneXZ(GLFWwindow* window, float dt, GameObject& gameObject);
 
+    void ImGuiControls(GLFWwindow* window,bool& visibilityTrigger);
+
     KeyMappings keys{};
     float moveSpeed{ 3.f };
     float lookSpeed{ 1.5f };
+    int lastStateImGuiVisibilityTrigger = -1;
 };

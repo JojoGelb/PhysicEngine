@@ -9,17 +9,17 @@
 #include <memory>
 #include <vector>
 
-
 #include "Camera.h"
 #include <SimpleRenderSystem.h>
 #include <KeyboardInput.h>
+#include "../ObjectData.h"
 
 class Window;
 
 class VulkanHandler
 {
 public:
-	VulkanHandler(Window & _window);
+	VulkanHandler(Window & _window, ObjectData* _objectData);
 
 	~VulkanHandler();
 
@@ -30,9 +30,14 @@ public:
 
 	GraphicDevice & GetGraphicDevice();
 
+	ObjectData* objectData;
 private:
-	void LoadGameObjects();
-
+	void InitialLoadGameObjects();
+	void LoadGameObject(Particle particle);
+	void InitImGui();//ImGui
+	void ShutdownImGui(); //ImGui
+	VkDescriptorPool imguiPool; //ImGui
+	static void check_vk_result(VkResult err);//ImGui
 	GraphicDevice graphicDevice;
 	Renderer renderer;
 	std::vector<GameObject> gameObjects;

@@ -162,6 +162,10 @@
     <ClCompile Include="GraphicEngine\VKPipeline.cpp" />
     <ClCompile Include="GraphicEngine\VulkanHandler.cpp" />
     <ClCompile Include="GraphicEngine\Window.cpp" />
+    <ClCompile Include="ImGuiEngine.cpp" />
+    <ClCompile Include="MathPhysicEngine.cpp" />
+    <ClCompile Include="Particle.cpp" />
+    <ClCompile Include="ObjectData.cpp" />
     <ClCompile Include="Sources\main.cpp" />
     <ClCompile Include="Sources\Vecteur3D.cpp" />
   </ItemGroup>
@@ -186,6 +190,10 @@
     <ClInclude Include="GraphicEngine\VulkanHandler.h" />
     <ClInclude Include="GraphicEngine\Window.h" />
     <ClInclude Include="Headers\Vecteur3D.h" />
+    <ClInclude Include="ImGuiEngine.h" />
+    <ClInclude Include="MathPhysicEngine.h" />
+    <ClInclude Include="Particle.h" />
+    <ClInclude Include="ObjectData.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="GraphicEngine\Readme.txt" />

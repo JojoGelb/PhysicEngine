@@ -9,6 +9,8 @@
 
 #include <stdexcept>
 #include <array>
+#include <imgui.h>
+#include <imgui_impl_vulkan.h>
 
 struct SimplePushConstantData {
 	glm::mat4 transform{ 1.f };
@@ -89,5 +91,13 @@ void SimpleRenderSystem::RenderGameObjects(VkCommandBuffer commandBuffer, std::v
 		obj.model->Draw(commandBuffer);
 
 	}
+}
+
+void SimpleRenderSystem::RenderImGui(VkCommandBuffer commandBuffer)
+{
+	// Rendering ImGui
+	ImGui::Render();
+	ImDrawData* draw_data = ImGui::GetDrawData();
+	ImGui_ImplVulkan_RenderDrawData(draw_data, commandBuffer);
 }
 
