@@ -9,17 +9,17 @@
 #include <memory>
 #include <vector>
 
-
 #include "Camera.h"
 #include <SimpleRenderSystem.h>
 #include <KeyboardInput.h>
+#include "../ParticulesData.h"
 
 class Window;
 
 class VulkanHandler
 {
 public:
-	VulkanHandler(Window & _window);
+	VulkanHandler(Window & _window, ParticulesData* _particulesData);
 
 	~VulkanHandler();
 
@@ -30,6 +30,7 @@ public:
 
 	GraphicDevice & GetGraphicDevice();
 
+	ParticulesData* particulesData;
 private:
 	void LoadGameObjects();
 

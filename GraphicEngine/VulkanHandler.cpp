@@ -9,8 +9,9 @@
 #include <stdexcept>
 #include <array>
 
-VulkanHandler::VulkanHandler(Window& _window) :
+VulkanHandler::VulkanHandler(Window& _window, ParticulesData* _particulesData) :
 	graphicDevice(_window),
+	particulesData(_particulesData),
 	renderer(_window, graphicDevice),
 	window(_window),
 	renderSystem(graphicDevice, renderer.GetSwapChainRenderPass()),
@@ -38,9 +39,18 @@ void VulkanHandler::Update(float frameTime)
 	//camera.setOrthographicProjection(-aspect, aspect, -1, 1, -1, 1);
 	camera.SetPerspectiveProjection(glm::radians(50.f), aspect, 0.1f, 100.f);
 
+	/*
 	for (auto& obj : gameObjects) {
-		obj.transform.rotation.y = glm::mod(obj.transform.rotation.y + 0.01f, glm::two_pi<float>());
-		obj.transform.rotation.x = glm::mod(obj.transform.rotation.x + 0.005f, glm::two_pi<float>());
+		//obj.transform.rotation.y = glm::mod(obj.transform.rotation.y + 0.01f, glm::two_pi<float>());
+		//obj.transform.rotation.x = glm::mod(obj.transform.rotation.x + 0.005f, glm::two_pi<float>());
+	}*/
+
+	for (int i = 0; i < gameObjects.size(); i++) {
+		
+		gameObjects[i].transform.translation.x = particulesData->Particules[i].position.x;
+		gameObjects[i].transform.translation.x = particulesData->Particules[i].position.y;
+		gameObjects[i].transform.translation.x = particulesData->Particules[i].position.z;
+
 	}
 }
 
@@ -69,10 +79,13 @@ void VulkanHandler::LoadGameObjects()
 	std::shared_ptr<Model> lveModel = Model::CreateModelFromFile(graphicDevice, "Models/colored_cube.obj");
 	auto gameObject = GameObject::CreateGameObject();
 	gameObject.model = lveModel;
-	gameObject.transform.translation = { .0f, .0f, 2.5f };
+	gameObject.transform.translation = { 4.0f, .0f, 2.5f };
 	gameObject.transform.scale = { .5f, .5f, .5f };
 	gameObjects.push_back(std::move(gameObject));
+	particulesData->gameObjects.push_back(std::move(gameObject));
 
+
+	/*
 	std::shared_ptr<Model> lveModel2 = Model::CreateModelFromFile(graphicDevice, "Models/flat_vase.obj");
 	gameObject = GameObject::CreateGameObject();
 	gameObject.model = lveModel2;
@@ -80,10 +93,13 @@ void VulkanHandler::LoadGameObjects()
 	gameObject.transform.scale = { .5f, .5f, .5f };
 	gameObjects.push_back(std::move(gameObject));
 
+	
 	gameObject = GameObject::CreateGameObject();
 	gameObject.model = lveModel;
-	gameObject.transform.translation = { 4.0f, .0f, 2.5f };
+	gameObject.transform.translation = { .0f, .0f, 2.5f };
 	gameObject.transform.scale = { .5f, .5f, .5f };
-	gameObjects.push_back(std::move(gameObject));
+	gameObjects.push_back(std::move(gameObject));*/
+
+	
 }
 
