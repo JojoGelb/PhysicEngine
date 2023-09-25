@@ -5,11 +5,12 @@
 This Engine is made by :
 
 - Gelb Jordy GELJ22050100
-- Monié Louis MONL17020307
+- MoniÃ© Louis MONL17020307
 
 ## Inputs
 
 - Camera inputs:
+
 a,d,w,s: move left, right, forward, backward
 space, left shift: up, down
 left, right, up, down: look left, right, up, down
@@ -17,7 +18,7 @@ left, right, up, down: look left, right, up, down
 - ImGui inputs:
 
 escape: close window
-i : hide/show ImGui
+i: hide/show ImGui
 
 ##Source
 
@@ -27,7 +28,7 @@ This graphic engine was implemented by us while following the tutorials from Bre
 
 - ImGui Engine:
 Original ImGui repository
-https://github.com/ocornut/imgui/tree/master
+(https://github.com/ocornut/imgui/tree/master)
 
 Help to implement ImGui with Vulkan
 (https://www.vkguide.dev/docs/extra-chapter/implementing_imgui/)
