@@ -1,7 +1,7 @@
 #include <GraphicsMotor.h>
 #include <chrono>
-#include "../MathPhysicEngine.h"
-#include "../ImGuiEngine.h"
+#include "../MathPhysicEngine/MathPhysicEngine.h"
+#include "../Sources/ImGuiEngine.h"
 
 int main() {
 

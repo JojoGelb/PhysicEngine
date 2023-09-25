@@ -12,7 +12,7 @@
 #include "Camera.h"
 #include <SimpleRenderSystem.h>
 #include <KeyboardInput.h>
-#include "../ObjectData.h"
+#include "../Sources/ObjectData.h"
 
 class Window;
 

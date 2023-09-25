@@ -162,12 +162,12 @@
     <ClCompile Include="GraphicEngine\VKPipeline.cpp" />
     <ClCompile Include="GraphicEngine\VulkanHandler.cpp" />
     <ClCompile Include="GraphicEngine\Window.cpp" />
-    <ClCompile Include="ImGuiEngine.cpp" />
-    <ClCompile Include="MathPhysicEngine.cpp" />
-    <ClCompile Include="Particle.cpp" />
-    <ClCompile Include="ObjectData.cpp" />
+    <ClCompile Include="Sources\ImGuiEngine.cpp" />
+    <ClCompile Include="MathPhysicEngine\MathPhysicEngine.cpp" />
+    <ClCompile Include="MathPhysicEngine\Particle.cpp" />
+    <ClCompile Include="Sources\ObjectData.cpp" />
     <ClCompile Include="Sources\main.cpp" />
-    <ClCompile Include="Sources\Vecteur3D.cpp" />
+    <ClCompile Include="MathPhysicEngine\Vecteur3D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="External Librairies\IMGUI\imconfig.h" />
@@ -189,11 +189,11 @@
     <ClInclude Include="GraphicEngine\VKPipeline.h" />
     <ClInclude Include="GraphicEngine\VulkanHandler.h" />
     <ClInclude Include="GraphicEngine\Window.h" />
-    <ClInclude Include="Headers\Vecteur3D.h" />
-    <ClInclude Include="ImGuiEngine.h" />
-    <ClInclude Include="MathPhysicEngine.h" />
-    <ClInclude Include="Particle.h" />
-    <ClInclude Include="ObjectData.h" />
+    <ClInclude Include="MathPhysicEngine\Vecteur3D.h" />
+    <ClInclude Include="Sources\ImGuiEngine.h" />
+    <ClInclude Include="MathPhysicEngine\MathPhysicEngine.h" />
+    <ClInclude Include="MathPhysicEngine\Particle.h" />
+    <ClInclude Include="Sources\ObjectData.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="GraphicEngine\Readme.txt" />

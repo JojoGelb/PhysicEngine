@@ -4,6 +4,8 @@
 #include "vulkan/vulkan_core.h"
 #include <iostream>
 #include"GLFW/glfw3.h"
+#include "../MathPhysicEngine/Particle.h"
+#include "../MathPhysicEngine/Vecteur3D.h"
 
 ImGuiEngine::ImGuiEngine(GLFWwindow* _window, ObjectData* _objectData): window(_window), objectData(_objectData)
 {
