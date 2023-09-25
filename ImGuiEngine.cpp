@@ -173,15 +173,21 @@ void ImGuiEngine::ShowEngineImGui()
                 if (ImGui::Checkbox(" print particle data on terminal ", &objectData->particles[i].printParticleOnTerminal))
                 ImGui::Spacing();
 
-                ImGui::Text("(position: %.2f, %.2f, %.2f", objectData->particles[i].position.x, objectData->particles[i].position.y, objectData->particles[i].position.z);
-                ImGui::Text("(velocity: %.2f, %.2f, %.2f", objectData->particles[i].velocity.x, objectData->particles[i].velocity.y, objectData->particles[i].velocity.z);
-                ImGui::Text("(acceleration: %.2f, %.2f, %.2f", objectData->particles[i].acceleration.x, objectData->particles[i].acceleration.y, objectData->particles[i].acceleration.z);
-                ImGui::Text("(force: %.2f, %.2f, %.2f", objectData->particles[i].force.x, objectData->particles[i].force.y, objectData->particles[i].force.z);
+                ImGui::Text(" position: %.2f, %.2f, %.2f", objectData->particles[i].position.x, objectData->particles[i].position.y, objectData->particles[i].position.z);
+                ImGui::Text(" velocity: %.2f, %.2f, %.2f", objectData->particles[i].velocity.x, objectData->particles[i].velocity.y, objectData->particles[i].velocity.z);
+                ImGui::Text(" acceleration: %.2f, %.2f, %.2f", objectData->particles[i].acceleration.x, objectData->particles[i].acceleration.y, objectData->particles[i].acceleration.z);
+                ImGui::Text(" force: %.2f, %.2f, %.2f", objectData->particles[i].force.x, objectData->particles[i].force.y, objectData->particles[i].force.z);
+
+                ImGui::Text(" gravity force: %.2f, %.2f, %.2f", objectData->particles[i].gravityForce.x, objectData->particles[i].gravityForce.y, objectData->particles[i].gravityForce.z);
 
                 ImGui::Spacing();
+                ImGui::Spacing();
 
-                ImGui::Text("(gravity force: %.2f", objectData->particles[i].gravityForce);
-                ImGui::Text("(damping: %.3f", objectData->particles[i].damping);
+                ImGui::InputFloat(" inversed mass: ", &objectData->particles[i].inversedMass);
+                ImGui::InputFloat(" gravity scale: ", &objectData->particles[i].gravity);
+                ImGui::InputFloat(" damping: ", &objectData->particles[i].damping);
+
+
 
                 ImGui::TreePop();
 

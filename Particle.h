@@ -25,11 +25,10 @@ public:
 
 	bool impulse = false;
 	bool printParticleOnTerminal = false;
+	float inversedMass;
 
 private:
 
-	float mass;
-	float inversedMass;
 
 	void SetInverseMass(float mass);
 };

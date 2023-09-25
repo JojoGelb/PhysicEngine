@@ -10,7 +10,8 @@ void MathPhysicsEngine::Init()
 		Particle particle = Particle();
 
 		particle.position = Vector3D(objectData->gameObjects[i].transform.translation.x, objectData->gameObjects[i].transform.translation.y, objectData->gameObjects[i].transform.translation.z);
-		particle.gravityForce = 0;
+		particle.gravity = 0;
+		particle.gravityForce = { 0,-10,0 };
 		objectData->particles.push_back(particle);
 	}
 }
