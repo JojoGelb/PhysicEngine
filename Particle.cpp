@@ -25,6 +25,14 @@ void Particle::SetTest() {
 	damping = 1;
 }
 
+void Particle::AddProjectile()
+{
+	gravity = 0;
+	damping =1;
+	force = Vector3D(0.0, 0.0, 0.0f);
+	position = { 0.0,0.0,0.0 };
+}
+
 void Particle::SemiImpliciteEulerIntegration(double t, double dt)
 {
 

@@ -21,6 +21,8 @@ public:
 
 	void SetTest();
 
+	void AddProjectile();
+
 	void SemiImpliciteEulerIntegration(double t, double dt);
 
 	bool impulse = false;

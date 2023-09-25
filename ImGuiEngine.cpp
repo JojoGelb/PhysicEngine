@@ -92,7 +92,7 @@ void ImGuiEngine::ShowDemoImGui()
 void ImGuiEngine::ShowEngineImGui()
 {
 
-    ImGui::Begin("Add object");                          
+    ImGui::Begin("Add object");
 
     static float positionX = 0.0f;
     static float positionY = 0.0f;
@@ -109,9 +109,9 @@ void ImGuiEngine::ShowEngineImGui()
     /*
     ImGui::Text("3D Model");
     ImGui::BeginListBox("3D Model list box");
-    
+
     ImGui::EndListBox()*/
-   
+
     ImGui::InputText("Object name", name, IM_ARRAYSIZE(name));
 
     ImGui::Text("Initial Position");
@@ -136,9 +136,57 @@ void ImGuiEngine::ShowEngineImGui()
             damping,
             gravity
         );
-            objectData->particles.push_back(particle);
-            objectData->names.push_back(name);
+        objectData->particles.push_back(particle);
+        objectData->names.push_back(name);
     }
+
+    if (ImGui::TreeNode("Projectile")) 
+    {
+        static int projectileId{ 0 };
+
+        if (projectileId == 0) {
+            if (ImGui::Button("Add projectile"))
+            {
+                Particle particle = Particle();
+                particle.AddProjectile();
+                objectData->particles.push_back(particle);
+                objectData->names.push_back(name);
+                projectileId = objectData->particles.size()-1;
+            }
+        }
+        else {
+
+            if (ImGui::Button("Add projectile"))
+            {
+                Particle particle = Particle();
+                particle.AddProjectile();
+                objectData->particles.push_back(particle);
+                objectData->names.push_back(name);
+                projectileId = objectData->particles.size() - 1;
+            }
+
+            ImGui::Text(" position: %.2f, %.2f, %.2f", objectData->particles[projectileId].position.x, objectData->particles[projectileId].position.y, objectData->particles[projectileId].position.z);
+            ImGui::Text(" velocity: %.2f, %.2f, %.2f", objectData->particles[projectileId].velocity.x, objectData->particles[projectileId].velocity.y, objectData->particles[projectileId].velocity.z);
+            ImGui::Text(" acceleration: %.2f, %.2f, %.2f", objectData->particles[projectileId].acceleration.x, objectData->particles[projectileId].acceleration.y, objectData->particles[projectileId].acceleration.z);
+            ImGui::Text(" force: %.2f, %.2f, %.2f", objectData->particles[projectileId].force.x, objectData->particles[projectileId].force.y, objectData->particles[projectileId].force.z);
+            ImGui::Text(" gravity force: %.2f, %.2f, %.2f", objectData->particles[projectileId].gravityForce.x, objectData->particles[projectileId].gravityForce.y, objectData->particles[projectileId].gravityForce.z);
+
+            if (ImGui::Button("launch projectile")) {
+                objectData->particles[projectileId].force = Vector3D(500.0f, 500.0f, 0.0f);
+                objectData->particles[projectileId].gravity = 1;
+                objectData->particles[projectileId].impulse = true;
+
+
+            }
+        }
+
+        ImGui::TreePop();
+
+    }
+
+    
+
+
     ImGui::End();
 
     ImGui::Begin("Objects List");
@@ -148,7 +196,6 @@ void ImGuiEngine::ShowEngineImGui()
     for (int i = 0; i < objectData->names.size(); i++)
     {
 
-        //std::string s = (std::string)i;
         if (ImGui::TreeNode( ( std::to_string(i) + ". " + objectData->names[i]).c_str())) {
             if (ImGui::TreeNode("Add force")){
 
@@ -187,14 +234,7 @@ void ImGuiEngine::ShowEngineImGui()
                 ImGui::InputFloat(" gravity scale: ", &objectData->particles[i].gravity);
                 ImGui::InputFloat(" damping: ", &objectData->particles[i].damping);
 
-
-
                 ImGui::TreePop();
-
-                /*
-                if (ImGui::Button(sh")) {
-                    objectData->particles[i].force = { forceX , forceY , forceZ };
-                }*/
             }
 
             ImGui::TreePop();
