@@ -35,8 +35,13 @@ void Particle::SemiImpliciteEulerIntegration(double t, double dt)
 	position = position + (velocity * dt);
 
 
-	std::cout << "time: " << t << " - Position: " << position << " Velocity: " << velocity << "\n";
+	if (printParticleOnTerminal) {
+		std::cout << "time: " << t << " - Position: " << position << " Velocity: " << velocity << "\n";
+	}
 
+	if (impulse) {
+		force = { 0.0,0.0,0.0 };
+	}
 }
 
 

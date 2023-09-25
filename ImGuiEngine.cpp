@@ -143,6 +143,7 @@ void ImGuiEngine::ShowEngineImGui()
 
     ImGui::Begin("Objects List");
 
+    static std::vector<Vector3D> force(200);
 
     for (int i = 0; i < objectData->names.size(); i++)
     {
@@ -151,23 +152,27 @@ void ImGuiEngine::ShowEngineImGui()
         if (ImGui::TreeNode( ( std::to_string(i) + ". " + objectData->names[i]).c_str())) {
             if (ImGui::TreeNode("Add force")){
 
-                static float forceX = 0.0f;
-                static float forceY = 0.0f;
-                static float forceZ = 0.0f;
+                ImGui::InputFloat("force x", &force[i].x);
+                ImGui::InputFloat("force y", &force[i].y);
+                ImGui::InputFloat("force z", &force[i].z);
 
-                ImGui::InputFloat("force x", &forceX);
-                ImGui::InputFloat("force y", &forceY);
-                ImGui::InputFloat("force z", &forceZ);
+                ImGui::Spacing();
+                if (ImGui::Checkbox(" Impulse", &objectData->particles[i].impulse))
+                ImGui::Spacing();
 
                 if (ImGui::Button("Apply force")) {
-                    objectData->particles[i].force = { forceX , forceY , forceZ };
+                    objectData->particles[i].force = force[i];
                 }
+
                 ImGui::TreePop();
                
             }
             if (ImGui::TreeNode("Show particule data")) {
 
-               
+                ImGui::Spacing();
+                if (ImGui::Checkbox(" print particle data on terminal ", &objectData->particles[i].printParticleOnTerminal))
+                ImGui::Spacing();
+
                 ImGui::Text("(position: %.2f, %.2f, %.2f", objectData->particles[i].position.x, objectData->particles[i].position.y, objectData->particles[i].position.z);
                 ImGui::Text("(velocity: %.2f, %.2f, %.2f", objectData->particles[i].velocity.x, objectData->particles[i].velocity.y, objectData->particles[i].velocity.z);
                 ImGui::Text("(acceleration: %.2f, %.2f, %.2f", objectData->particles[i].acceleration.x, objectData->particles[i].acceleration.y, objectData->particles[i].acceleration.z);

@@ -23,7 +23,8 @@ public:
 
 	void SemiImpliciteEulerIntegration(double t, double dt);
 
-
+	bool impulse = false;
+	bool printParticleOnTerminal = false;
 
 private:
 
