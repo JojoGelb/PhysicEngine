@@ -42,7 +42,6 @@ Help to implement ImGui with Vulkan
 
 (https://www.vkguide.dev/docs/extra-chapter/implementing_imgui/)
 
-
 - Math and physics engine:
 
 Help to implement particule and integration
