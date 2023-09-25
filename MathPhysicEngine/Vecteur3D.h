@@ -6,10 +6,7 @@ class Vector3D
 public:
 
 	Vector3D(float x_ = 0, float y_ = 0, float z_ = 0);
-
 	Vector3D(const Vector3D& v);
-
-	void Display();
 
 	Vector3D operator+(const Vector3D& other) const;
 	Vector3D operator+=(const Vector3D& other);
@@ -22,6 +19,8 @@ public:
 	Vector3D& operator=(const Vector3D& other);
 
 	bool operator==(const Vector3D& other) const;
+
+	void Display();
 
 	bool Equal(const Vector3D& other, float epsilon = 1e-3) const;
 

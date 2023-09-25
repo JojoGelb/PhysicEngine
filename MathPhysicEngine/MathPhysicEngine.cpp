@@ -5,7 +5,7 @@ void MathPhysicsEngine::Init()
 {
 
 	//Initialisation of pre-existing gameObjects
-	for (int i = 0; i < objectData->gameObjects.size(); i++) {
+	/*for (int i = 0; i < objectData->gameObjects.size(); i++) {
 
 		Particle particle = Particle();
 
@@ -13,22 +13,22 @@ void MathPhysicsEngine::Init()
 		particle.gravity = 0;
 		particle.gravityForce = { 0,-10,0 };
 		objectData->particles.push_back(particle);
-	}
+	}*/
 }
 
 void MathPhysicsEngine::Update(double t,float frameTime)
 {
 	
 	 //std::cout << frameTime << "\n";
-	for (int i = 0; i < objectData->particles.size(); i++) {
+	for (Particle * p : particles) {
 
 		//objectData->particles[i].position += Vector3D(0.0f,0.0f,0.01f);
-		objectData->particles[i].SemiImpliciteEulerIntegration(t, (double)frameTime);
+		p->SemiImpliciteEulerIntegration(t, (double)frameTime);
 	}
 }
 
 
-MathPhysicsEngine::MathPhysicsEngine(ObjectData* _objectData)
-	: objectData(_objectData)
+MathPhysicsEngine::MathPhysicsEngine()
+	
 {
 }

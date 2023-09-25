@@ -67,7 +67,7 @@ void SimpleRenderSystem::CreatePipeline(VkRenderPass renderPass)
 		pipelineConfig);
 }
 
-void SimpleRenderSystem::RenderGameObjects(VkCommandBuffer commandBuffer, std::vector<GameObject>& gameObjects, const Camera& camera)
+void SimpleRenderSystem::RenderGameObjects(VkCommandBuffer commandBuffer, std::vector<VisualGameObject>& gameObjects, const Camera& camera)
 {
 	vKPipeline->Bind(commandBuffer);
 
@@ -90,6 +90,31 @@ void SimpleRenderSystem::RenderGameObjects(VkCommandBuffer commandBuffer, std::v
 		obj.model->Bind(commandBuffer);
 		obj.model->Draw(commandBuffer);
 
+	}
+}
+
+void SimpleRenderSystem::RenderGameObjectsV2(VkCommandBuffer commandBuffer, std::vector<VisualGameObject*>& gameObjects, const Camera& camera)
+{
+	vKPipeline->Bind(commandBuffer);
+
+	auto projectionView = camera.GetProjection() * camera.GetView();
+
+	for (auto& obj : gameObjects) {
+		SimplePushConstantData push{};
+		auto modelMatrix = obj->transform.Mat4();
+		push.transform = projectionView * modelMatrix;
+		push.normalMatrix = obj->transform.NormalMatrix();
+		push.transform = projectionView * obj->transform.Mat4();
+
+		vkCmdPushConstants(
+			commandBuffer,
+			pipelineLayout,
+			VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT,
+			0,
+			sizeof(SimplePushConstantData),
+			&push);
+		obj->model->Bind(commandBuffer);
+		obj->model->Draw(commandBuffer);
 	}
 }
 

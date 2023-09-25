@@ -4,7 +4,7 @@
 #include <GraphicDevice.h>
 #include "Renderer.h"
 
-#include "GameObject.h" 
+#include "VisualGameObject.h" 
 
 #include <memory>
 #include <vector>
@@ -19,7 +19,7 @@ class Window;
 class VulkanHandler
 {
 public:
-	VulkanHandler(Window & _window, ObjectData* _objectData);
+	VulkanHandler(Window & _window);
 
 	~VulkanHandler();
 
@@ -28,9 +28,10 @@ public:
 
 	void Shutdown();
 
+	void AddGameObject2(VisualGameObject* obj) { objects2.push_back(obj); }
+
 	GraphicDevice & GetGraphicDevice();
 
-	ObjectData* objectData;
 private:
 	void InitialLoadGameObjects();
 	void LoadGameObject(Particle particle);
@@ -40,12 +41,14 @@ private:
 	static void check_vk_result(VkResult err);//ImGui
 	GraphicDevice graphicDevice;
 	Renderer renderer;
-	std::vector<GameObject> gameObjects;
+
+	std::vector<VisualGameObject*> objects2;
+
+
 	Window & window;
 
 	SimpleRenderSystem renderSystem;
 	Camera camera;
 	KeyboardInput cameraController;
-	GameObject viewerObject; 
+	VisualGameObject viewerObject;
 };
-

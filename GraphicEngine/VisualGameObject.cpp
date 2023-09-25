@@ -1,4 +1,4 @@
-#include "GameObject.h"
+#include "VisualGameObject.h"
 
 glm::mat4 TransformComponent::Mat4() {
     const float c3 = glm::cos(rotation.z);

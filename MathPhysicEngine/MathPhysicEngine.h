@@ -5,13 +5,15 @@ class MathPhysicsEngine {
 
 public:
 
-	ObjectData* objectData;
-
 	void Init();
 	void Update(double t, float frameTime);
 	void Shutdown();
 
 
 
-	MathPhysicsEngine(ObjectData* _objectData);
+	MathPhysicsEngine();
+	void AddParticle(Particle* particule) { particles.push_back(particule); }
+
+private:
+	std::vector<Particle*> particles;
 };

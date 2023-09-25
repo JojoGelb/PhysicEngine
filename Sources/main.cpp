@@ -2,15 +2,21 @@
 #include <chrono>
 #include "../MathPhysicEngine/MathPhysicEngine.h"
 #include "../Sources/ImGuiEngine.h"
+#include "GameObject.h"
 
 int main() {
 
     ObjectData* objectData = new ObjectData();
+    std::vector<GameObject*> gameObjects;
 
-    GraphicsMotor graphicsMotor = GraphicsMotor(objectData);
-    MathPhysicsEngine mathPhysics = MathPhysicsEngine(objectData);
+    GraphicsMotor graphicsMotor = GraphicsMotor();
+
+    MathPhysicsEngine mathPhysics = MathPhysicsEngine();
     ImGuiEngine imGuiEngine = ImGuiEngine(graphicsMotor.GetGLFWWindow(),objectData);
     mathPhysics.Init();
+
+    GameObject* go = new GameObject({}, graphicsMotor.GetVulkanHandler(), "Models/colored_cube.obj");
+    gameObjects.push_back(go);
 
     double t = 0.0f;
 
@@ -26,12 +32,21 @@ int main() {
         imGuiEngine.Update();
         mathPhysics.Update(t, frameTime);
         graphicsMotor.Update(frameTime);
+
+       for ( auto gameObj : gameObjects) {
+            gameObj->UpdateVisual();
+       }
+
         graphicsMotor.Render();
 
         t += frameTime;
     }
 
     graphicsMotor.Shutdown();
+
+    for (auto gameObj : gameObjects) {
+        delete gameObj;
+    }
 
     return EXIT_SUCCESS;
 }

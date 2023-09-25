@@ -4,7 +4,7 @@
 //#include <GLFW/glfw3.h>
 #include <GraphicDevice.h>
 
-#include "GameObject.h" 
+#include "VisualGameObject.h" 
 #include "Camera.h"
 
 #include <memory>
@@ -18,7 +18,9 @@ public:
 	SimpleRenderSystem(GraphicDevice & device, VkRenderPass renderPass);
 	~SimpleRenderSystem();
 
-	void RenderGameObjects(VkCommandBuffer commandBuffer, std::vector<GameObject>& gameObjects, const Camera& camera);
+	void RenderGameObjects(VkCommandBuffer commandBuffer, std::vector<VisualGameObject>& gameObjects, const Camera& camera);
+
+	void RenderGameObjectsV2(VkCommandBuffer commandBuffer, std::vector<VisualGameObject*>& gameObjects, const Camera& camera);
 	void RenderImGui(VkCommandBuffer commandBuffer);
 private:
 	void CreatePipelineLayout();

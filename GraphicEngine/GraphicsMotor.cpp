@@ -1,8 +1,8 @@
 #include "GraphicsMotor.h"
 
 
-GraphicsMotor::GraphicsMotor(ObjectData* _objectData) : window(800, 600, "Test"),
-								 vulkanHandler(window, _objectData)
+GraphicsMotor::GraphicsMotor() : window(800, 600, "Test"),
+								 vulkanHandler(window)
 								 /*imguiHandler(window.GetWindow(), vulkanHandler) */{};
 
 GraphicsMotor::~GraphicsMotor()
