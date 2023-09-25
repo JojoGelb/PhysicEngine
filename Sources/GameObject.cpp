@@ -1,9 +1,10 @@
 #include "GameObject.h"
 
 
-GameObject::GameObject(Particle _particle, VulkanHandler& v, std::string modelePath, std::string _name):
-	particle(std::move(_particle)),
-	vk(v),
+GameObject::GameObject(MathPhysicsEngine& _physicEngine, VulkanHandler& v, std::string modelePath, std::string _name):
+	particle({}),
+	physicEngine(_physicEngine),
+	vkHandler(v),
 	visual(VisualGameObject::CreateGameObject()),
 	name(_name)
 {
@@ -11,12 +12,16 @@ GameObject::GameObject(Particle _particle, VulkanHandler& v, std::string modeleP
 	visual.model = lveModel;
 	visual.transform.translation = { 0.0f, .0f, 0.0f };
 	visual.transform.scale = { 1.f, 1.f, 1.f };
-	vk.AddGameObject2(&visual);
+	vkHandler.AddGameObject2(&visual);
+	physicEngine.AddParticle(&particle);
+
+	particle.gravity = 0;
 }
 
 GameObject::~GameObject()
 {
-	//vk.RemoveGameObject2(&visual);
+	physicEngine.RemoveParticle(&particle);
+	vkHandler.RemoveGameObject2(&visual);
 }
 
 void GameObject::UpdateVisual()

@@ -39,24 +39,6 @@ void VulkanHandler::Update(float frameTime)
 	float aspect = renderer.GetAspectRatio();
 	//camera.setOrthographicProjection(-aspect, aspect, -1, 1, -1, 1);
 	camera.SetPerspectiveProjection(glm::radians(50.f), aspect, 0.1f, 100.f);
-
-	/*
-	for (auto& obj : gameObjects) {
-		//obj.transform.rotation.y = glm::mod(obj.transform.rotation.y + 0.01f, glm::two_pi<float>());
-		//obj.transform.rotation.x = glm::mod(obj.transform.rotation.x + 0.005f, glm::two_pi<float>());
-	}*/
-
-    //for (int i = objectData->gameObjects.size(); i < objectData->particles.size(); i++) {
-       // LoadGameObject(objectData->particles[i]);
-   // }
-
-	//for (int i = 0; i < gameObjects.size(); i++) {
-		
-		//gameObjects[i].transform.translation.x = objectData->particles[i].position.x;
-		//gameObjects[i].transform.translation.y = -objectData->particles[i].position.y;
-		//gameObjects[i].transform.translation.z = objectData->particles[i].position.z;
-
-	//}
 }
 
 void VulkanHandler::Render()

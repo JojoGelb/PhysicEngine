@@ -196,7 +196,6 @@
     <ClInclude Include="MathPhysicEngine\MathPhysicEngine.h" />
     <ClInclude Include="MathPhysicEngine\Particle.h" />
     <ClInclude Include="Sources\ObjectData.h" />
-    <ClInclude Include="Sources\VisualFabrik.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Readme.txt" />

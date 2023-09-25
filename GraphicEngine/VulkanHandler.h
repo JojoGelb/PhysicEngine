@@ -29,6 +29,9 @@ public:
 	void Shutdown();
 
 	void AddGameObject2(VisualGameObject* obj) { objects2.push_back(obj); }
+	void RemoveGameObject2(VisualGameObject* obj) {
+		objects2.erase(std::remove(objects2.begin(), objects2.end(), obj), objects2.end());
+	}
 
 	GraphicDevice & GetGraphicDevice();
 

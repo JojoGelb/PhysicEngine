@@ -15,7 +15,7 @@ int main() {
     ImGuiEngine imGuiEngine = ImGuiEngine(graphicsMotor.GetGLFWWindow(),objectData);
     mathPhysics.Init();
 
-    GameObject* go = new GameObject({}, graphicsMotor.GetVulkanHandler(), "Models/colored_cube.obj");
+    GameObject* go = new GameObject(mathPhysics, graphicsMotor.GetVulkanHandler(), "Models/colored_cube.obj");
     gameObjects.push_back(go);
 
     double t = 0.0f;

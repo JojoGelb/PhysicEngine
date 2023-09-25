@@ -12,7 +12,8 @@ public:
 
 
 	MathPhysicsEngine();
-	void AddParticle(Particle* particule) { particles.push_back(particule); }
+	void AddParticle(Particle* p) { particles.push_back(p); }
+	void RemoveParticle(Particle* p) { particles.erase(std::remove(particles.begin(), particles.end(), p), particles.end()); }
 
 private:
 	std::vector<Particle*> particles;
