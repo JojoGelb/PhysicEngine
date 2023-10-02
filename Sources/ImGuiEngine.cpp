@@ -7,7 +7,7 @@
 #include "../MathPhysicEngine/Particle.h"
 #include "../MathPhysicEngine/Vecteur3D.h"
 
-ImGuiEngine::ImGuiEngine(GLFWwindow* _window, ObjectData* _objectData): window(_window), objectData(_objectData)
+ImGuiEngine::ImGuiEngine(GLFWwindow* _window, std::vector<GameObject*>* _gameObjects): window(_window), gameObjects(_gameObjects)
 {
     this->clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
@@ -138,45 +138,62 @@ void ImGuiEngine::ShowEngineImGui()
             damping,
             gravity
         );
-        objectData->particles.push_back(particle);
-        objectData->names.push_back(name);
+        GameObject* go = new GameObject(name);
+        go->AddComponent(new Particle());
+        VisualGameObject* v = VisualGameObject::CreatePtrGameObject("Models/colored_cube.obj");
+        go->AddComponent(v);
+
+        gameObjects->push_back(go);
     }
 
     if (ImGui::TreeNode("Projectile")) 
     {
-        static int projectileId{ 0 };
+        static GameObject * projectile = nullptr;
 
-        if (projectileId == 0) {
+        if (projectile == nullptr) {
             if (ImGui::Button("Add projectile"))
             {
-                Particle particle = Particle();
-                particle.AddProjectile();
-                objectData->particles.push_back(particle);
-                objectData->names.push_back(name);
-                projectileId = objectData->particles.size()-1;
+                GameObject* go = new GameObject(name);
+                Particle* particle = new Particle();
+                particle->AddProjectile();
+                go->AddComponent(particle);
+                VisualGameObject* v = VisualGameObject::CreatePtrGameObject("Models/colored_cube.obj");
+                go->AddComponent(v);
+
+                gameObjects->push_back(go);
+
+                //projectileId = objectData->particles.size()-1;
+                projectile = go;
             }
         }
         else {
 
             if (ImGui::Button("Add projectile"))
             {
-                Particle particle = Particle();
-                particle.AddProjectile();
-                objectData->particles.push_back(particle);
-                objectData->names.push_back(name);
-                projectileId = objectData->particles.size() - 1;
+                GameObject* go = new GameObject(name);
+                Particle* particle = new Particle();
+                particle->AddProjectile();
+                go->AddComponent(particle);
+                VisualGameObject* v = VisualGameObject::CreatePtrGameObject("Models/colored_cube.obj");
+                go->AddComponent(v);
+
+                gameObjects->push_back(go);
+
+                projectile = go;
             }
 
-            ImGui::Text(" position: %.2f, %.2f, %.2f", objectData->particles[projectileId].position.x, objectData->particles[projectileId].position.y, objectData->particles[projectileId].position.z);
-            ImGui::Text(" velocity: %.2f, %.2f, %.2f", objectData->particles[projectileId].velocity.x, objectData->particles[projectileId].velocity.y, objectData->particles[projectileId].velocity.z);
-            ImGui::Text(" acceleration: %.2f, %.2f, %.2f", objectData->particles[projectileId].acceleration.x, objectData->particles[projectileId].acceleration.y, objectData->particles[projectileId].acceleration.z);
-            ImGui::Text(" force: %.2f, %.2f, %.2f", objectData->particles[projectileId].force.x, objectData->particles[projectileId].force.y, objectData->particles[projectileId].force.z);
-            ImGui::Text(" gravity force: %.2f, %.2f, %.2f", objectData->particles[projectileId].gravityForce.x, objectData->particles[projectileId].gravityForce.y, objectData->particles[projectileId].gravityForce.z);
+            auto p = projectile->GetComponentOfType<Particle>();
+
+            ImGui::Text(" position: %.2f, %.2f, %.2f", p->position.x, p->position.y, p->position.z);
+            ImGui::Text(" velocity: %.2f, %.2f, %.2f", p->velocity.x, p->velocity.y, p->velocity.z);
+            ImGui::Text(" acceleration: %.2f, %.2f, %.2f", p->acceleration.x, p->acceleration.y, p->acceleration.z);
+            ImGui::Text(" force: %.2f, %.2f, %.2f", p->force.x, p->force.y, p->force.z);
+            ImGui::Text(" gravity force: %.2f, %.2f, %.2f", p->gravityForce.x, p->gravityForce.y, p->gravityForce.z);
 
             if (ImGui::Button("launch projectile")) {
-                objectData->particles[projectileId].force = Vector3D(500.0f, 500.0f, 0.0f);
-                objectData->particles[projectileId].gravity = 1;
-                objectData->particles[projectileId].impulse = true;
+                p->force = Vector3D(500.0f, 500.0f, 0.0f);
+                p->gravity = 1;
+                p->impulse = true;
 
 
             }
@@ -195,10 +212,11 @@ void ImGuiEngine::ShowEngineImGui()
 
     static std::vector<Vector3D> force(200);
 
-    for (int i = 0; i < objectData->names.size(); i++)
+    for (int i = 0; i < gameObjects->size(); i++)
     {
+        auto particle = gameObjects->at(i)->GetComponentOfType<Particle>();
+        if (ImGui::TreeNode( ( std::to_string(i) + ". " + gameObjects->at(i)->GetName()).c_str())) {
 
-        if (ImGui::TreeNode( ( std::to_string(i) + ". " + objectData->names[i]).c_str())) {
             if (ImGui::TreeNode("Add force")){
 
                 ImGui::InputFloat("force x", &force[i].x);
@@ -206,11 +224,11 @@ void ImGuiEngine::ShowEngineImGui()
                 ImGui::InputFloat("force z", &force[i].z);
 
                 ImGui::Spacing();
-                if (ImGui::Checkbox(" Impulse", &objectData->particles[i].impulse))
+                if (ImGui::Checkbox(" Impulse", &particle->impulse))
                 ImGui::Spacing();
 
                 if (ImGui::Button("Apply force")) {
-                    objectData->particles[i].force = force[i];
+                    particle->force = force[i];
                 }
 
                 ImGui::TreePop();
@@ -219,22 +237,22 @@ void ImGuiEngine::ShowEngineImGui()
             if (ImGui::TreeNode("Show particule data")) {
 
                 ImGui::Spacing();
-                if (ImGui::Checkbox(" print particle data on terminal ", &objectData->particles[i].printParticleOnTerminal))
+                if (ImGui::Checkbox(" print particle data on terminal ", &particle->printParticleOnTerminal))
                 ImGui::Spacing();
 
-                ImGui::Text(" position: %.2f, %.2f, %.2f", objectData->particles[i].position.x, objectData->particles[i].position.y, objectData->particles[i].position.z);
-                ImGui::Text(" velocity: %.2f, %.2f, %.2f", objectData->particles[i].velocity.x, objectData->particles[i].velocity.y, objectData->particles[i].velocity.z);
-                ImGui::Text(" acceleration: %.2f, %.2f, %.2f", objectData->particles[i].acceleration.x, objectData->particles[i].acceleration.y, objectData->particles[i].acceleration.z);
-                ImGui::Text(" force: %.2f, %.2f, %.2f", objectData->particles[i].force.x, objectData->particles[i].force.y, objectData->particles[i].force.z);
+                ImGui::Text(" position: %.2f, %.2f, %.2f", particle->position.x, particle->position.y, particle->position.z);
+                ImGui::Text(" velocity: %.2f, %.2f, %.2f", particle->velocity.x, particle->velocity.y, particle->velocity.z);
+                ImGui::Text(" acceleration: %.2f, %.2f, %.2f", particle->acceleration.x, particle->acceleration.y, particle->acceleration.z);
+                ImGui::Text(" force: %.2f, %.2f, %.2f", particle->force.x, particle->force.y, particle->force.z);
 
-                ImGui::Text(" gravity force: %.2f, %.2f, %.2f", objectData->particles[i].gravityForce.x, objectData->particles[i].gravityForce.y, objectData->particles[i].gravityForce.z);
+                ImGui::Text(" gravity force: %.2f, %.2f, %.2f", particle->gravityForce.x, particle->gravityForce.y, particle->gravityForce.z);
 
                 ImGui::Spacing();
                 ImGui::Spacing();
 
-                ImGui::InputFloat(" inversed mass: ", &objectData->particles[i].inversedMass);
-                ImGui::InputFloat(" gravity scale: ", &objectData->particles[i].gravity);
-                ImGui::InputFloat(" damping: ", &objectData->particles[i].damping);
+                ImGui::InputFloat(" inversed mass: ", &particle->inversedMass);
+                ImGui::InputFloat(" gravity scale: ", &particle->gravity);
+                ImGui::InputFloat(" damping: ", &particle->damping);
 
                 ImGui::TreePop();
             }

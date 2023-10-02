@@ -26,6 +26,8 @@ public:
 
 	void AddComponent(Component* component);
 
+	const std::string & GetName() const { return name; }
+
 private:
 	std::string name;
 

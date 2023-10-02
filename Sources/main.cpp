@@ -5,14 +5,14 @@
 #include "GameObject.h"
 
 int main() {
-    ObjectData* objectData = new ObjectData();
+    //ObjectData* objectData = new ObjectData();
 
     std::vector<GameObject*> gameObjects;
 
     GraphicsMotor* graphicsMotor = GraphicsMotor::GetInstance();
 
     MathPhysicsEngine * mathPhysics = MathPhysicsEngine::GetInstance();
-    ImGuiEngine imGuiEngine = ImGuiEngine(graphicsMotor->GetGLFWWindow(),objectData);
+    ImGuiEngine imGuiEngine = ImGuiEngine(graphicsMotor->GetGLFWWindow(), &gameObjects);
 
     //GameObject* go = new GameObject(mathPhysics, graphicsMotor.GetVulkanHandler(), "Models/colored_cube.obj");
     GameObject* go = new GameObject();
