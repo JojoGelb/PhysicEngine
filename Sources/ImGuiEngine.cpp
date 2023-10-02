@@ -140,7 +140,7 @@ void ImGuiEngine::ShowEngineImGui()
         );
         GameObject* go = new GameObject(name);
         go->AddComponent(new Particle());
-        VisualGameObject* v = VisualGameObject::CreatePtrGameObject("Models/colored_cube.obj");
+        VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject("Models/colored_cube.obj");
         go->AddComponent(v);
 
         gameObjects->push_back(go);
@@ -157,7 +157,7 @@ void ImGuiEngine::ShowEngineImGui()
                 Particle* particle = new Particle();
                 particle->AddProjectile();
                 go->AddComponent(particle);
-                VisualGameObject* v = VisualGameObject::CreatePtrGameObject("Models/colored_cube.obj");
+                VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject("Models/colored_cube.obj");
                 go->AddComponent(v);
 
                 gameObjects->push_back(go);
@@ -173,7 +173,7 @@ void ImGuiEngine::ShowEngineImGui()
                 Particle* particle = new Particle();
                 particle->AddProjectile();
                 go->AddComponent(particle);
-                VisualGameObject* v = VisualGameObject::CreatePtrGameObject("Models/colored_cube.obj");
+                VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject("Models/colored_cube.obj");
                 go->AddComponent(v);
 
                 gameObjects->push_back(go);
@@ -193,8 +193,6 @@ void ImGuiEngine::ShowEngineImGui()
                 p->force = Vector3D(500.0f, 500.0f, 0.0f);
                 p->gravity = 1;
                 p->impulse = true;
-
-
             }
         }
 

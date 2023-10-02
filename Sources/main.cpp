@@ -15,7 +15,7 @@ int main() {
 
     GameObject* go = new GameObject();
     go->AddComponent(new Particle());
-    VisualGameObject* v = VisualGameObject::CreatePtrGameObject("Models/colored_cube.obj");
+    VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject("Models/colored_cube.obj");
     go->AddComponent(v);
 
     //add graphics
@@ -50,9 +50,10 @@ int main() {
     }
 
     graphicsMotor->Shutdown();
+    delete GraphicsMotor::GetInstance();
 
     delete MathPhysicsEngine::GetInstance();
-    delete GraphicsMotor::GetInstance();
+
 
     return EXIT_SUCCESS;
 }

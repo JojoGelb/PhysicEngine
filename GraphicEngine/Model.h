@@ -45,7 +45,7 @@ public:
     Model(const Model&) = delete;
     Model& operator=(const Model&) = delete;
 
-    static std::unique_ptr<Model> CreateModelFromFile(
+    static Model* CreateModelFromFile(
         GraphicDevice& device, const std::string& filepath);
 
     void Bind(VkCommandBuffer commandBuffer);

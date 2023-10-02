@@ -58,18 +58,23 @@ glm::mat3 TransformComponent::NormalMatrix() {
     };
 }
 
-VisualGameObject* VisualGameObject::CreatePtrGameObject(std::string modelePath)
+VisualGameObject* VisualGameObject::CreatePtrVisualGameObject(std::string modelePath)
 {
     static id_t currentId = 0;
 
     VisualGameObject* visual = new VisualGameObject(currentId++);
 
-    std::shared_ptr<Model> lveModel = Model::CreateModelFromFile(GraphicsMotor::GetInstance()->GetVulkanHandler().GetGraphicDevice(), modelePath);
+    Model* lveModel = Model::CreateModelFromFile(GraphicsMotor::GetInstance()->GetVulkanHandler().GetGraphicDevice(), modelePath);
     visual->model = lveModel;
     visual->transform.translation = { 0.0f, .0f, 0.0f };
     visual->transform.scale = { 1.f, 1.f, 1.f };
 
     return visual;
+}
+
+VisualGameObject::~VisualGameObject()
+{
+    delete model;
 }
 
 void VisualGameObject::Start()

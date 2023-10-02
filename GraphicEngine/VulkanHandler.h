@@ -50,5 +50,5 @@ private:
 	SimpleRenderSystem renderSystem;
 	Camera camera;
 	KeyboardInput cameraController;
-	VisualGameObject viewerObject;
+	VisualGameObject * viewerObject;
 };

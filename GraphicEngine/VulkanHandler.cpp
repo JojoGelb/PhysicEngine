@@ -19,9 +19,9 @@ VulkanHandler::VulkanHandler(Window& _window) :
 	renderSystem(graphicDevice, renderer.GetSwapChainRenderPass()),
 	camera(),
 	cameraController(),
-	viewerObject(VisualGameObject::CreateGameObject())
+	viewerObject(VisualGameObject::CreatePtrEmptyVisualGameObject())
 {
-    viewerObject.transform.translation.z = -5.0f;
+    viewerObject->transform.translation.z = -5.0f;
     InitImGui();
 }
 
@@ -32,8 +32,8 @@ VulkanHandler::~VulkanHandler()
 
 void VulkanHandler::Update(float frameTime)
 {
-	cameraController.MoveInPlaneXZ(window.GetWindow(), frameTime, viewerObject);
-	camera.SetViewYXZ(viewerObject.transform.translation, viewerObject.transform.rotation);
+	cameraController.MoveInPlaneXZ(window.GetWindow(), frameTime, *viewerObject);
+	camera.SetViewYXZ(viewerObject->transform.translation, viewerObject->transform.rotation);
 
 	float aspect = renderer.GetAspectRatio();
 	//camera.setOrthographicProjection(-aspect, aspect, -1, 1, -1, 1);
@@ -56,8 +56,10 @@ void VulkanHandler::Render()
 
 void VulkanHandler::Shutdown()
 {
-	vkDeviceWaitIdle(graphicDevice.Device());
+    delete viewerObject;
+    vkDeviceWaitIdle(graphicDevice.Device());
     ShutdownImGui();
+
 }
 
 GraphicDevice& VulkanHandler::GetGraphicDevice()

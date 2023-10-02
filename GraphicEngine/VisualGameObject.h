@@ -21,12 +21,14 @@ class VisualGameObject : public Component{
 public:
 	using id_t = unsigned int;
 
-	static VisualGameObject* CreatePtrGameObject(std::string modelePath);
+	static VisualGameObject* CreatePtrVisualGameObject(std::string modelePath);
 
-	static VisualGameObject CreateGameObject() {
+	static VisualGameObject * CreatePtrEmptyVisualGameObject() {
 		static id_t currentId = 0;
-		return VisualGameObject(currentId++);
+		return new VisualGameObject(currentId++);
 	}
+
+	~VisualGameObject();
 
 	VisualGameObject(const VisualGameObject&) = delete;
 	VisualGameObject& operator=(const VisualGameObject&) = delete;
@@ -40,7 +42,7 @@ public:
 
 	id_t GetId() { return id; }
 
-	std::shared_ptr<Model> model{};
+	Model* model = nullptr;
 	glm::vec3 color{};
     TransformComponent transform{};
 
