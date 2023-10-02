@@ -100,7 +100,7 @@ void VulkanHandler::InitialLoadGameObjects()
 	
 }
 
-void VulkanHandler::LoadGameObject(Particle particle)
+void VulkanHandler::LoadGameObject()
 {
     /*
 	std::shared_ptr<Model> lveModel = Model::CreateModelFromFile(graphicDevice, "Models/colored_cube.obj");

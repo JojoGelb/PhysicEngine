@@ -1,8 +1,9 @@
 #pragma once
 
 #include"Vecteur3D.h"
+#include "Component.h"
 
-class Particle
+class Particle : public Component
 {
 public:
 
@@ -30,9 +31,16 @@ public:
 
 	void SemiImpliciteEulerIntegration(double t, double dt);
 
+	void Start() override;
+	void Update() override;
+	void Shutdown() override;
+
 
 private:
 
 	void SetInverseMass(float mass);
+
+	// Hérité via Component
+
 };
 

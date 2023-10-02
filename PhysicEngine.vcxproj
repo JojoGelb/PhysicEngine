@@ -191,6 +191,7 @@
     <ClInclude Include="GraphicEngine\VulkanHandler.h" />
     <ClInclude Include="GraphicEngine\Window.h" />
     <ClInclude Include="MathPhysicEngine\Vecteur3D.h" />
+    <ClInclude Include="Headers\Component.h" />
     <ClInclude Include="Sources\GameObject.h" />
     <ClInclude Include="Sources\ImGuiEngine.h" />
     <ClInclude Include="MathPhysicEngine\MathPhysicEngine.h" />

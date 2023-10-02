@@ -12,7 +12,7 @@
 #include "Camera.h"
 #include <SimpleRenderSystem.h>
 #include <KeyboardInput.h>
-#include "../Sources/ObjectData.h"
+//#include "../Sources/ObjectData.h"
 
 class Window;
 
@@ -37,7 +37,7 @@ public:
 
 private:
 	void InitialLoadGameObjects();
-	void LoadGameObject(Particle particle);
+	void LoadGameObject();
 	void InitImGui();//ImGui
 	void ShutdownImGui(); //ImGui
 	VkDescriptorPool imguiPool; //ImGui

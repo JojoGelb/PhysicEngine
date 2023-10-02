@@ -4,14 +4,21 @@
 #include "VulkanHandler.h"
 
 class GraphicsMotor {
-
+protected:
+	GraphicsMotor();
+	static GraphicsMotor* singleton_;
 public:
 
-	GraphicsMotor();
+	//Can't be cloned
+	GraphicsMotor(GraphicsMotor& other) = delete;
+	//Can't be assignated
+	void operator=(const GraphicsMotor&) = delete;
+
+	static GraphicsMotor* GetInstance();
+
+
 	~GraphicsMotor();
 
-	GraphicsMotor(const GraphicsMotor&) = delete;
-	GraphicsMotor& operator=(const GraphicsMotor&) = delete;
 
 	void Update(float frameTime);
 	void Render();

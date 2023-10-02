@@ -5,24 +5,29 @@
 #include "GameObject.h"
 
 int main() {
-
     ObjectData* objectData = new ObjectData();
+
     std::vector<GameObject*> gameObjects;
 
-    GraphicsMotor graphicsMotor = GraphicsMotor();
+    GraphicsMotor* graphicsMotor = GraphicsMotor::GetInstance();
 
-    MathPhysicsEngine mathPhysics = MathPhysicsEngine();
-    ImGuiEngine imGuiEngine = ImGuiEngine(graphicsMotor.GetGLFWWindow(),objectData);
-    mathPhysics.Init();
+    MathPhysicsEngine * mathPhysics = MathPhysicsEngine::GetInstance();
+    ImGuiEngine imGuiEngine = ImGuiEngine(graphicsMotor->GetGLFWWindow(),objectData);
 
-    GameObject* go = new GameObject(mathPhysics, graphicsMotor.GetVulkanHandler(), "Models/colored_cube.obj");
+    //GameObject* go = new GameObject(mathPhysics, graphicsMotor.GetVulkanHandler(), "Models/colored_cube.obj");
+    GameObject* go = new GameObject();
+    go->AddComponent(new Particle());
+    VisualGameObject* v = VisualGameObject::CreatePtrGameObject("Models/colored_cube.obj");
+    go->AddComponent(v);
+
+    //add graphics
     gameObjects.push_back(go);
-
+    
     double t = 0.0f;
 
     auto currentTime = std::chrono::high_resolution_clock::now();
 
-    while (!graphicsMotor.ExitCondition()) {
+    while (!graphicsMotor->ExitCondition()) {
 
         auto newTime = std::chrono::high_resolution_clock::now();
         float frameTime =
@@ -30,23 +35,26 @@ int main() {
         currentTime = newTime;
 
         imGuiEngine.Update();
-        mathPhysics.Update(t, frameTime);
-        graphicsMotor.Update(frameTime);
+        mathPhysics->Update(t, frameTime);
+        graphicsMotor->Update(frameTime);
 
        for ( auto gameObj : gameObjects) {
-            gameObj->UpdateVisual();
+            gameObj->Update();
        }
 
-        graphicsMotor.Render();
+        graphicsMotor->Render();
 
         t += frameTime;
     }
 
-    graphicsMotor.Shutdown();
-
     for (auto gameObj : gameObjects) {
         delete gameObj;
     }
+
+    graphicsMotor->Shutdown();
+
+    delete MathPhysicsEngine::GetInstance();
+    delete GraphicsMotor::GetInstance();
 
     return EXIT_SUCCESS;
 }

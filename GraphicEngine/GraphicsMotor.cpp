@@ -5,6 +5,14 @@ GraphicsMotor::GraphicsMotor() : window(800, 600, "Test"),
 								 vulkanHandler(window)
 								 /*imguiHandler(window.GetWindow(), vulkanHandler) */{};
 
+GraphicsMotor* GraphicsMotor::GetInstance()
+{
+	if (singleton_ == nullptr) {
+		singleton_ = new GraphicsMotor();
+	}
+	return singleton_;
+}
+
 GraphicsMotor::~GraphicsMotor()
 {
 }
@@ -36,3 +44,5 @@ GLFWwindow* GraphicsMotor::GetGLFWWindow()
 {
 	return window.GetWindow();
 }
+
+GraphicsMotor* GraphicsMotor::singleton_ = nullptr;

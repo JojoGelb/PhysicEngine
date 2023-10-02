@@ -3,7 +3,7 @@
 #include "Model.h"
 
 #include <glm/gtc/matrix_transform.hpp>
-
+#include "Component.h"
 // std
 #include <memory>
 
@@ -17,14 +17,11 @@ struct TransformComponent {
 	glm::mat3 NormalMatrix();
 };
 
-class VisualGameObject {
+class VisualGameObject : public Component{
 public:
 	using id_t = unsigned int;
 
-	static VisualGameObject* CreatePtrGameObject() {
-		static id_t currentId = 0;
-		return new VisualGameObject(currentId++);
-	}
+	static VisualGameObject* CreatePtrGameObject(std::string modelePath);
 
 	static VisualGameObject CreateGameObject() {
 		static id_t currentId = 0;
@@ -36,6 +33,11 @@ public:
 	VisualGameObject(VisualGameObject&&) = default;
 	VisualGameObject& operator=(VisualGameObject&&) = default;
 
+	// Hérité via Component
+	void Start() override;
+	void Update() override;
+	void Shutdown() override;
+
 	id_t GetId() { return id; }
 
 	std::shared_ptr<Model> model{};
@@ -46,4 +48,6 @@ private:
 	VisualGameObject(id_t objId) : id(objId) {};
 
 	id_t id;
+
+
 };

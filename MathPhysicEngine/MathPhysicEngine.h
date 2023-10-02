@@ -3,18 +3,27 @@
 #include "Vecteur3D.h"
 class MathPhysicsEngine {
 
+protected:
+	MathPhysicsEngine();
+	static MathPhysicsEngine* singleton_;
+
 public:
 
-	void Init();
+	//Can't be cloned
+	MathPhysicsEngine(MathPhysicsEngine& other) = delete;
+	//Can't be assignated
+	void operator=(const MathPhysicsEngine&) = delete;
+
+	static MathPhysicsEngine* GetInstance();
+
+
 	void Update(double t, float frameTime);
 	void Shutdown();
 
-
-
-	MathPhysicsEngine();
 	void AddParticle(Particle* p) { particles.push_back(p); }
 	void RemoveParticle(Particle* p) { particles.erase(std::remove(particles.begin(), particles.end(), p), particles.end()); }
 
 private:
+	void Init();
 	std::vector<Particle*> particles;
 };
