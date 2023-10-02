@@ -12,7 +12,6 @@
 #include "Camera.h"
 #include <SimpleRenderSystem.h>
 #include <KeyboardInput.h>
-//#include "../Sources/ObjectData.h"
 
 class Window;
 
@@ -36,8 +35,6 @@ public:
 	GraphicDevice & GetGraphicDevice();
 
 private:
-	void InitialLoadGameObjects();
-	void LoadGameObject();
 	void InitImGui();//ImGui
 	void ShutdownImGui(); //ImGui
 	VkDescriptorPool imguiPool; //ImGui

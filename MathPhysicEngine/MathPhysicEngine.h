@@ -1,6 +1,7 @@
 #pragma once
-#include "../Sources/ObjectData.h"
 #include "Vecteur3D.h"
+#include "Particle.h"
+#include <vector>
 class MathPhysicsEngine {
 
 protected:

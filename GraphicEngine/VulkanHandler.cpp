@@ -23,7 +23,6 @@ VulkanHandler::VulkanHandler(Window& _window) :
 {
     viewerObject.transform.translation.z = -5.0f;
     InitImGui();
-	InitialLoadGameObjects();
 }
 
 VulkanHandler::~VulkanHandler()
@@ -64,52 +63,6 @@ void VulkanHandler::Shutdown()
 GraphicDevice& VulkanHandler::GetGraphicDevice()
 {
 	return graphicDevice;
-}
-
-void VulkanHandler::InitialLoadGameObjects()
-{
-    
-	/*std::shared_ptr<Model> lveModel = Model::CreateModelFromFile(graphicDevice, "Models/colored_cube.obj");
-	auto gameObject = VisualGameObject::CreateGameObject();
-	gameObject.model = lveModel;
-	gameObject.transform.translation = { 5.0f, .0f, 0.0f };
-	gameObject.transform.scale = { .5f, .5f, .5f };
-	gameObjects.push_back(std::move(gameObject));
-	objectData->gameObjects.push_back(std::move(gameObject));
-    objectData->names.push_back("ColoredCube1");
-    
-	
-	std::shared_ptr<Model> lveModel2 = Model::CreateModelFromFile(graphicDevice, "Models/flat_vase.obj");
-	gameObject = VisualGameObject::CreateGameObject();
-	gameObject.model = lveModel2;
-	gameObject.transform.translation = { .0f, 4.0f, 2.5f };
-	gameObject.transform.scale = { .5f, .5f, .5f };
-	gameObjects.push_back(std::move(gameObject));
-    objectData->gameObjects.push_back(std::move(gameObject));
-    objectData->names.push_back("FlatVase");
-
-	
-	gameObject = VisualGameObject::CreateGameObject();
-	gameObject.model = lveModel;
-	gameObject.transform.translation = { .0f, .0f, 2.5f };
-	gameObject.transform.scale = { .5f, .5f, .5f };
-	gameObjects.push_back(std::move(gameObject));
-    objectData->gameObjects.push_back(std::move(gameObject));
-    objectData->names.push_back("ColoredCube2");
-    */
-	
-}
-
-void VulkanHandler::LoadGameObject()
-{
-    /*
-	std::shared_ptr<Model> lveModel = Model::CreateModelFromFile(graphicDevice, "Models/colored_cube.obj");
-	auto gameObject = VisualGameObject::CreateGameObject();
-	gameObject.model = lveModel;
-    gameObject.transform.translation = {particle.position.x,particle.position.y,particle.position.z};
-	gameObject.transform.scale = { .5f, .5f, .5f }; //HardCoded
-	gameObjects.push_back(std::move(gameObject));
-	objectData->gameObjects.push_back(std::move(gameObject));*/
 }
 
 void VulkanHandler::InitImGui()

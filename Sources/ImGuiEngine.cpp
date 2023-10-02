@@ -162,7 +162,6 @@ void ImGuiEngine::ShowEngineImGui()
 
                 gameObjects->push_back(go);
 
-                //projectileId = objectData->particles.size()-1;
                 projectile = go;
             }
         }

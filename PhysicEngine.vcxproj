@@ -166,7 +166,6 @@
     <ClCompile Include="Sources\ImGuiEngine.cpp" />
     <ClCompile Include="MathPhysicEngine\MathPhysicEngine.cpp" />
     <ClCompile Include="MathPhysicEngine\Particle.cpp" />
-    <ClCompile Include="Sources\ObjectData.cpp" />
     <ClCompile Include="Sources\main.cpp" />
     <ClCompile Include="MathPhysicEngine\Vecteur3D.cpp" />
   </ItemGroup>
@@ -196,7 +195,6 @@
     <ClInclude Include="Sources\ImGuiEngine.h" />
     <ClInclude Include="MathPhysicEngine\MathPhysicEngine.h" />
     <ClInclude Include="MathPhysicEngine\Particle.h" />
-    <ClInclude Include="Sources\ObjectData.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Readme.txt" />

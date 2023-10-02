@@ -5,7 +5,6 @@
 #include "GameObject.h"
 
 int main() {
-    //ObjectData* objectData = new ObjectData();
 
     std::vector<GameObject*> gameObjects;
 
@@ -14,7 +13,6 @@ int main() {
     MathPhysicsEngine * mathPhysics = MathPhysicsEngine::GetInstance();
     ImGuiEngine imGuiEngine = ImGuiEngine(graphicsMotor->GetGLFWWindow(), &gameObjects);
 
-    //GameObject* go = new GameObject(mathPhysics, graphicsMotor.GetVulkanHandler(), "Models/colored_cube.obj");
     GameObject* go = new GameObject();
     go->AddComponent(new Particle());
     VisualGameObject* v = VisualGameObject::CreatePtrGameObject("Models/colored_cube.obj");

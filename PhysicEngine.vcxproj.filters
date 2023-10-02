@@ -84,9 +84,6 @@
     <ClCompile Include="MathPhysicEngine\Particle.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="Sources\ObjectData.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
     <ClCompile Include="MathPhysicEngine\Vecteur3D.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
@@ -164,10 +161,10 @@
     <ClInclude Include="MathPhysicEngine\Particle.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="Sources\ObjectData.h">
+    <ClInclude Include="Sources\GameObject.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="Sources\GameObject.h">
+    <ClInclude Include="Headers\Component.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
   </ItemGroup>

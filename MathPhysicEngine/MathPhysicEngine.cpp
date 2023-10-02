@@ -22,26 +22,12 @@ MathPhysicsEngine* MathPhysicsEngine::GetInstance()
 
 void MathPhysicsEngine::Init()
 {
-
-	//Initialisation of pre-existing gameObjects
-	/*for (int i = 0; i < objectData->gameObjects.size(); i++) {
-
-		Particle particle = Particle();
-
-		particle.position = Vector3D(objectData->gameObjects[i].transform.translation.x, objectData->gameObjects[i].transform.translation.y, objectData->gameObjects[i].transform.translation.z);
-		particle.gravity = 0;
-		particle.gravityForce = { 0,-10,0 };
-		objectData->particles.push_back(particle);
-	}*/
 }
 
 void MathPhysicsEngine::Update(double t,float frameTime)
 {
-	
 	 //std::cout << frameTime << "\n";
 	for (Particle * p : particles) {
-
-		//objectData->particles[i].position += Vector3D(0.0f,0.0f,0.01f);
 		p->SemiImpliciteEulerIntegration(t, (double)frameTime);
 	}
 }
