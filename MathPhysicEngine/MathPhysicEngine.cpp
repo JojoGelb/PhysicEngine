@@ -27,6 +27,15 @@ void MathPhysicsEngine::Update(double t,float frameTime)
 	}
 }
 
+void MathPhysicsEngine::SetFinalStates(const double alpha)
+{
+	for (int i = 0; i < objectData->particles.size(); i++) {
+
+		objectData->particles[i].finalState = objectData->particles[i].currentState * alpha +
+			objectData->particles[i].previousState * (1.0 - alpha);
+	}
+}
+
 
 MathPhysicsEngine::MathPhysicsEngine(ObjectData* _objectData)
 	: objectData(_objectData)

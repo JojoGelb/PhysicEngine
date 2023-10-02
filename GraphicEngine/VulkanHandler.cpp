@@ -11,6 +11,7 @@
 #include <imgui.h>
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_vulkan.h>
+#include <iostream>
 
 VulkanHandler::VulkanHandler(Window& _window, ObjectData* _objectData) :
 	graphicDevice(_window),
@@ -54,10 +55,13 @@ void VulkanHandler::Update(float frameTime)
 
 	for (int i = 0; i < gameObjects.size(); i++) {
 		
-		gameObjects[i].transform.translation.x = objectData->particles[i].position.x;
-		gameObjects[i].transform.translation.y = -objectData->particles[i].position.y;
-		gameObjects[i].transform.translation.z = objectData->particles[i].position.z;
+		gameObjects[i].transform.translation.x = objectData->particles[i].finalState.position.x;
+		gameObjects[i].transform.translation.y = -objectData->particles[i].finalState.position.y;
+		gameObjects[i].transform.translation.z = objectData->particles[i].finalState.position.z;
 
+        if (objectData->particles[i].printParticleOnTerminal) {
+            std::cout << " - Position: " << objectData->particles[i].finalState.position << " Velocity: " << objectData->particles[i].finalState.velocity << objectData->particles[i].finalState.acceleration << "\n";
+        }
 	}
 }
 

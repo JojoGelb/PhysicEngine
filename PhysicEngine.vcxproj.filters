@@ -39,9 +39,6 @@
     <ClCompile Include="External Librairies\IMGUI\imgui_widgets.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="Sources\Vecteur3D.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
     <ClCompile Include="GraphicEngine\Camera.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
@@ -75,16 +72,34 @@
     <ClCompile Include="GraphicEngine\Window.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="ObjectData.cpp">
+    <ClCompile Include="GraphicEngine\GameObject.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="Particle.cpp">
+    <ClCompile Include="Sources\ImGuiEngine.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="MathPhysicEngine.cpp">
+    <ClCompile Include="MathPhysicEngine\MathPhysicEngine.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="ImGuiEngine.cpp">
+    <ClCompile Include="MathPhysicEngine\Particle.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\ObjectData.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="MathPhysicEngine\Vecteur3D.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="MathPhysicEngine\Forces\ParticleForceGenerator.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="MathPhysicEngine\Forces\ParticleForceRegistry.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="MathPhysicEngine\Forces\ParticleGravity.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="MathPhysicEngine\Forces\ParticleDrag.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>
@@ -105,9 +120,6 @@
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="External Librairies\IMGUI\imstb_textedit.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="Headers\Vecteur3D.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="GraphicEngine\Window.h">
@@ -149,20 +161,35 @@
     <ClInclude Include="GraphicEngine\VulkanHandler.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="MathPhysicEngine.h">
+    <ClInclude Include="MathPhysicEngine\Vecteur3D.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="ObjectData.h">
+    <ClInclude Include="Sources\ImGuiEngine.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="Particle.h">
+    <ClInclude Include="MathPhysicEngine\MathPhysicEngine.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="ImGuiEngine.h">
+    <ClInclude Include="MathPhysicEngine\Particle.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\ObjectData.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="MathPhysicEngine\Forces\ParticleForceGenerator.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="MathPhysicEngine\Forces\ParticleForceRegistry.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="MathPhysicEngine\Forces\ParticleGravity.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="MathPhysicEngine\Forces\ParticleDrag.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="GraphicEngine\Readme.txt" />
+    <Text Include="Readme.txt" />
   </ItemGroup>
 </Project>

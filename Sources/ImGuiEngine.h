@@ -29,6 +29,7 @@ private:
 
 	void SetVisible(bool _visible);
 
+	float framerate;
 
 	KeyboardInput ImGuiInput;
 	ObjectData* objectData;
@@ -36,6 +37,6 @@ public:
 	ImGuiEngine(GLFWwindow* _window, ObjectData* _objectData);
 	~ImGuiEngine();
 
-	void Update();
+	void Update(float frameTime);
 
 };

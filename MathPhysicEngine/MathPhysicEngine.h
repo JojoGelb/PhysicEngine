@@ -11,6 +11,7 @@ public:
 	void Update(double t, float frameTime);
 	void Shutdown();
 
+	void SetFinalStates(const double alpha);
 
 
 	MathPhysicsEngine(ObjectData* _objectData);

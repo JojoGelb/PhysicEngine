@@ -21,9 +21,11 @@ ImGuiEngine::~ImGuiEngine()
 {
 }
 
-void ImGuiEngine::Update()
+void ImGuiEngine::Update(float frameTime)
 {
     bool visibilityTrigger;
+
+    framerate = frameTime;
 
     ImGuiInput.ImGuiControls(window, visibilityTrigger);
 
@@ -194,6 +196,8 @@ void ImGuiEngine::ShowEngineImGui()
     ImGui::Begin("Objects List");
 
     static std::vector<Vector3D> force(200);
+
+    ImGui::Text("FrameRate : %.5f ", framerate);
 
     for (int i = 0; i < objectData->names.size(); i++)
     {

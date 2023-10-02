@@ -162,6 +162,10 @@
     <ClCompile Include="GraphicEngine\VKPipeline.cpp" />
     <ClCompile Include="GraphicEngine\VulkanHandler.cpp" />
     <ClCompile Include="GraphicEngine\Window.cpp" />
+    <ClCompile Include="MathPhysicEngine\Forces\ParticleForceGenerator.cpp" />
+    <ClCompile Include="MathPhysicEngine\Forces\ParticleForceRegistry.cpp" />
+    <ClCompile Include="MathPhysicEngine\Forces\ParticleGravity.cpp" />
+    <ClCompile Include="MathPhysicEngine\Forces\ParticleDrag.cpp" />
     <ClCompile Include="Sources\ImGuiEngine.cpp" />
     <ClCompile Include="MathPhysicEngine\MathPhysicEngine.cpp" />
     <ClCompile Include="MathPhysicEngine\Particle.cpp" />
@@ -190,6 +194,10 @@
     <ClInclude Include="GraphicEngine\VulkanHandler.h" />
     <ClInclude Include="GraphicEngine\Window.h" />
     <ClInclude Include="MathPhysicEngine\Vecteur3D.h" />
+    <ClInclude Include="MathPhysicEngine\Forces\ParticleForceGenerator.h" />
+    <ClInclude Include="MathPhysicEngine\Forces\ParticleForceRegistry.h" />
+    <ClInclude Include="MathPhysicEngine\Forces\ParticleGravity.h" />
+    <ClInclude Include="MathPhysicEngine\Forces\ParticleDrag.h" />
     <ClInclude Include="Sources\ImGuiEngine.h" />
     <ClInclude Include="MathPhysicEngine\MathPhysicEngine.h" />
     <ClInclude Include="MathPhysicEngine\Particle.h" />
