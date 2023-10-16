@@ -8,6 +8,9 @@ Particle::Particle(const Vector3D& _position, const Vector3D& _velocity, const V
 	currentState = { 0.0,0.0 ,0.0 };
 	finalState = { 0.0,0.0 ,0.0 };
 	gravityForce = { 0,-10,0 };
+
+	sumForce = { 0,0,0 };
+
 }
 
 float Particle::GetInverseMass()
@@ -58,6 +61,16 @@ void Particle::SemiImpliciteEulerIntegration(double t, double dt)
 	currentState = { position ,velocity ,acceleration };
 
 
+}
+
+void Particle::AddForce(Vector3D forceToAdd)
+{
+	sumForce += forceToAdd;
+}
+
+void Particle::ClearSumForce()
+{
+	sumForce = { 0,0,0 };
 }
 
 State::State()

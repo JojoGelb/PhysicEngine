@@ -1,6 +1,7 @@
 #pragma once
 #include "../Sources/ObjectData.h"
 #include "Vecteur3D.h"
+#include "Forces/ParticleForceRegistry.h"
 class MathPhysicsEngine {
 
 public:
@@ -15,4 +16,9 @@ public:
 
 
 	MathPhysicsEngine(ObjectData* _objectData);
+
+	ParticleForceRegistry* particleForceRegistry;
+
+private:
+	void UpdateSumForces(float frameTime);
 };

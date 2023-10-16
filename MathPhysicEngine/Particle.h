@@ -43,6 +43,9 @@ public:
 
 	void SemiImpliciteEulerIntegration(double t, double dt);
 
+	void AddForce(Vector3D forceToAdd);
+
+	void ClearSumForce();
 
 	bool impulse = false;
 	bool printParticleOnTerminal = false;
@@ -50,6 +53,7 @@ public:
 
 private:
 
+	Vector3D sumForce;
 
 	void SetInverseMass(float mass);
 };

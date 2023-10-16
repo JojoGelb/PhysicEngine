@@ -11,7 +11,7 @@ private:
 		ParticleForceGenerator* forceGenerator;
 	};
 
-	using Registry = std::vector<ParticleForceGenerator>;
+	using Registry = std::vector<ParticleForceEntry>;
 	Registry m_registry;
 
 public:
@@ -19,5 +19,7 @@ public:
 	// Reigstry acccesor;
 	
 	void UpdateForce(float duration);
+	void ClearForces();
+
 };
 

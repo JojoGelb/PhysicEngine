@@ -4,6 +4,8 @@
 void MathPhysicsEngine::Init()
 {
 
+	this->particleForceRegistry = new ParticleForceRegistry();
+
 	//Initialisation of pre-existing gameObjects
 	for (int i = 0; i < objectData->gameObjects.size(); i++) {
 
@@ -19,12 +21,18 @@ void MathPhysicsEngine::Init()
 void MathPhysicsEngine::Update(double t,float frameTime)
 {
 	
+
 	 //std::cout << frameTime << "\n";
 	for (int i = 0; i < objectData->particles.size(); i++) {
 
 		//objectData->particles[i].position += Vector3D(0.0f,0.0f,0.01f);
 		objectData->particles[i].SemiImpliciteEulerIntegration(t, (double)frameTime);
 	}
+}
+
+void MathPhysicsEngine::Shutdown()
+{
+	delete this->particleForceRegistry;
 }
 
 void MathPhysicsEngine::SetFinalStates(const double alpha)
@@ -40,4 +48,11 @@ void MathPhysicsEngine::SetFinalStates(const double alpha)
 MathPhysicsEngine::MathPhysicsEngine(ObjectData* _objectData)
 	: objectData(_objectData)
 {
+}
+
+void MathPhysicsEngine::UpdateSumForces(float frameTime)
+{
+	particleForceRegistry->ClearForces();
+	particleForceRegistry->UpdateForce(frameTime);
+
 }
