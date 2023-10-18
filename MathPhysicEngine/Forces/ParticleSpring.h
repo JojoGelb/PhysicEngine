@@ -1,13 +1,15 @@
 #pragma once
 #include "ParticleForceGenerator.h"
-class ParticleGravity :
+class ParticleSpring :
     public ParticleForceGenerator
 {
 private:
-    Vector3D m_gravity;
+    Particle *other;
+    float m_springConstant;
+    float m_restLength;
+
 public:
     void UpdateForce(Particle* particle, float duration);
-    
-    ParticleGravity(const Vector3D m_gravity);
+
 };
 

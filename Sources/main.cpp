@@ -47,7 +47,7 @@ int main() {
         const double alpha = accumulator / dt;
 
         mathPhysics.SetFinalStates(alpha);
-        std::cout << "time: " << t + frameTime << "\n";
+        //std::cout << "time: " << t + frameTime << "\n";
         graphicsMotor.Update(frameTime);
         graphicsMotor.Render();
 

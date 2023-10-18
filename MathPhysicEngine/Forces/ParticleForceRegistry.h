@@ -19,7 +19,5 @@ public:
 	// Reigstry acccesor;
 	
 	void UpdateForce(float duration);
-	void ClearForces();
-
 };
 

@@ -7,11 +7,3 @@ void ParticleForceRegistry::UpdateForce(float duration)
 		particleForceEntry.forceGenerator->UpdateForce(particleForceEntry.particle, duration);
 	}
 }
-
-void ParticleForceRegistry::ClearForces()
-{
-	for (auto particleForceEntry : m_registry)
-	{
-		particleForceEntry.particle->ClearSumForce();
-	}
-}

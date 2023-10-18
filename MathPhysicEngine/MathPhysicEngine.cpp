@@ -52,7 +52,11 @@ MathPhysicsEngine::MathPhysicsEngine(ObjectData* _objectData)
 
 void MathPhysicsEngine::UpdateSumForces(float frameTime)
 {
-	particleForceRegistry->ClearForces();
+	for (auto particle : objectData->particles) 
+	{
+		particle.ClearSumForce();
+	}
+
 	particleForceRegistry->UpdateForce(frameTime);
 
 }
