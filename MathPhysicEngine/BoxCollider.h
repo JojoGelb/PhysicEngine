@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Collider.h";
+#include "Collider.h"
 
 struct Vector3D;
 

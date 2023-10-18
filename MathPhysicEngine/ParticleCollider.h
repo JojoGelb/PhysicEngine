@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Collider.h";
+#include "Collider.h"
 #include "Vecteur3D.h"
 
 class ParticleCollider : public Collider {

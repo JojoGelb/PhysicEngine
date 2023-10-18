@@ -6,6 +6,8 @@
 #include "ParticleContact.h"
 #include "ParticleContactResolver.h"
 #include "ParticleContactGenerator.h"
+#include "ParticleRod.h"
+#include "ParticleCable.h"
 class MathPhysicsEngine {
 
 protected:
@@ -36,6 +38,15 @@ public:
 
 
 	ParticleForceRegistry* GetParticleForceRegistry();
+
+	void TestCableCollisionSetup(Particle * a, Particle * b, float cableLen) {
+		contactGenerators.push_back(new ParticleCable(a, b,cableLen,1));
+	}
+
+	void TestRodCollisionSetup(Particle* a, Particle* b, float cableLen) {
+		contactGenerators.push_back(new ParticleRod(a, b, cableLen));
+	}
+
 private:
 	void UpdateSumForces(float frameTime);
 	ParticleForceRegistry* particleForceRegistry;

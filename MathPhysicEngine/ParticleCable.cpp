@@ -4,7 +4,7 @@ unsigned int ParticleCable::AddContact(std::vector<ParticleContact*>& contacts, 
 {
     float length = CurrentLength();
 
-    if (length > maxLength) return 0;
+    if (length < maxLength) return 0;
 
     ParticleContact* contact = new ParticleContact();
 

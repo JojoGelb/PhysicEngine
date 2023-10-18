@@ -17,7 +17,7 @@ ImGuiEngine::ImGuiEngine(GLFWwindow* _window, std::vector<GameObject*>* _gameObj
     this->show_demo_window = true;
     this->show_another_window = false;
 
-    SetVisible(visible);
+    SetVisible(!visible);
 }
 
 ImGuiEngine::~ImGuiEngine()

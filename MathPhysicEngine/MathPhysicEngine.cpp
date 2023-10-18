@@ -1,6 +1,7 @@
 #include "MathPhysicEngine.h"
 #include <iostream>
 #include "NaiveParticleContactGenerator.h"
+#include "ParticleRod.h"
 
 MathPhysicsEngine::MathPhysicsEngine()
 {
@@ -9,6 +10,12 @@ MathPhysicsEngine::MathPhysicsEngine()
 MathPhysicsEngine::~MathPhysicsEngine()
 {
 	for (ParticleContact* p : particlesContact) {
+		delete p;
+	}
+
+	delete particleForceRegistry;
+
+	for (ParticleContactGenerator* p : contactGenerators) {
 		delete p;
 	}
 }
@@ -41,7 +48,7 @@ unsigned MathPhysicsEngine::GenerateContacts()
 		if (particlesContact.size() >= limit) break;
 	}
 
-	return particlesContact.size();
+	return static_cast<unsigned int>(particlesContact.size());
 }
 
 void MathPhysicsEngine::Init()
@@ -60,9 +67,10 @@ void MathPhysicsEngine::Update(double t,float frameTime)
 		p->SemiImpliciteEulerIntegration(t, (double)frameTime);
 	}
 
+	//Check every contact generator to get the current frame contact list
 	unsigned usedContacts = GenerateContacts();
 
-
+	//Solve the contacts
 	if (usedContacts) {
 	
 		contactResolver.ResolveContacts(particlesContact, frameTime);

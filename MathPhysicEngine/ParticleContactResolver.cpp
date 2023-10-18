@@ -3,22 +3,20 @@
 #include <iostream>
 void ParticleContactResolver::ResolveContacts(std::vector<ParticleContact*>& contactArray, float frameTime)
 {
-	int iterationUsed = 0;
+	unsigned int iterationUsed = 0;
 	while (iterationUsed < iteration) {
 		std::cout << "iteration : " << iterationUsed << std::endl;
 
 		float max = std::numeric_limits<float>::max();
-		unsigned maxIndex = contactArray.size();
+		unsigned maxIndex = static_cast<unsigned int>(contactArray.size());
 
 
 		for (int i = 0; i < contactArray.size(); i++) {
 			float sepVel = contactArray.at(i)->CalculateSeparatingVelocity();
-			std::cout << "sepVELOCITY : " << sepVel << "max: " << max << std::endl;
+			//std::cout << "sepVELOCITY : " << sepVel << " max: " << max << " interpene: " << contactArray.at(i)->penetration << std::endl;
 			if (sepVel < max && (sepVel < 0 /*|| contactArray.at(i)->penetration > 0*/)) {
-			
 				max = sepVel;
 				maxIndex = i;
-			
 			}
 		}
 
@@ -30,6 +28,6 @@ void ParticleContactResolver::ResolveContacts(std::vector<ParticleContact*>& con
 
 		iterationUsed++;
 		
-		std::cout << "=====================\n " << std::endl;
+		//std::cout << "=====================\n " << std::endl;
 	}
 }

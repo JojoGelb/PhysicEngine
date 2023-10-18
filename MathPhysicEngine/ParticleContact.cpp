@@ -18,6 +18,7 @@ float ParticleContact::CalculateSeparatingVelocity()
 
 void ParticleContact::ResolveVelocity(float duration)
 {
+	//Velocity in direction of contact
 	float seperatingVelocity = CalculateSeparatingVelocity();
 
 	if (seperatingVelocity > 0) {
@@ -27,10 +28,13 @@ void ParticleContact::ResolveVelocity(float duration)
 
 	float newSepVelocity = -seperatingVelocity * restitution;
 
-	Vector3D accCausedVelocity = particle[0]->acceleration;
-	if (particle[1]) { accCausedVelocity -= particle[1]->acceleration; }
+	//check velocity buildUp due to acceleration
+	Vector3D accCausedVelocity = particle[0]->previousState.acceleration;
+	if (particle[1]) { accCausedVelocity -= particle[1]->previousState.acceleration; }
 	float accCausedSepVelocity = accCausedVelocity.DotProduct(contactNormal) * duration;
 
+	//closing velocity due to acceleration buildup
+	//need to remove it
 	if (accCausedSepVelocity < 0) {
 	
 		newSepVelocity += restitution * accCausedSepVelocity;
@@ -40,11 +44,13 @@ void ParticleContact::ResolveVelocity(float duration)
 
 	float deltaVelocity = newSepVelocity - seperatingVelocity;
 
+	
 	float totalInverseMass = particle[0]->GetInverseMass();
 	if (particle[1]) {
 		totalInverseMass += particle[1]->GetInverseMass();
 	}
 
+	//all particle has infinite mass
 	if (totalInverseMass <= 0) return;
 
 	float impulse = deltaVelocity / totalInverseMass;

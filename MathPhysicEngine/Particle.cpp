@@ -1,4 +1,4 @@
-#include "Particle.h";
+#include "Particle.h"
 #include "MathPhysicEngine.h"
 #include "ParticleCollider.h"
 #include <iostream>

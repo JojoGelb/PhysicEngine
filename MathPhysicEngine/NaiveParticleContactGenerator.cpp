@@ -11,7 +11,9 @@ unsigned int NaiveParticleContactGenerator::AddContact(std::vector<ParticleConta
 		Particle* p = particles->at(i);
 		for (j = i+1; j < particles->size(); j++) {
 			Particle* p2 = particles->at(j);
-			if (p == p2) continue; //shouldn't happen now
+			if (p == p2) {
+				continue; //shouldn't happen now
+			} 
 
 			float distance = p->position.DistanceTo(p2->position);
 
@@ -24,15 +26,18 @@ unsigned int NaiveParticleContactGenerator::AddContact(std::vector<ParticleConta
 				float maxDist = radius * 2;
 
 				contact->penetration = maxDist - contact->particle[0]->position.DistanceTo(contact->particle[1]->position);
-				std::cout << "penetration : " << contact->penetration << std::endl;
 				contacts.push_back(contact);
 				numAddedContacts++;
-				if (contacts.size() >= limit) return numAddedContacts;
+
+				if (contacts.size() >= limit) {
+					return numAddedContacts;
+				} 
 
 			}
 		}
-		return numAddedContacts;
 	}
+
+	return numAddedContacts;
 
 	
 }
