@@ -58,10 +58,6 @@ public:
 
 	void ClearSumForce();
 
-	bool impulse = false;
-	bool printParticleOnTerminal = false;
-	float inversedMass;
-
 private:
 
 	Vector3D sumForce;

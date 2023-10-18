@@ -48,23 +48,23 @@ int main() {
         while (accumulator >= dt)
         {
 
-            mathPhysics.Update(t, dt);
+            mathPhysics->Update(t, dt);
             t += dt;
             accumulator -= dt;
 
         }
         const double alpha = accumulator / dt;
 
-        mathPhysics.SetFinalStates(alpha);
+        mathPhysics->SetFinalStates(alpha);
         //std::cout << "time: " << t + frameTime << "\n";
 
-        graphicsMotor.Update(frameTime);
+        graphicsMotor->Update(frameTime);
 
         for (auto gameObj : gameObjects) {
             gameObj->Update();
         }
 
-        graphicsMotor.Render();
+        graphicsMotor->Render();
 
         t += frameTime;
     }

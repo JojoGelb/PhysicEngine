@@ -39,24 +39,28 @@ void MathPhysicsEngine::Shutdown()
 
 void MathPhysicsEngine::SetFinalStates(const double alpha)
 {
+	/*
 	for (int i = 0; i < objectData->particles.size(); i++) {
 
 		objectData->particles[i].finalState = objectData->particles[i].currentState * alpha +
 			objectData->particles[i].previousState * (1.0 - alpha);
+	}*/
+
+	for (Particle* p : particles) {
+		p->finalState = p->currentState * alpha + p->previousState * (1.0 - alpha);
 	}
-}
-
-
-MathPhysicsEngine::MathPhysicsEngine(ObjectData* _objectData)
-	: objectData(_objectData)
-{
 }
 
 void MathPhysicsEngine::UpdateSumForces(float frameTime)
 {
+	/*
 	for (auto particle : objectData->particles) 
 	{
 		particle.ClearSumForce();
+	}*/
+
+	for (Particle* p : particles) {
+		p->ClearSumForce();
 	}
 
 	particleForceRegistry->UpdateForce(frameTime);
