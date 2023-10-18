@@ -9,6 +9,7 @@ private:
 	{
 		Particle* particle;
 		ParticleForceGenerator* forceGenerator;
+		ParticleForceEntry(Particle* particle, ParticleForceGenerator* forceGenerator);
 	};
 
 	using Registry = std::vector<ParticleForceEntry>;
@@ -19,5 +20,6 @@ public:
 	// Reigstry acccesor;
 	
 	void UpdateForce(float duration);
+	void AddForce(Particle* particle, ParticleForceGenerator* forceGenerator);
 };
 

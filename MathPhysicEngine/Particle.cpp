@@ -56,9 +56,8 @@ void Particle::AddProjectile()
 
 void Particle::SemiImpliciteEulerIntegration(double t, double dt)
 {
-	sumForce = (force)+(gravityForce * gravity * 1/inversedMass);
-	//sumForce *= inversedMass;
-
+	//sumForce = (force)+(gravityForce * gravity * 1/ inversedMass);
+	// 	//sumForce *= inversedMass;
 	previousState = { position ,velocity ,acceleration };
 
 	velocity = velocity * damping + (acceleration * dt);

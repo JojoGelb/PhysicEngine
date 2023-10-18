@@ -26,11 +26,11 @@ public:
 	void RemoveParticle(Particle* p) { particles.erase(std::remove(particles.begin(), particles.end(), p), particles.end()); }
 	void SetFinalStates(const double alpha);
 
-	ParticleForceRegistry* particleForceRegistry;
-
+	ParticleForceRegistry* GetParticleForceRegistry();
 private:
 	void UpdateSumForces(float frameTime);
-private:
+	ParticleForceRegistry* particleForceRegistry;
+
 	void Init();
 	std::vector<Particle*> particles;
 };

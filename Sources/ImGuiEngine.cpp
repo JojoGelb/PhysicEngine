@@ -6,7 +6,8 @@
 #include"GLFW/glfw3.h"
 #include "../MathPhysicEngine/Particle.h"
 #include "../MathPhysicEngine/Vecteur3D.h"
-
+#include "../MathPhysicEngine/MathPhysicEngine.h"
+#include "../MathPhysicEngine/Forces/ParticleGravity.h"
 ImGuiEngine::ImGuiEngine(GLFWwindow* _window, std::vector<GameObject*>* _gameObjects): window(_window), gameObjects(_gameObjects)
 {
     this->clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
@@ -141,13 +142,19 @@ void ImGuiEngine::ShowEngineImGui()
             gravity
         );
         GameObject* go = new GameObject(name);
-        go->AddComponent(new Particle());
+        Particle* particleBuffer = new Particle(particle);
+        go->AddComponent(particleBuffer);
+
+        ParticleGravity* particleGravity = new ParticleGravity({ 0.0f,-10.0f,0.0f });
+        MathPhysicsEngine::GetInstance()->GetParticleForceRegistry()->AddForce(particleBuffer, particleGravity);
+
         VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject("Models/colored_cube.obj");
         go->AddComponent(v);
 
         gameObjects->push_back(go);
     }
 
+    /*
     if (ImGui::TreeNode("Projectile")) 
     {
         static GameObject * projectile = nullptr;
@@ -199,8 +206,8 @@ void ImGuiEngine::ShowEngineImGui()
         }
 
         ImGui::TreePop();
-
-    }
+        
+    }*/
 
     
 

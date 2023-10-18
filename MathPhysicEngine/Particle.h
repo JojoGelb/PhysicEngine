@@ -40,8 +40,7 @@ public:
 	bool printParticleOnTerminal = false;
 	float inversedMass;
 
-	Particle(const Vector3D& _position = Vector3D(0.0f, 0.0f, 0.0f), const Vector3D& _velocity = Vector3D(0.0f, 0.0f, 0.0f), const Vector3D& _acceleration = Vector3D(0.0f, 0.0f, 0.0f), float _mass = 1.0f, float _damping = 0.999999999f,float _gravity = 10);
-
+	Particle(const Vector3D& _position = {0.0f}, const Vector3D& _velocity = { 0.0f }, const Vector3D& _acceleration = { 0.0f }, float _inversedMass = 1.0f, float _damping = 0.999f, float _gravity =  1.0f);
 	float GetInverseMass();
 
 	void SetTest();
