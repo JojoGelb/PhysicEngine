@@ -13,20 +13,17 @@
 #include <imgui_impl_vulkan.h>
 #include <iostream>
 
-VulkanHandler::VulkanHandler(Window& _window, ObjectData* _objectData) :
+VulkanHandler::VulkanHandler(Window& _window) :
 	graphicDevice(_window),
-	objectData(_objectData),
 	renderer(_window, graphicDevice),
 	window(_window),
 	renderSystem(graphicDevice, renderer.GetSwapChainRenderPass()),
 	camera(),
 	cameraController(),
-	viewerObject(GameObject::CreateGameObject())
+	viewerObject(VisualGameObject::CreatePtrEmptyVisualGameObject())
 {
-	//camera.setViewDirection(glm::vec3(0.f), glm::vec3(0.5f,0.1f,1.f));
-	//camera.setViewTarget(glm::vec3(-1.f, -2.f, -2.f), glm::vec3(0.f, 0.f, 2.5f));
+    viewerObject->transform.translation.z = -5.0f;
     InitImGui();
-	InitialLoadGameObjects();
 }
 
 VulkanHandler::~VulkanHandler()
@@ -36,101 +33,39 @@ VulkanHandler::~VulkanHandler()
 
 void VulkanHandler::Update(float frameTime)
 {
-	cameraController.MoveInPlaneXZ(window.GetWindow(), frameTime, viewerObject);
-	camera.SetViewYXZ(viewerObject.transform.translation, viewerObject.transform.rotation);
+	cameraController.MoveInPlaneXZ(window.GetWindow(), frameTime, *viewerObject);
+	camera.SetViewYXZ(viewerObject->transform.translation, viewerObject->transform.rotation);
 
 	float aspect = renderer.GetAspectRatio();
 	//camera.setOrthographicProjection(-aspect, aspect, -1, 1, -1, 1);
 	camera.SetPerspectiveProjection(glm::radians(50.f), aspect, 0.1f, 100.f);
-
-	/*
-	for (auto& obj : gameObjects) {
-		//obj.transform.rotation.y = glm::mod(obj.transform.rotation.y + 0.01f, glm::two_pi<float>());
-		//obj.transform.rotation.x = glm::mod(obj.transform.rotation.x + 0.005f, glm::two_pi<float>());
-	}*/
-
-    for (int i = objectData->gameObjects.size(); i < objectData->particles.size(); i++) {
-        LoadGameObject(objectData->particles[i]);
-    }
-
-	for (int i = 0; i < gameObjects.size(); i++) {
-		
-		gameObjects[i].transform.translation.x = objectData->particles[i].finalState.position.x;
-		gameObjects[i].transform.translation.y = -objectData->particles[i].finalState.position.y;
-		gameObjects[i].transform.translation.z = objectData->particles[i].finalState.position.z;
-
-        if (objectData->particles[i].printParticleOnTerminal) {
-            std::cout << " - Position: " << objectData->particles[i].finalState.position << " Velocity: " << objectData->particles[i].finalState.velocity << objectData->particles[i].finalState.acceleration << "\n";
-        }
-	}
 }
 
 void VulkanHandler::Render()
 {
 	if (auto commandBuffer = renderer.BeginFrame()) {
 		renderer.BeginSwapChainRenderPass(commandBuffer);
-		renderSystem.RenderGameObjects(commandBuffer, gameObjects, camera);
+		//renderSystem.RenderGameObjects(commandBuffer, gameObjects, camera);
+
+        renderSystem.RenderGameObjectsV2(commandBuffer, objects2, camera);
         renderSystem.RenderImGui(commandBuffer);
+
 		renderer.EndSwapChainRenderPass(commandBuffer);
 		renderer.EndFrame();
-        
 	}
 }
 
 void VulkanHandler::Shutdown()
 {
-	vkDeviceWaitIdle(graphicDevice.Device());
+    delete viewerObject;
+    vkDeviceWaitIdle(graphicDevice.Device());
     ShutdownImGui();
+
 }
 
 GraphicDevice& VulkanHandler::GetGraphicDevice()
 {
 	return graphicDevice;
-}
-
-void VulkanHandler::InitialLoadGameObjects()
-{
-    
-	std::shared_ptr<Model> lveModel = Model::CreateModelFromFile(graphicDevice, "Models/colored_cube.obj");
-	auto gameObject = GameObject::CreateGameObject();
-	gameObject.model = lveModel;
-	gameObject.transform.translation = { 5.0f, .0f, 0.0f };
-	gameObject.transform.scale = { .5f, .5f, .5f };
-	gameObjects.push_back(std::move(gameObject));
-	objectData->gameObjects.push_back(std::move(gameObject));
-    objectData->names.push_back("ColoredCube1");
-    
-	
-	std::shared_ptr<Model> lveModel2 = Model::CreateModelFromFile(graphicDevice, "Models/flat_vase.obj");
-	gameObject = GameObject::CreateGameObject();
-	gameObject.model = lveModel2;
-	gameObject.transform.translation = { .0f, 4.0f, 2.5f };
-	gameObject.transform.scale = { .5f, .5f, .5f };
-	gameObjects.push_back(std::move(gameObject));
-    objectData->gameObjects.push_back(std::move(gameObject));
-    objectData->names.push_back("FlatVase");
-
-	
-	gameObject = GameObject::CreateGameObject();
-	gameObject.model = lveModel;
-	gameObject.transform.translation = { .0f, .0f, 2.5f };
-	gameObject.transform.scale = { .5f, .5f, .5f };
-	gameObjects.push_back(std::move(gameObject));
-    objectData->gameObjects.push_back(std::move(gameObject));
-    objectData->names.push_back("ColoredCube2");
-
-	
-}
-
-void VulkanHandler::LoadGameObject(Particle particle)
-{
-	std::shared_ptr<Model> lveModel = Model::CreateModelFromFile(graphicDevice, "Models/colored_cube.obj");
-	auto gameObject = GameObject::CreateGameObject();
-	gameObject.model = lveModel;
-    gameObject.transform.translation = {particle.position.x,particle.position.y,particle.position.z};
-	gameObject.transform.scale = { .5f, .5f, .5f }; //HardCoded
-	gameObjects.push_back(std::move(gameObject));
-	objectData->gameObjects.push_back(std::move(gameObject));
 }
 
 void VulkanHandler::InitImGui()

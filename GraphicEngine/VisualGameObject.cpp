@@ -1,4 +1,5 @@
-#include "GameObject.h"
+#include "VisualGameObject.h"
+#include "GraphicsMotor.h"
 
 glm::mat4 TransformComponent::Mat4() {
     const float c3 = glm::cos(rotation.z);
@@ -55,4 +56,37 @@ glm::mat3 TransformComponent::NormalMatrix() {
             invScale.z * (c1 * c2),
         },
     };
+}
+
+VisualGameObject* VisualGameObject::CreatePtrVisualGameObject(std::string modelePath)
+{
+    static id_t currentId = 0;
+
+    VisualGameObject* visual = new VisualGameObject(currentId++);
+
+    Model* lveModel = Model::CreateModelFromFile(GraphicsMotor::GetInstance()->GetVulkanHandler().GetGraphicDevice(), modelePath);
+    visual->model = lveModel;
+    visual->transform.translation = { 0.0f, .0f, 0.0f };
+    visual->transform.scale = { 1.f, 1.f, 1.f };
+
+    return visual;
+}
+
+VisualGameObject::~VisualGameObject()
+{
+    delete model;
+}
+
+void VisualGameObject::Start()
+{
+    GraphicsMotor::GetInstance()->GetVulkanHandler().AddGameObject2(this);
+}
+
+void VisualGameObject::Update()
+{
+}
+
+void VisualGameObject::Shutdown()
+{
+    GraphicsMotor::GetInstance()->GetVulkanHandler().RemoveGameObject2(this);
 }

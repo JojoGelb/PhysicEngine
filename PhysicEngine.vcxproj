@@ -151,7 +151,7 @@
     <ClCompile Include="External Librairies\IMGUI\imgui_tables.cpp" />
     <ClCompile Include="External Librairies\IMGUI\imgui_widgets.cpp" />
     <ClCompile Include="GraphicEngine\Camera.cpp" />
-    <ClCompile Include="GraphicEngine\GameObject.cpp" />
+    <ClCompile Include="GraphicEngine\VisualGameObject.cpp" />
     <ClCompile Include="GraphicEngine\GraphicDevice.cpp" />
     <ClCompile Include="GraphicEngine\GraphicsMotor.cpp" />
     <ClCompile Include="GraphicEngine\KeyboardInput.cpp" />
@@ -168,10 +168,10 @@
     <ClCompile Include="MathPhysicEngine\Forces\ParticleGravity.cpp" />
     <ClCompile Include="MathPhysicEngine\Forces\ParticleDrag.cpp" />
     <ClCompile Include="MathPhysicEngine\Forces\ParticleSpring.cpp" />
+    <ClCompile Include="Sources\GameObject.cpp" />
     <ClCompile Include="Sources\ImGuiEngine.cpp" />
     <ClCompile Include="MathPhysicEngine\MathPhysicEngine.cpp" />
     <ClCompile Include="MathPhysicEngine\Particle.cpp" />
-    <ClCompile Include="Sources\ObjectData.cpp" />
     <ClCompile Include="Sources\main.cpp" />
     <ClCompile Include="MathPhysicEngine\Vecteur3D.cpp" />
   </ItemGroup>
@@ -183,7 +183,7 @@
     <ClInclude Include="External Librairies\IMGUI\imgui_internal.h" />
     <ClInclude Include="External Librairies\IMGUI\imstb_textedit.h" />
     <ClInclude Include="GraphicEngine\Camera.h" />
-    <ClInclude Include="GraphicEngine\GameObject.h" />
+    <ClInclude Include="GraphicEngine\VisualGameObject.h" />
     <ClInclude Include="GraphicEngine\GraphicDevice.h" />
     <ClInclude Include="GraphicEngine\GraphicsMotor.h" />
     <ClInclude Include="GraphicEngine\KeyboardInput.h" />
@@ -202,10 +202,11 @@
     <ClInclude Include="MathPhysicEngine\Forces\ParticleForceRegistry.h" />
     <ClInclude Include="MathPhysicEngine\Forces\ParticleGravity.h" />
     <ClInclude Include="MathPhysicEngine\Forces\ParticleDrag.h" />
+    <ClInclude Include="Headers\Component.h" />
+    <ClInclude Include="Sources\GameObject.h" />
     <ClInclude Include="Sources\ImGuiEngine.h" />
     <ClInclude Include="MathPhysicEngine\MathPhysicEngine.h" />
     <ClInclude Include="MathPhysicEngine\Particle.h" />
-    <ClInclude Include="Sources\ObjectData.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Readme.txt" />

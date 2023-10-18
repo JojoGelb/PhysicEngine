@@ -25,11 +25,11 @@ namespace std {
     };
 }  // namespace std
 
-std::unique_ptr<Model> Model::CreateModelFromFile(
+Model* Model::CreateModelFromFile(
     GraphicDevice& device, const std::string& filepath) {
     Model::Builder builder{};
     builder.LoadModel(filepath);
-    return std::make_unique<Model>(device, builder);
+    return new Model(device, builder);
 }
 
 Model::Model(GraphicDevice& device, const Model::Builder& builder) : graphicDevice{ device }

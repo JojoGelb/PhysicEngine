@@ -1,4 +1,5 @@
 #include "Particle.h";
+#include "MathPhysicEngine.h"
 #include <iostream>
 
 Particle::Particle(const Vector3D& _position, const Vector3D& _velocity, const Vector3D& _acceleration, float _inversedMass, float _damping,float _gravity)
@@ -21,6 +22,20 @@ float Particle::GetInverseMass()
 void Particle::SetInverseMass(float inversedMass)
 {
 	this->inversedMass = inversedMass;
+}
+
+void Particle::Start()
+{
+	MathPhysicsEngine::GetInstance()->AddParticle(this);
+}
+
+void Particle::Update()
+{
+}
+
+void Particle::Shutdown()
+{
+	MathPhysicsEngine::GetInstance()->RemoveParticle(this);
 }
 
 void Particle::SetTest() {

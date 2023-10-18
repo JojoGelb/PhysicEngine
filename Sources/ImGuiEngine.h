@@ -7,7 +7,7 @@
 #include <stdlib.h>         // abort
 #include <vector> 
 #include <KeyboardInput.h>
-#include "ObjectData.h"
+#include "GameObject.h"
 
 
 
@@ -32,9 +32,10 @@ private:
 	float framerate;
 
 	KeyboardInput ImGuiInput;
-	ObjectData* objectData;
+
+	std::vector<GameObject*>* gameObjects;
 public:
-	ImGuiEngine(GLFWwindow* _window, ObjectData* _objectData);
+	ImGuiEngine(GLFWwindow* _window, std::vector<GameObject*> * _gameObjects);
 	~ImGuiEngine();
 
 	void Update(float frameTime);

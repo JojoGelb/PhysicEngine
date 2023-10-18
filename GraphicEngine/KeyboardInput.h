@@ -1,6 +1,6 @@
 #pragma once
 
-#include "GameObject.h"
+#include "VisualGameObject.h"
 #include "Window.h"
 
 class KeyboardInput {
@@ -20,7 +20,7 @@ public:
         int imGuiVisibilityTrigger = GLFW_KEY_I;
     };
 
-    void MoveInPlaneXZ(GLFWwindow* window, float dt, GameObject& gameObject);
+    void MoveInPlaneXZ(GLFWwindow* window, float dt, VisualGameObject& gameObject);
 
     void ImGuiControls(GLFWwindow* window,bool& visibilityTrigger);
 
