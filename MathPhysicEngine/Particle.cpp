@@ -40,7 +40,6 @@ void Particle::Shutdown()
 
 void Particle::SetTest() {
 	SetInverseMass(1);
-	force = Vector3D(10.0, 10.0, 10.0);
 	velocity = 0;
 	//position = 0;
 	damping = 1;
@@ -50,7 +49,6 @@ void Particle::AddProjectile()
 {
 	gravity = 0;
 	damping =1;
-	force = Vector3D(0.0, 0.0, 0.0f);
 	position = { 0.0,0.0,0.0 };
 }
 
@@ -71,9 +69,10 @@ void Particle::SemiImpliciteEulerIntegration(double t, double dt)
 		std::cout << "time: " << t << " - Position: " << currentState.position << " Velocity: " << currentState.velocity << currentState.acceleration << "\n";
 	}*/
 
+	/*
 	if (impulse) {
 		force = { 0.0,0.0,0.0 };
-	}
+	}*/
 
 	currentState = { position ,velocity ,acceleration };
 

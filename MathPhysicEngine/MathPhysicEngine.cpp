@@ -29,7 +29,6 @@ void MathPhysicsEngine::Update(double t,float frameTime)
 {
 	UpdateSumForces(frameTime);
 
-	 //std::cout << frameTime << "\n";
 	for (Particle * p : particles) {
 		p->SemiImpliciteEulerIntegration(t, (double)frameTime);
 	}

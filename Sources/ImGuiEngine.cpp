@@ -8,6 +8,7 @@
 #include "../MathPhysicEngine/Vecteur3D.h"
 #include "../MathPhysicEngine/MathPhysicEngine.h"
 #include "../MathPhysicEngine/Forces/ParticleGravity.h"
+#include "../MathPhysicEngine/Forces/ConstantForce.h"
 ImGuiEngine::ImGuiEngine(GLFWwindow* _window, std::vector<GameObject*>* _gameObjects): window(_window), gameObjects(_gameObjects)
 {
     this->clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
@@ -216,6 +217,8 @@ void ImGuiEngine::ShowEngineImGui()
 
     ImGui::Begin("Objects List");
 
+    ImGui::Text("famerate : %.5f", framerate);
+
     static std::vector<Vector3D> force(200);
 
     for (int i = 0; i < gameObjects->size(); i++)
@@ -229,12 +232,17 @@ void ImGuiEngine::ShowEngineImGui()
                 ImGui::InputFloat("force y", &force[i].y);
                 ImGui::InputFloat("force z", &force[i].z);
 
+                /*
                 ImGui::Spacing();
-                if (ImGui::Checkbox(" Impulse", &particle->impulse))
+                if (ImGui::Checkbox(" Impulse", &particle->impulse))*/
+
                 ImGui::Spacing();
 
                 if (ImGui::Button("Apply force")) {
-                    particle->force = force[i];
+                    //particle->force = force[i];
+                    ConstantForce* constantForce = new ConstantForce(force[i]);
+
+                    MathPhysicsEngine::GetInstance()->GetParticleForceRegistry()->AddForce(particle, constantForce);
                 }
 
                 ImGui::TreePop();
@@ -249,7 +257,7 @@ void ImGuiEngine::ShowEngineImGui()
                 ImGui::Text(" position: %.2f, %.2f, %.2f", particle->position.x, particle->position.y, particle->position.z);
                 ImGui::Text(" velocity: %.2f, %.2f, %.2f", particle->velocity.x, particle->velocity.y, particle->velocity.z);
                 ImGui::Text(" acceleration: %.2f, %.2f, %.2f", particle->acceleration.x, particle->acceleration.y, particle->acceleration.z);
-                ImGui::Text(" force: %.2f, %.2f, %.2f", particle->force.x, particle->force.y, particle->force.z);
+                //ImGui::Text(" force: %.2f, %.2f, %.2f", particle->force.x, particle->force.y, particle->force.z);
 
                 ImGui::Text(" gravity force: %.2f, %.2f, %.2f", particle->gravityForce.x, particle->gravityForce.y, particle->gravityForce.z);
 

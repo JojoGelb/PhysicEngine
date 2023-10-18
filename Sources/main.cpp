@@ -53,6 +53,8 @@ int main() {
 
             mathPhysics->Update(t, dt);
             t += dt;
+            //std::cout << dt << "\n";
+
             accumulator -= dt;
 
         }

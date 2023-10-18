@@ -30,7 +30,6 @@ public:
 	State currentState;
 	State finalState;
 
-	Vector3D force;
 	Vector3D gravityForce;
 
 	float damping;
