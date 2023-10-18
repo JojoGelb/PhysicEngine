@@ -26,9 +26,9 @@ void GameObject::Update()
 	VisualGameObject * v = GetComponentOfType<VisualGameObject>();
 
 	if (p != nullptr && v != nullptr) {
-		v->transform.translation.x = p->position.x;
-		v->transform.translation.y = -p->position.y;
-		v->transform.translation.z = p->position.z;
+		v->transform.translation.x = p->finalState.position.x;
+		v->transform.translation.y = -p->finalState.position.y;
+		v->transform.translation.z = p->finalState.position.z;
 	}
 }
 

@@ -2,6 +2,7 @@
 #include "Vecteur3D.h"
 #include "Particle.h"
 #include <vector>
+#include "Forces/ParticleForceRegistry.h"
 class MathPhysicsEngine {
 
 protected:
@@ -23,8 +24,13 @@ public:
 
 	void AddParticle(Particle* p) { particles.push_back(p); }
 	void RemoveParticle(Particle* p) { particles.erase(std::remove(particles.begin(), particles.end(), p), particles.end()); }
+	void SetFinalStates(const double alpha);
 
+	ParticleForceRegistry* GetParticleForceRegistry();
 private:
+	void UpdateSumForces(float frameTime);
+	ParticleForceRegistry* particleForceRegistry;
+
 	void Init();
 	std::vector<Particle*> particles;
 };

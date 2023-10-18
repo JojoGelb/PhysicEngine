@@ -22,14 +22,43 @@ MathPhysicsEngine* MathPhysicsEngine::GetInstance()
 
 void MathPhysicsEngine::Init()
 {
+	particleForceRegistry = new ParticleForceRegistry();
 }
 
 void MathPhysicsEngine::Update(double t,float frameTime)
 {
-	 //std::cout << frameTime << "\n";
+	UpdateSumForces(frameTime);
+
 	for (Particle * p : particles) {
 		p->SemiImpliciteEulerIntegration(t, (double)frameTime);
 	}
 }
 
+void MathPhysicsEngine::Shutdown()
+{
+	delete this->particleForceRegistry;
+}
+
+void MathPhysicsEngine::SetFinalStates(const double alpha)
+{
+	for (Particle* p : particles) {
+		p->finalState = p->currentState * alpha + p->previousState * (1.0 - alpha);
+	}
+}
+
+ParticleForceRegistry* MathPhysicsEngine::GetParticleForceRegistry()
+{
+	return this->particleForceRegistry;
+}
+
+void MathPhysicsEngine::UpdateSumForces(float frameTime)
+{
+
+	for (Particle* p : particles) {
+		p->ClearSumForce();
+	}
+
+	particleForceRegistry->UpdateForce(frameTime);
+
+}
 MathPhysicsEngine* MathPhysicsEngine::singleton_ = nullptr;

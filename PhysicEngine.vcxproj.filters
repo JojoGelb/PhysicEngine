@@ -72,7 +72,7 @@
     <ClCompile Include="GraphicEngine\Window.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="GraphicEngine\VisualGameObject.cpp">
+    <ClCompile Include="GraphicEngine\GameObject.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
     <ClCompile Include="Sources\ImGuiEngine.cpp">
@@ -84,9 +84,31 @@
     <ClCompile Include="MathPhysicEngine\Particle.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
+    <ClCompile Include="Sources\ObjectData.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
     <ClCompile Include="MathPhysicEngine\Vecteur3D.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
+    <ClCompile Include="MathPhysicEngine\Forces\ParticleForceGenerator.cpp">
+    <ClCompile Include="GraphicEngine\VisualGameObject.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\ImGuiEngine.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="MathPhysicEngine\MathPhysicEngine.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="MathPhysicEngine\Forces\ParticleForceRegistry.cpp">
+    <ClCompile Include="MathPhysicEngine\Particle.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="MathPhysicEngine\Forces\ParticleGravity.cpp">
+    <ClCompile Include="MathPhysicEngine\Vecteur3D.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="MathPhysicEngine\Forces\ParticleDrag.cpp">
     <ClCompile Include="Sources\GameObject.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
@@ -156,14 +178,33 @@
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="MathPhysicEngine\MathPhysicEngine.h">
+    <ClInclude Include="MathPhysicEngine\Vecteur3D.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\ImGuiEngine.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="MathPhysicEngine\MathPhysicEngine.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="MathPhysicEngine\Particle.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+    <ClInclude Include="Sources\ObjectData.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="MathPhysicEngine\Particle.h">
+    <ClInclude Include="MathPhysicEngine\Forces\ParticleForceGenerator.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="MathPhysicEngine\Forces\ParticleForceRegistry.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="MathPhysicEngine\Forces\ParticleGravity.h">
     <ClInclude Include="Sources\GameObject.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+    <ClInclude Include="MathPhysicEngine\Forces\ParticleDrag.h">
     <ClInclude Include="Headers\Component.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
