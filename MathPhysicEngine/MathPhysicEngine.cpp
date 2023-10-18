@@ -46,15 +46,25 @@ unsigned MathPhysicsEngine::GenerateContacts()
 
 void MathPhysicsEngine::Init()
 {
+<<<<<<< HEAD
 	contactGenerators.push_back(new NaiveParticleContactGenerator(1.0f, &particles));
+=======
+	particleForceRegistry = new ParticleForceRegistry();
+>>>>>>> develop
 }
 
 void MathPhysicsEngine::Update(double t,float frameTime)
 {
+<<<<<<< HEAD
 	//Genere les forces
 
 	//Integrate
 	for (Particle* p : particles) {
+=======
+	UpdateSumForces(frameTime);
+
+	for (Particle * p : particles) {
+>>>>>>> develop
 		p->SemiImpliciteEulerIntegration(t, (double)frameTime);
 	}
 
@@ -69,4 +79,31 @@ void MathPhysicsEngine::Update(double t,float frameTime)
 
 }
 
+void MathPhysicsEngine::Shutdown()
+{
+	delete this->particleForceRegistry;
+}
+
+void MathPhysicsEngine::SetFinalStates(const double alpha)
+{
+	for (Particle* p : particles) {
+		p->finalState = p->currentState * alpha + p->previousState * (1.0 - alpha);
+	}
+}
+
+ParticleForceRegistry* MathPhysicsEngine::GetParticleForceRegistry()
+{
+	return this->particleForceRegistry;
+}
+
+void MathPhysicsEngine::UpdateSumForces(float frameTime)
+{
+
+	for (Particle* p : particles) {
+		p->ClearSumForce();
+	}
+
+	particleForceRegistry->UpdateForce(frameTime);
+
+}
 MathPhysicsEngine* MathPhysicsEngine::singleton_ = nullptr;

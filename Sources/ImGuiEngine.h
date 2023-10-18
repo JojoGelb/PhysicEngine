@@ -29,6 +29,7 @@ private:
 
 	void SetVisible(bool _visible);
 
+	float framerate;
 
 	KeyboardInput ImGuiInput;
 
@@ -37,6 +38,6 @@ public:
 	ImGuiEngine(GLFWwindow* _window, std::vector<GameObject*> * _gameObjects);
 	~ImGuiEngine();
 
-	void Update();
+	void Update(float frameTime);
 
 };
