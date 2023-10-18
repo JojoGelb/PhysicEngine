@@ -2,13 +2,10 @@
 #include "Vecteur3D.h"
 #include "Particle.h"
 #include <vector>
-<<<<<<< HEAD
+#include "Forces/ParticleForceRegistry.h"
 #include "ParticleContact.h"
 #include "ParticleContactResolver.h"
 #include "ParticleContactGenerator.h"
-=======
-#include "Forces/ParticleForceRegistry.h"
->>>>>>> develop
 class MathPhysicsEngine {
 
 protected:
@@ -34,14 +31,11 @@ public:
 	void RemoveParticle(Particle* p) { particles.erase(std::remove(particles.begin(), particles.end(), p), particles.end()); }
 	void SetFinalStates(const double alpha);
 
-<<<<<<< HEAD
 	
 	unsigned GenerateContacts();
 
 
-=======
 	ParticleForceRegistry* GetParticleForceRegistry();
->>>>>>> develop
 private:
 	void UpdateSumForces(float frameTime);
 	ParticleForceRegistry* particleForceRegistry;

@@ -46,25 +46,17 @@ unsigned MathPhysicsEngine::GenerateContacts()
 
 void MathPhysicsEngine::Init()
 {
-<<<<<<< HEAD
-	contactGenerators.push_back(new NaiveParticleContactGenerator(1.0f, &particles));
-=======
 	particleForceRegistry = new ParticleForceRegistry();
->>>>>>> develop
+	contactGenerators.push_back(new NaiveParticleContactGenerator(1.0f, &particles));
 }
 
 void MathPhysicsEngine::Update(double t,float frameTime)
 {
-<<<<<<< HEAD
 	//Genere les forces
-
-	//Integrate
-	for (Particle* p : particles) {
-=======
 	UpdateSumForces(frameTime);
 
+	//Integrate
 	for (Particle * p : particles) {
->>>>>>> develop
 		p->SemiImpliciteEulerIntegration(t, (double)frameTime);
 	}
 

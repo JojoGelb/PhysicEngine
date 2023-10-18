@@ -17,19 +17,18 @@ int main() {
     /*-------------------------TEST ZONE-----------------------------*/
 
     GameObject* go = new GameObject();
-<<<<<<< HEAD
-    go->AddComponent(new Particle(Vector3D(-10,0,20),Vector3D(0,0,0),Vector3D(0,0,0),0.0001f,0.999f,0));
-=======
-    Particle* particle = new Particle();
-    ParticleGravity* particleGravity = new ParticleGravity({0.0f,-10.0f,0.0f});
+
+    Particle* particle = new Particle(Vector3D(-10, 0, 20), Vector3D(0, 0, 0), Vector3D(0, 0, 0), 0.0001f, 0.999f, 0.1f);
     go->AddComponent(particle);
+
+    ParticleGravity* particleGravity = new ParticleGravity({0.0f,-10.0f,0.0f});
     mathPhysics->GetParticleForceRegistry()->AddForce(particle, particleGravity);
->>>>>>> develop
+
     VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject("Models/colored_cube.obj");
     go->AddComponent(v);
 
     GameObject* go2 = new GameObject();
-    go2->AddComponent(new Particle(Vector3D(10, 0, 20), Vector3D(-50, 0, 0), Vector3D(0, 0, 0), 1.0f, 0.97f, 0));
+    go2->AddComponent(new Particle(Vector3D(10, 0, 20), Vector3D(-50, 0, 0), Vector3D(0, 0, 0), 1.0f, 0.98f, 1));
     VisualGameObject* v2 = VisualGameObject::CreatePtrVisualGameObject("Models/colored_cube.obj");
     go2->AddComponent(v2);
 
