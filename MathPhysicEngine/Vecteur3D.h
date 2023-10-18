@@ -1,4 +1,5 @@
 #pragma once
+
 #include <ostream>
 class Vector3D
 {
@@ -28,10 +29,12 @@ public:
 
 	Vector3D CrossProduct(const Vector3D& other);
 
+	//return magnitude/length of a vector
 	float GetNorm() const; 
 
 	Vector3D Normalize();
 
+	float DistanceTo(const Vector3D& other);
 
 
 	friend std::ostream& operator<<(std::ostream& os, const Vector3D& v) {
@@ -42,5 +45,8 @@ public:
 	float x;
 	float y;
 	float z;
+
+	friend Vector3D operator*(float scalar, const Vector3D& vector);
+
 };
 

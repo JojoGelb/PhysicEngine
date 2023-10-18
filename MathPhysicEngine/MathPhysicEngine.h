@@ -2,6 +2,9 @@
 #include "Vecteur3D.h"
 #include "Particle.h"
 #include <vector>
+#include "ParticleContact.h"
+#include "ParticleContactResolver.h"
+#include "ParticleContactGenerator.h"
 class MathPhysicsEngine {
 
 protected:
@@ -15,6 +18,8 @@ public:
 	//Can't be assignated
 	void operator=(const MathPhysicsEngine&) = delete;
 
+	~MathPhysicsEngine();
+
 	static MathPhysicsEngine* GetInstance();
 
 
@@ -24,7 +29,21 @@ public:
 	void AddParticle(Particle* p) { particles.push_back(p); }
 	void RemoveParticle(Particle* p) { particles.erase(std::remove(particles.begin(), particles.end(), p), particles.end()); }
 
+	
+	unsigned GenerateContacts();
+
+
 private:
 	void Init();
+	
 	std::vector<Particle*> particles;
+
+	ParticleContactResolver contactResolver;
+
+	std::vector<ParticleContactGenerator*> contactGenerators;
+
+	std::vector<ParticleContact*> particlesContact;
+
+
+
 };

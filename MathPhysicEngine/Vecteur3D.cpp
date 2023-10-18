@@ -99,9 +99,23 @@ float Vector3D::GetNorm() const
 Vector3D Vector3D::Normalize()
 {
 	if (GetNorm() == 0) {
-		throw std::runtime_error("Trying to get the Normalized version of a vector with a norm of 0");
+		//throw std::runtime_error("Trying to get the Normalized version of a vector with a norm of 0");
 		return Vector3D();
 	}
 	*this /= GetNorm();
 	return *this;
+}
+
+float Vector3D::DistanceTo(const Vector3D& other)
+{
+	float dx = other.x - x;
+	float dy = other.y - y;
+	float dz = other.z - z;
+
+	return std::sqrt(dx * dx + dy * dy + dz * dz);
+}
+
+Vector3D operator*(float scalar, const Vector3D& vector)
+{
+	return Vector3D(vector.x * scalar, vector.y * scalar, vector.z * scalar);
 }

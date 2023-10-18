@@ -1,9 +1,16 @@
 #include "MathPhysicEngine.h"
-
-
+#include <iostream>
+#include "NaiveParticleContactGenerator.h"
 
 MathPhysicsEngine::MathPhysicsEngine()
 {
+}
+
+MathPhysicsEngine::~MathPhysicsEngine()
+{
+	for (ParticleContact* p : particlesContact) {
+		delete p;
+	}
 }
 
 //Static methods should be defined outside the class.
@@ -20,16 +27,46 @@ MathPhysicsEngine* MathPhysicsEngine::GetInstance()
 	return singleton_;
 }
 
+unsigned MathPhysicsEngine::GenerateContacts()
+{
+	//TODO OPTIMIZE
+	for (ParticleContact* p : particlesContact) delete p;
+	particlesContact.clear();
+
+	unsigned limit = 10; //maxContacts at a time
+	
+	for (ParticleContactGenerator* g : contactGenerators) {
+		unsigned used = g->AddContact(particlesContact, limit);
+
+		if (particlesContact.size() >= limit) break;
+	}
+
+	return particlesContact.size();
+}
+
 void MathPhysicsEngine::Init()
 {
+	contactGenerators.push_back(new NaiveParticleContactGenerator(1.0f, &particles));
 }
 
 void MathPhysicsEngine::Update(double t,float frameTime)
 {
-	 //std::cout << frameTime << "\n";
-	for (Particle * p : particles) {
+	//Genere les forces
+
+	//Integrate
+	for (Particle* p : particles) {
 		p->SemiImpliciteEulerIntegration(t, (double)frameTime);
 	}
+
+	unsigned usedContacts = GenerateContacts();
+
+
+	if (usedContacts) {
+	
+		contactResolver.ResolveContacts(particlesContact, frameTime);
+	
+	}
+
 }
 
 MathPhysicsEngine* MathPhysicsEngine::singleton_ = nullptr;

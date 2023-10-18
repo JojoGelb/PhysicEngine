@@ -129,7 +129,7 @@ void ImGuiEngine::ShowEngineImGui()
     ImGui::InputFloat("damping", &damping);
     ImGui::InputFloat("gravity", &gravity);
     if (ImGui::Button("Add Game Object")) {
-        Particle particle = Particle
+        Particle* particle = new Particle
         (
             Vector3D(positionX, positionY, positionZ),
             Vector3D(velocityX, velocityY, velocityZ),
@@ -139,7 +139,7 @@ void ImGuiEngine::ShowEngineImGui()
             gravity
         );
         GameObject* go = new GameObject(name);
-        go->AddComponent(new Particle());
+        go->AddComponent(particle);
         VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject("Models/colored_cube.obj");
         go->AddComponent(v);
 
