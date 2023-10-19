@@ -13,7 +13,6 @@ unsigned int ParticleRod::AddContact(std::vector<ParticleContact*>& contacts, un
 
     Vector3D normal = particle[1]->position - particle[0]->position;
     normal.Normalize();
-    contact->contactNormal = normal;
 
     if (currentLen > length) {
     

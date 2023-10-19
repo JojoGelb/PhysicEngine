@@ -1,6 +1,5 @@
 #include "Particle.h"
 #include "MathPhysicEngine.h"
-#include "ParticleCollider.h"
 #include <iostream>
 
 Particle::Particle(const Vector3D& _position, const Vector3D& _velocity, const Vector3D& _acceleration, float _inversedMass, float _damping,float _gravity)

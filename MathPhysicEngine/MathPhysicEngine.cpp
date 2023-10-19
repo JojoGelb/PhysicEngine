@@ -70,11 +70,11 @@ void MathPhysicsEngine::Update(double t,float frameTime)
 	//Check every contact generator to get the current frame contact list
 	unsigned usedContacts = GenerateContacts();
 
+	std::cout << "Contact numbers: " << particlesContact.size() << " - " << usedContacts << "\n";
+
 	//Solve the contacts
 	if (usedContacts) {
-	
 		contactResolver.ResolveContacts(particlesContact, frameTime);
-	
 	}
 
 }

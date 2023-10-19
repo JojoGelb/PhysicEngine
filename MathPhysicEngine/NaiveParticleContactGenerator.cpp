@@ -10,6 +10,7 @@ unsigned int NaiveParticleContactGenerator::AddContact(std::vector<ParticleConta
 	for (i = 0; i < particles->size(); i++) {
 		Particle* p = particles->at(i);
 		for (j = i+1; j < particles->size(); j++) {
+		//for (j = 0; j < particles->size(); j++) {
 			Particle* p2 = particles->at(j);
 			if (p == p2) {
 				continue; //shouldn't happen now

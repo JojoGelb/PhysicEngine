@@ -6,7 +6,7 @@ class ParticleContactResolver {
 protected:
 
 	//number of allowed iteration = double max contacts
-	unsigned int iteration = 2;
+	unsigned int iteration = 10;
 
 
 public:

@@ -1,9 +1,15 @@
 #include "ParticleContact.h"
-
+#include <iostream>
 void ParticleContact::Resolve(float duration)
 {
+	//float test = CalculateSeparatingVelocity();
+	//std::cout << "before : " << CalculateSeparatingVelocity() << std::endl;
 	ResolveVelocity(duration);
+
+	//if(test != CalculateSeparatingVelocity())
 	ResolveInterpenetration();
+
+	//std::cout << "after : " << CalculateSeparatingVelocity() << std::endl;
 }
 
 float ParticleContact::CalculateSeparatingVelocity()
@@ -16,6 +22,7 @@ float ParticleContact::CalculateSeparatingVelocity()
 	return relativeVelocity.DotProduct(contactNormal);
 }
 
+//Give proper impulse to solve contact
 void ParticleContact::ResolveVelocity(float duration)
 {
 	//Velocity in direction of contact
@@ -29,8 +36,8 @@ void ParticleContact::ResolveVelocity(float duration)
 	float newSepVelocity = -seperatingVelocity * restitution;
 
 	//check velocity buildUp due to acceleration
-	Vector3D accCausedVelocity = particle[0]->previousState.acceleration;
-	if (particle[1]) { accCausedVelocity -= particle[1]->previousState.acceleration; }
+	Vector3D accCausedVelocity = particle[0]->acceleration;
+	if (particle[1]) { accCausedVelocity -= particle[1]->acceleration; }
 	float accCausedSepVelocity = accCausedVelocity.DotProduct(contactNormal) * duration;
 
 	//closing velocity due to acceleration buildup
@@ -41,6 +48,15 @@ void ParticleContact::ResolveVelocity(float duration)
 
 		if (newSepVelocity < 0) newSepVelocity = 0;
 	}
+
+	/*test gravite repos : cancel acceleration si stationnaire
+	float dotProd = particle[0]->acceleration.DotProduct(Vector3D(0, 10.0f, 0) * 1 / particle[0]->GetInverseMass() * particle[0]->gravity) * duration;
+
+	if (std::fabs(dotProd) < 0.001) { //gravity is the reason of the jitter
+		particle[0]->velocity = Vector3D();
+		if (particle[1]) particle[1]->velocity = Vector3D();
+	}
+	*/
 
 	float deltaVelocity = newSepVelocity - seperatingVelocity;
 
@@ -66,6 +82,7 @@ void ParticleContact::ResolveVelocity(float duration)
 
 void ParticleContact::ResolveInterpenetration()
 {
+
 	if (penetration <= 0) return;
 
 	float totalInversMass = particle[0]->GetInverseMass();
@@ -91,6 +108,9 @@ void ParticleContact::ResolveInterpenetration()
 	if (particle[1]) {
 		particle[1]->position += particleBMovement;
 	}
+
+	//TODO attention : ajout de plus
+	//penetration = 0;
 
 	/*float S = penetration / (particle[0]->GetInverseMass() + particle[1]->GetInverseMass());
 

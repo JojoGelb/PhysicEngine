@@ -2,7 +2,6 @@
 
 #include"Vecteur3D.h"
 #include "Component.h"
-#include "ParticleCollider.h"
 
 struct State
 {

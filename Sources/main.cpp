@@ -24,7 +24,7 @@ int main() {
     ParticleGravity* particleGravity = new ParticleGravity({ 0.0f,-10.0f,0.0f });
 
     // Test cable
-    /*go = new GameObject();
+   /* go = new GameObject();
 
      particle = new Particle(Vector3D(0, 0, 20), Vector3D(0, 0, 0), Vector3D(0, 0, 0), 0.00000001f, 1, 1.0f);
     go->AddComponent(particle);
@@ -57,7 +57,7 @@ int main() {
     }*/
 
     //Test ROD
-    go = new GameObject();
+   /*go = new GameObject();
 
     particle = new Particle(Vector3D(0, 0, 20), Vector3D(0, 0, 0), Vector3D(0, 0, 0), 0.00000001f, 1, 1.0f);
     go->AddComponent(particle);
@@ -81,12 +81,35 @@ int main() {
         mathPhysics->TestRodCollisionSetup(p2, particle, 5);
 
         particle = p2;
-    }
-
-    //add graphics
-    
+    }*/
 
 
+    //Test contact repos
+    go = new GameObject();
+
+    particle = new Particle(Vector3D(0, 0, 20), Vector3D(0, 0, 0), Vector3D(0, 0, 0), 0.00000001f, 1, 1.0f);
+    go->AddComponent(particle);
+    v = VisualGameObject::CreatePtrVisualGameObject("Models/colored_cube.obj");
+    go->AddComponent(v);
+    gameObjects.push_back(go);
+
+    go = new GameObject();
+
+    particle = new Particle(Vector3D(0, 5, 20), Vector3D(0, 0, 0), Vector3D(0, 0, 0), 1, 0.95f, 1.0f);
+    go->AddComponent(particle);
+    mathPhysics->GetParticleForceRegistry()->AddForce(particle, particleGravity);
+    v = VisualGameObject::CreatePtrVisualGameObject("Models/colored_cube.obj");
+    go->AddComponent(v);
+    gameObjects.push_back(go);
+
+    go = new GameObject();
+
+    particle = new Particle(Vector3D(0, 10, 20), Vector3D(0, 0, 0), Vector3D(0, 0, 0), 1, 0.95f, 1.0f);
+    go->AddComponent(particle);
+    mathPhysics->GetParticleForceRegistry()->AddForce(particle, particleGravity);
+    v = VisualGameObject::CreatePtrVisualGameObject("Models/colored_cube.obj");
+    go->AddComponent(v);
+    gameObjects.push_back(go);
     
 
     /*------------------------TEST ZONE--------------------------*/
