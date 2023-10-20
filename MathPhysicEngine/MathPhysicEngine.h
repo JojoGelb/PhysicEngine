@@ -3,11 +3,11 @@
 #include "Particle.h"
 #include <vector>
 #include "Forces/ParticleForceRegistry.h"
-#include "ParticleContact.h"
-#include "ParticleContactResolver.h"
-#include "ParticleContactGenerator.h"
-#include "ParticleRod.h"
-#include "ParticleCable.h"
+#include "Collisions/ParticleContact.h"
+#include "Collisions/ParticleContactResolver.h"
+#include "Collisions/ParticleContactGenerator.h"
+#include "Collisions/ParticleRod.h"
+#include "Collisions/ParticleCable.h"
 
 #include "Forces/ParticleGravity.h"
 

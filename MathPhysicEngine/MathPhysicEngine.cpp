@@ -1,7 +1,6 @@
 #include "MathPhysicEngine.h"
 #include <iostream>
-#include "NaiveParticleContactGenerator.h"
-#include "ParticleRod.h"
+#include "Collisions/NaiveParticleContactGenerator.h"
 
 MathPhysicsEngine::MathPhysicsEngine()
 {
