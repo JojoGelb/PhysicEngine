@@ -2,13 +2,10 @@
 #include <iostream>
 void ParticleContact::Resolve(float duration)
 {
-	//float test = CalculateSeparatingVelocity();
 	//std::cout << "before : " << CalculateSeparatingVelocity() << std::endl;
 	ResolveVelocity(duration);
 
-	//if(test != CalculateSeparatingVelocity())
 	ResolveInterpenetration();
-
 	//std::cout << "after : " << CalculateSeparatingVelocity() << std::endl;
 }
 
@@ -48,15 +45,6 @@ void ParticleContact::ResolveVelocity(float duration)
 
 		if (newSepVelocity < 0) newSepVelocity = 0;
 	}
-
-	/*test gravite repos : cancel acceleration si stationnaire
-	float dotProd = particle[0]->acceleration.DotProduct(Vector3D(0, 10.0f, 0) * 1 / particle[0]->GetInverseMass() * particle[0]->gravity) * duration;
-
-	if (std::fabs(dotProd) < 0.001) { //gravity is the reason of the jitter
-		particle[0]->velocity = Vector3D();
-		if (particle[1]) particle[1]->velocity = Vector3D();
-	}
-	*/
 
 	float deltaVelocity = newSepVelocity - seperatingVelocity;
 
@@ -109,16 +97,16 @@ void ParticleContact::ResolveInterpenetration()
 		particle[1]->position += particleBMovement;
 	}
 
-	//TODO attention : ajout de plus
-	//penetration = 0;
+	/*Same book, different edition
+	Vector3D movePerIMass = contactNormal * (-penetration / totalInversMass);
+	particle[0]->position += movePerIMass * particle[0]->GetInverseMass();
 
-	/*float S = penetration / (particle[0]->GetInverseMass() + particle[1]->GetInverseMass());
+	if (particle[1]) {
+		particle[1]->position += movePerIMass * particle[1]->GetInverseMass();
+	}*/
 
-	Vector3D newPosA = particle[0]->position + S * contactNormal;
-	Vector3D newPosB = particle[1]->position - S * contactNormal;
-
-	particle[0]->position = newPosA;
-	particle[1]->position = newPosB;*/
+	//PATCH: this line prevent the ResolveInterpenetration to be called several times during a frame
+	penetration = 0;
 
 }
 

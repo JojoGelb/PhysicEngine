@@ -39,13 +39,11 @@ unsigned MathPhysicsEngine::GenerateContacts()
 	//TODO OPTIMIZE
 	for (ParticleContact* p : particlesContact) delete p;
 	particlesContact.clear();
-
-	unsigned limit = 10; //maxContacts at a time
 	
 	for (ParticleContactGenerator* g : contactGenerators) {
-		unsigned used = g->AddContact(particlesContact, limit);
+		unsigned used = g->AddContact(particlesContact, maxContactNumber);
 
-		if (particlesContact.size() >= limit) break;
+		if (particlesContact.size() >= maxContactNumber) break;
 	}
 
 	return static_cast<unsigned int>(particlesContact.size());
@@ -70,10 +68,12 @@ void MathPhysicsEngine::Update(double t,float frameTime)
 	//Check every contact generator to get the current frame contact list
 	unsigned usedContacts = GenerateContacts();
 
-	std::cout << "Contact numbers: " << particlesContact.size() << " - " << usedContacts << "\n";
+	//std::cout << "Contact numbers: " << particlesContact.size() << " - " << usedContacts << "\n";
 
 	//Solve the contacts
 	if (usedContacts) {
+		//number of iteration = double contacts number 
+		contactResolver.SetIterationNumber(usedContacts * 2);
 		contactResolver.ResolveContacts(particlesContact, frameTime);
 	}
 
@@ -82,6 +82,29 @@ void MathPhysicsEngine::Update(double t,float frameTime)
 void MathPhysicsEngine::Shutdown()
 {
 	delete this->particleForceRegistry;
+}
+
+void MathPhysicsEngine::RemoveParticle(Particle* p)
+{
+	particles.erase(std::remove(particles.begin(), particles.end(), p), particles.end()); 
+	particleForceRegistry->RemoveParticle(p);
+
+	std::cout << contactGenerators.size() << std::endl;
+
+	for (int i = 0; i < contactGenerators.size(); i++) {
+
+		if (ParticleLink* link = dynamic_cast<ParticleLink*>(contactGenerators.at(i))) {
+			if (link->particle[0] == p || link->particle[1] == p) {
+
+				delete link;
+				auto iterator = contactGenerators.begin() + i;
+				contactGenerators.erase(iterator);
+
+			}
+		}
+	}
+
+	std::cout << contactGenerators.size() << std::endl;
 }
 
 void MathPhysicsEngine::SetFinalStates(const double alpha)

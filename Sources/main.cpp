@@ -24,7 +24,7 @@ int main() {
     ParticleGravity* particleGravity = new ParticleGravity({ 0.0f,-10.0f,0.0f });
 
     // Test cable
-   /* go = new GameObject();
+    /*go = new GameObject();
 
      particle = new Particle(Vector3D(0, 0, 20), Vector3D(0, 0, 0), Vector3D(0, 0, 0), 0.00000001f, 1, 1.0f);
     go->AddComponent(particle);
@@ -57,7 +57,7 @@ int main() {
     }*/
 
     //Test ROD
-   /*go = new GameObject();
+    /*go = new GameObject();
 
     particle = new Particle(Vector3D(0, 0, 20), Vector3D(0, 0, 0), Vector3D(0, 0, 0), 0.00000001f, 1, 1.0f);
     go->AddComponent(particle);
@@ -65,12 +65,12 @@ int main() {
     go->AddComponent(v);
     gameObjects.push_back(go);
 
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < 7; i++) {
 
         GameObject* go2 = new GameObject();
 
 
-        Particle* p2 = new Particle(Vector3D(0.1, 5* (i+1), 20), Vector3D(0, 0, 0), Vector3D(0, 0, 0), 1, 1, 1);
+        Particle* p2 = new Particle(Vector3D(0.1, 5* (i+1), 20), Vector3D(0, 0, 0), Vector3D(0, 0, 0), 1, 0.999f, 1);
         go2->AddComponent(p2);
         mathPhysics->GetParticleForceRegistry()->AddForce(p2, particleGravity);
         VisualGameObject* v2 = VisualGameObject::CreatePtrVisualGameObject("Models/colored_cube.obj");
@@ -85,7 +85,7 @@ int main() {
 
 
     //Test contact repos
-    go = new GameObject();
+    /*go = new GameObject();
 
     particle = new Particle(Vector3D(0, 0, 20), Vector3D(0, 0, 0), Vector3D(0, 0, 0), 0.00000001f, 1, 1.0f);
     go->AddComponent(particle);
@@ -109,7 +109,7 @@ int main() {
     mathPhysics->GetParticleForceRegistry()->AddForce(particle, particleGravity);
     v = VisualGameObject::CreatePtrVisualGameObject("Models/colored_cube.obj");
     go->AddComponent(v);
-    gameObjects.push_back(go);
+    gameObjects.push_back(go);*/
     
 
     /*------------------------TEST ZONE--------------------------*/
