@@ -2,11 +2,9 @@
 #include <iostream>
 void ParticleContact::Resolve(float duration)
 {
-	//std::cout << "before : " << CalculateSeparatingVelocity() << std::endl;
 	ResolveVelocity(duration);
 
 	ResolveInterpenetration();
-	//std::cout << "after : " << CalculateSeparatingVelocity() << std::endl;
 }
 
 float ParticleContact::CalculateSeparatingVelocity()
@@ -32,6 +30,8 @@ void ParticleContact::ResolveVelocity(float duration)
 
 	float newSepVelocity = -seperatingVelocity * restitution;
 
+	// ## Resting contact resolution
+
 	//check velocity buildUp due to acceleration
 	Vector3D accCausedVelocity = particle[0]->acceleration;
 	if (particle[1]) { accCausedVelocity -= particle[1]->acceleration; }
@@ -45,6 +45,7 @@ void ParticleContact::ResolveVelocity(float duration)
 
 		if (newSepVelocity < 0) newSepVelocity = 0;
 	}
+	// ##
 
 	float deltaVelocity = newSepVelocity - seperatingVelocity;
 
@@ -109,6 +110,3 @@ void ParticleContact::ResolveInterpenetration()
 	penetration = 0;
 
 }
-
-
-//page 120

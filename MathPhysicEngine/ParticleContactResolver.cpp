@@ -5,7 +5,6 @@ void ParticleContactResolver::ResolveContacts(std::vector<ParticleContact*>& con
 {
 	unsigned int iterationUsed = 0;
 	while (iterationUsed < iteration) {
-		//std::cout << "iteration : " << iterationUsed << std::endl;
 
 		float min = 0;
 		unsigned maxIndex = static_cast<unsigned int>(contactArray.size());
@@ -23,16 +22,12 @@ void ParticleContactResolver::ResolveContacts(std::vector<ParticleContact*>& con
 			}
 		}
 
-		//std::cout << "maxIndex : " << maxIndex << " - Size: " << contactArray.size() << "max: " << max << std::endl;
-
 		//nothing left to be done: smallest separating velocity > 0
 		if (maxIndex == contactArray.size()) break;
 
-		//std::cout << "maxIndex : " << maxIndex << " - Size: " << contactArray.size() << "min: " << min << std::endl;
 		contactArray.at(maxIndex)->Resolve(frameTime);
 
 		iterationUsed++;
 		
-		//std::cout << "=====================\n " << std::endl;
 	}
 }
