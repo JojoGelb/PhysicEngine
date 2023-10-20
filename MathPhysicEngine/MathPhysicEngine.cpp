@@ -87,8 +87,6 @@ void MathPhysicsEngine::RemoveParticle(Particle* p)
 	particles.erase(std::remove(particles.begin(), particles.end(), p), particles.end()); 
 	particleForceRegistry->RemoveParticle(p);
 
-	std::cout << contactGenerators.size() << std::endl;
-
 	for (int i = 0; i < contactGenerators.size(); i++) {
 
 		if (ParticleLink* link = dynamic_cast<ParticleLink*>(contactGenerators.at(i))) {
@@ -102,7 +100,6 @@ void MathPhysicsEngine::RemoveParticle(Particle* p)
 		}
 	}
 
-	std::cout << contactGenerators.size() << std::endl;
 }
 
 void MathPhysicsEngine::SetFinalStates(const double alpha)
