@@ -1,16 +1,16 @@
 #pragma once
 #include "ParticleForceGenerator.h"
-class ParticleSpring :
+class ParticleElasticBungee :
     public ParticleForceGenerator
 {
 private:
-    Particle *other;
+    Particle* other;
     float m_springConstant;
     float m_restLength;
 
 public:
     void UpdateForce(Particle* particle, float duration);
 
-    ParticleSpring(Particle* other, float m_springConstant, float m_restLength);
+    ParticleElasticBungee(Particle* other, float m_springConstant, float m_restLength);
 };
 

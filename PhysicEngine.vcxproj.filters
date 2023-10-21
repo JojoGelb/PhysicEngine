@@ -27,6 +27,7 @@
     <ClCompile Include="MathPhysicEngine\Collisions\ParticleLink.cpp" />
     <ClCompile Include="MathPhysicEngine\Collisions\ParticleRod.cpp" />
     <ClCompile Include="MathPhysicEngine\Forces\ConstantForce.cpp" />
+    <ClCompile Include="MathPhysicEngine\Forces\ParticleAnchoredSpring.cpp" />
     <ClCompile Include="MathPhysicEngine\Forces\ParticleForceGenerator.cpp" />
     <ClCompile Include="MathPhysicEngine\Forces\ParticleForceRegistry.cpp" />
     <ClCompile Include="MathPhysicEngine\Forces\ParticleGravity.cpp" />
@@ -38,6 +39,7 @@
     <ClCompile Include="MathPhysicEngine\Particle.cpp" />
     <ClCompile Include="Sources\main.cpp" />
     <ClCompile Include="MathPhysicEngine\Vecteur3D.cpp" />
+    <ClCompile Include="MathPhysicEngine\Forces\ParticleElasticBungee.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="External Librairies\IMGUI\imconfig.h" />
@@ -67,6 +69,7 @@
     <ClInclude Include="MathPhysicEngine\Collisions\ParticleLink.h" />
     <ClInclude Include="MathPhysicEngine\Collisions\ParticleRod.h" />
     <ClInclude Include="MathPhysicEngine\Forces\ConstantForce.h" />
+    <ClInclude Include="MathPhysicEngine\Forces\ParticleAnchoredSpring.h" />
     <ClInclude Include="MathPhysicEngine\Forces\ParticleSpring.h" />
     <ClInclude Include="MathPhysicEngine\Vecteur3D.h" />
     <ClInclude Include="MathPhysicEngine\Forces\ParticleForceGenerator.h" />
@@ -78,6 +81,7 @@
     <ClInclude Include="Sources\ImGuiEngine.h" />
     <ClInclude Include="MathPhysicEngine\MathPhysicEngine.h" />
     <ClInclude Include="MathPhysicEngine\Particle.h" />
+    <ClInclude Include="MathPhysicEngine\Forces\ParticleElasticBungee.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Readme.txt" />

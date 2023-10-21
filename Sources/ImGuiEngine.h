@@ -5,10 +5,9 @@
 #include "imgui_impl_vulkan.h"
 #include <stdio.h>          // printf, fprintf
 #include <stdlib.h>         // abort
-#include <vector> 
 #include <KeyboardInput.h>
 #include "GameObject.h"
-
+#include "../MathPhysicEngine/Vecteur3D.h"
 
 
 class ImGuiEngine
@@ -23,6 +22,8 @@ private:
 	ImVec4 clear_color;
 
 	GLFWwindow* window;
+
+
 
 	void ShowDemoImGui();
 	void ShowEngineImGui();
@@ -39,5 +40,6 @@ public:
 	~ImGuiEngine();
 
 	void Update(float frameTime);
+	Vector3D testT;
 
 };

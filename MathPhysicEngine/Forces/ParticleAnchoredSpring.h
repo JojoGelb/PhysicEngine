@@ -1,16 +1,16 @@
 #pragma once
 #include "ParticleForceGenerator.h"
-class ParticleSpring :
+class ParticleAnchoredSpring :
     public ParticleForceGenerator
 {
 private:
-    Particle *other;
+    Vector3D anchor;
     float m_springConstant;
     float m_restLength;
 
 public:
     void UpdateForce(Particle* particle, float duration);
 
-    ParticleSpring(Particle* other, float m_springConstant, float m_restLength);
+    ParticleAnchoredSpring(Vector3D anchor, float m_springConstant, float m_restLength);
 };
 
