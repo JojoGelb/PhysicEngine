@@ -49,3 +49,7 @@ Help to implement particule and integration
 (https://jdickinsongames.wordpress.com/2015/01/22/numerical-integration-in-games-development-2/)
 
 (https://gafferongames.com/post/integration_basics/)
+
+Help to implement the collisions:
+
+I. Millington. Game physics engine development

@@ -21,5 +21,7 @@ public:
 	
 	void UpdateForce(float duration);
 	void AddForce(Particle* particle, ParticleForceGenerator* forceGenerator);
+	void RemoveParticle(Particle* particle);
+
 };
 

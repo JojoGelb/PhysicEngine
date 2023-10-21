@@ -3,6 +3,14 @@
 #include "Particle.h"
 #include <vector>
 #include "Forces/ParticleForceRegistry.h"
+#include "Collisions/ParticleContact.h"
+#include "Collisions/ParticleContactResolver.h"
+#include "Collisions/ParticleContactGenerator.h"
+#include "Collisions/ParticleRod.h"
+#include "Collisions/ParticleCable.h"
+
+#include "Forces/ParticleGravity.h"
+
 class MathPhysicsEngine {
 
 protected:
@@ -16,6 +24,8 @@ public:
 	//Can't be assignated
 	void operator=(const MathPhysicsEngine&) = delete;
 
+	~MathPhysicsEngine();
+
 	static MathPhysicsEngine* GetInstance();
 
 
@@ -23,14 +33,43 @@ public:
 	void Shutdown();
 
 	void AddParticle(Particle* p) { particles.push_back(p); }
-	void RemoveParticle(Particle* p) { particles.erase(std::remove(particles.begin(), particles.end(), p), particles.end()); }
+	void RemoveParticle(Particle* p);
 	void SetFinalStates(const double alpha);
 
+	
+	unsigned GenerateContacts();
+
+
 	ParticleForceRegistry* GetParticleForceRegistry();
+
 private:
+
 	void UpdateSumForces(float frameTime);
-	ParticleForceRegistry* particleForceRegistry;
 
 	void Init();
+	int maxContactNumber = 10;
+
+	ParticleForceRegistry* particleForceRegistry;
+
 	std::vector<Particle*> particles;
+
+	ParticleContactResolver contactResolver;
+
+	std::vector<ParticleContactGenerator*> contactGenerators;
+
+	std::vector<ParticleContact*> particlesContact;
+
+
+public:
+
+	void TestCableCollisionSetup(Particle* a, Particle* b, float cableLen) {
+		contactGenerators.push_back(new ParticleCable(a, b, cableLen, 1));
+	}
+
+	void TestRodCollisionSetup(Particle* a, Particle* b, float cableLen) {
+		contactGenerators.push_back(new ParticleRod(a, b, cableLen));
+	}
+
+	ParticleGravity* particleGravity = new ParticleGravity({ 0.0f,-10.0f,0.0f });
+
 };

@@ -5,6 +5,8 @@
 #include <iostream>
 #include "GameObject.h"
 #include "../MathPhysicEngine/Forces/ParticleGravity.h"
+#include <random>
+
 int main() {
 
     std::vector<GameObject*> gameObjects;
@@ -13,17 +15,6 @@ int main() {
 
     MathPhysicsEngine * mathPhysics = MathPhysicsEngine::GetInstance();
     ImGuiEngine imGuiEngine = ImGuiEngine(graphicsMotor->GetGLFWWindow(), &gameObjects);
-
-    GameObject* go = new GameObject();
-    Particle* particle = new Particle();
-    ParticleGravity* particleGravity = new ParticleGravity({0.0f,-10.0f,0.0f});
-    go->AddComponent(particle);
-    mathPhysics->GetParticleForceRegistry()->AddForce(particle, particleGravity);
-    VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject("Models/colored_cube.obj");
-    go->AddComponent(v);
-
-    //add graphics
-    gameObjects.push_back(go);
     
     double t = 0.0f;
     double dt = 0.01;

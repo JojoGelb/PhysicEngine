@@ -162,6 +162,12 @@
     <ClCompile Include="GraphicEngine\VKPipeline.cpp" />
     <ClCompile Include="GraphicEngine\VulkanHandler.cpp" />
     <ClCompile Include="GraphicEngine\Window.cpp" />
+    <ClCompile Include="MathPhysicEngine\Collisions\NaiveParticleContactGenerator.cpp" />
+    <ClCompile Include="MathPhysicEngine\Collisions\ParticleCable.cpp" />
+    <ClCompile Include="MathPhysicEngine\Collisions\ParticleContact.cpp" />
+    <ClCompile Include="MathPhysicEngine\Collisions\ParticleContactResolver.cpp" />
+    <ClCompile Include="MathPhysicEngine\Collisions\ParticleLink.cpp" />
+    <ClCompile Include="MathPhysicEngine\Collisions\ParticleRod.cpp" />
     <ClCompile Include="MathPhysicEngine\Forces\ConstantForce.cpp" />
     <ClCompile Include="MathPhysicEngine\Forces\ParticleAnchoredSpring.cpp" />
     <ClCompile Include="MathPhysicEngine\Forces\ParticleForceGenerator.cpp" />
@@ -196,6 +202,13 @@
     <ClInclude Include="GraphicEngine\VKPipeline.h" />
     <ClInclude Include="GraphicEngine\VulkanHandler.h" />
     <ClInclude Include="GraphicEngine\Window.h" />
+    <ClInclude Include="MathPhysicEngine\Collisions\NaiveParticleContactGenerator.h" />
+    <ClInclude Include="MathPhysicEngine\Collisions\ParticleCable.h" />
+    <ClInclude Include="MathPhysicEngine\Collisions\ParticleContact.h" />
+    <ClInclude Include="MathPhysicEngine\Collisions\ParticleContactGenerator.h" />
+    <ClInclude Include="MathPhysicEngine\Collisions\ParticleContactResolver.h" />
+    <ClInclude Include="MathPhysicEngine\Collisions\ParticleLink.h" />
+    <ClInclude Include="MathPhysicEngine\Collisions\ParticleRod.h" />
     <ClInclude Include="MathPhysicEngine\Forces\ConstantForce.h" />
     <ClInclude Include="MathPhysicEngine\Forces\ParticleAnchoredSpring.h" />
     <ClInclude Include="MathPhysicEngine\Forces\ParticleSpring.h" />

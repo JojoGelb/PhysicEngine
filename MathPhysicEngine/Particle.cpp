@@ -1,4 +1,4 @@
-#include "Particle.h";
+#include "Particle.h"
 #include "MathPhysicEngine.h"
 #include <iostream>
 
@@ -8,10 +8,8 @@ Particle::Particle(const Vector3D& _position, const Vector3D& _velocity, const V
 	previousState = { 0.0,0.0 ,0.0 };
 	currentState = { 0.0,0.0 ,0.0 };
 	finalState = { 0.0,0.0 ,0.0 };
-	gravityForce = { 0,-10,0 };
-
 	sumForce = { 0,0,0 };
-
+	gravityForce = { 0,-gravity,0 };
 }
 
 float Particle::GetInverseMass()
