@@ -5,10 +5,13 @@
 #include <iostream>
 #include"GLFW/glfw3.h"
 #include "../MathPhysicEngine/Particle.h"
-#include "../MathPhysicEngine/Vecteur3D.h"
 #include "../MathPhysicEngine/MathPhysicEngine.h"
 #include "../MathPhysicEngine/Forces/ParticleGravity.h"
 #include "../MathPhysicEngine/Forces/ConstantForce.h"
+#include "../MathPhysicEngine/Forces/ParticleSpring.h"
+#include "../MathPhysicEngine/Forces/ParticleAnchoredSpring.h"
+
+
 ImGuiEngine::ImGuiEngine(GLFWwindow* _window, std::vector<GameObject*>* _gameObjects): window(_window), gameObjects(_gameObjects)
 {
     this->clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
@@ -220,6 +223,11 @@ void ImGuiEngine::ShowEngineImGui()
     ImGui::Text("famerate : %.5f", framerate);
 
     static std::vector<Vector3D> force(200);
+    static std::vector<float> restLength(200);
+    static std::vector<float> springConstant(200);
+    static std::vector<int> index(200);
+
+
 
     for (int i = 0; i < gameObjects->size(); i++)
     {
@@ -246,7 +254,63 @@ void ImGuiEngine::ShowEngineImGui()
                 }
 
                 ImGui::TreePop();
-               
+            }
+            if (ImGui::TreeNode("Add spring force")) {
+
+                //ImGui::PushID(i+10);
+
+              
+                ImGui::InputInt("Index", &index[i]);
+                ImGui::InputFloat("rest Length", &restLength[i]);
+                ImGui::InputFloat("spring Constant", &springConstant[i]);
+
+                //ImGui::PopID();
+
+                ImGui::Spacing();
+
+                if (ImGui::Button("Apply spring force")) {
+
+                    
+                    //Particle* other = new Particle();
+                    ParticleSpring* particleSpring = new ParticleSpring(gameObjects->at(index[i])->GetComponentOfType<Particle>(), restLength[i], springConstant[i]);
+                    ParticleSpring* otherSpring = new ParticleSpring(particle, restLength[i], springConstant[i]);
+
+                    MathPhysicsEngine::GetInstance()->GetParticleForceRegistry()->AddForce(particle, particleSpring);
+                    MathPhysicsEngine::GetInstance()->GetParticleForceRegistry()->AddForce(gameObjects->at(index[i])->GetComponentOfType<Particle>(), otherSpring);
+
+                }
+
+
+                ImGui::TreePop();
+
+
+
+            }
+            if (ImGui::TreeNode("Add anchored spring force")) {
+
+                //ImGui::PushID(i+10);
+
+
+                ImGui::InputInt("Index", &index[i]);
+                ImGui::InputFloat("rest Length", &restLength[i]);
+                ImGui::InputFloat("spring Constant", &springConstant[i]);
+
+                //ImGui::PopID();
+
+                ImGui::Spacing();
+
+                if (ImGui::Button("Apply anchored spring force")) {
+
+
+                    //Particle* other = new Particle();
+                    Vector3D anchoredPos = gameObjects->at(index[i])->GetComponentOfType<Particle>()->position;
+                    ParticleAnchoredSpring* particleAnchoredSpring = new ParticleAnchoredSpring(anchoredPos, restLength[i], springConstant[i]);
+
+                    MathPhysicsEngine::GetInstance()->GetParticleForceRegistry()->AddForce(particle, particleAnchoredSpring);
+                }
+
+                ImGui::TreePop();
+
             }
             if (ImGui::TreeNode("Show particule data")) {
 
@@ -275,6 +339,7 @@ void ImGuiEngine::ShowEngineImGui()
             ImGui::Spacing();
          
         }
+
            
     }
     ImGui::End();

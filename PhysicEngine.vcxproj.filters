@@ -1,213 +1,72 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Fichiers sources">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Fichiers d%27en-tête">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="Fichiers de ressources">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
+    <ClCompile Include="External Librairies\IMGUI\imgui.cpp" />
+    <ClCompile Include="External Librairies\IMGUI\imgui_demo.cpp" />
+    <ClCompile Include="External Librairies\IMGUI\imgui_draw.cpp" />
+    <ClCompile Include="External Librairies\IMGUI\imgui_impl_glfw.cpp" />
+    <ClCompile Include="External Librairies\IMGUI\imgui_impl_vulkan.cpp" />
+    <ClCompile Include="External Librairies\IMGUI\imgui_tables.cpp" />
+    <ClCompile Include="External Librairies\IMGUI\imgui_widgets.cpp" />
+    <ClCompile Include="GraphicEngine\Camera.cpp" />
+    <ClCompile Include="GraphicEngine\VisualGameObject.cpp" />
+    <ClCompile Include="GraphicEngine\GraphicDevice.cpp" />
+    <ClCompile Include="GraphicEngine\GraphicsMotor.cpp" />
+    <ClCompile Include="GraphicEngine\KeyboardInput.cpp" />
+    <ClCompile Include="GraphicEngine\Model.cpp" />
+    <ClCompile Include="GraphicEngine\Renderer.cpp" />
+    <ClCompile Include="GraphicEngine\SimpleRenderSystem.cpp" />
+    <ClCompile Include="GraphicEngine\SwapChain.cpp" />
+    <ClCompile Include="GraphicEngine\VKPipeline.cpp" />
+    <ClCompile Include="GraphicEngine\VulkanHandler.cpp" />
+    <ClCompile Include="GraphicEngine\Window.cpp" />
+    <ClCompile Include="MathPhysicEngine\Forces\ConstantForce.cpp" />
+    <ClCompile Include="MathPhysicEngine\Forces\ParticleForceGenerator.cpp" />
+    <ClCompile Include="MathPhysicEngine\Forces\ParticleForceRegistry.cpp" />
+    <ClCompile Include="MathPhysicEngine\Forces\ParticleGravity.cpp" />
+    <ClCompile Include="MathPhysicEngine\Forces\ParticleDrag.cpp" />
+    <ClCompile Include="MathPhysicEngine\Forces\ParticleSpring.cpp" />
+    <ClCompile Include="Sources\GameObject.cpp" />
+    <ClCompile Include="Sources\ImGuiEngine.cpp" />
+    <ClCompile Include="MathPhysicEngine\MathPhysicEngine.cpp" />
+    <ClCompile Include="MathPhysicEngine\Particle.cpp" />
+    <ClCompile Include="Sources\main.cpp" />
+    <ClCompile Include="MathPhysicEngine\Vecteur3D.cpp" />
+    <ClCompile Include="MathPhysicEngine\Forces\ParticleAnchoredSpring.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Sources\main.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="External Librairies\IMGUI\imgui.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="External Librairies\IMGUI\imgui_demo.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="External Librairies\IMGUI\imgui_draw.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="External Librairies\IMGUI\imgui_impl_glfw.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="External Librairies\IMGUI\imgui_impl_vulkan.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="External Librairies\IMGUI\imgui_tables.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="External Librairies\IMGUI\imgui_widgets.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="GraphicEngine\Camera.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="GraphicEngine\GraphicDevice.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="GraphicEngine\GraphicsMotor.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="GraphicEngine\KeyboardInput.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="GraphicEngine\Model.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="GraphicEngine\Renderer.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="GraphicEngine\SimpleRenderSystem.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="GraphicEngine\SwapChain.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="GraphicEngine\VKPipeline.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="GraphicEngine\VulkanHandler.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="GraphicEngine\Window.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="GraphicEngine\GameObject.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\ImGuiEngine.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="MathPhysicEngine\MathPhysicEngine.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="MathPhysicEngine\Particle.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\ObjectData.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="MathPhysicEngine\Vecteur3D.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="MathPhysicEngine\Forces\ParticleForceGenerator.cpp">
-    <ClCompile Include="GraphicEngine\VisualGameObject.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\ImGuiEngine.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="MathPhysicEngine\MathPhysicEngine.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="MathPhysicEngine\Forces\ParticleForceRegistry.cpp">
-    <ClCompile Include="MathPhysicEngine\Particle.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="MathPhysicEngine\Forces\ParticleGravity.cpp">
-    <ClCompile Include="MathPhysicEngine\Vecteur3D.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="MathPhysicEngine\Forces\ParticleDrag.cpp">
-    <ClCompile Include="Sources\GameObject.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="External Librairies\IMGUI\imconfig.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="External Librairies\IMGUI\imgui.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="External Librairies\IMGUI\imgui_impl_glfw.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="External Librairies\IMGUI\imgui_impl_vulkan.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="External Librairies\IMGUI\imgui_internal.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="External Librairies\IMGUI\imstb_textedit.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="GraphicEngine\Window.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="GraphicEngine\Camera.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="GraphicEngine\VisualGameObject.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="GraphicEngine\GraphicDevice.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="GraphicEngine\GraphicsMotor.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="GraphicEngine\KeyboardInput.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="GraphicEngine\Model.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="GraphicEngine\Renderer.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="GraphicEngine\SimpleRenderSystem.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="GraphicEngine\SwapChain.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="GraphicEngine\Utils.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="GraphicEngine\VKPipeline.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="GraphicEngine\VulkanHandler.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="MathPhysicEngine\Vecteur3D.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\ImGuiEngine.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="MathPhysicEngine\MathPhysicEngine.h">
-    <ClInclude Include="MathPhysicEngine\Vecteur3D.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\ImGuiEngine.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="MathPhysicEngine\MathPhysicEngine.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="MathPhysicEngine\Particle.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\ObjectData.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="MathPhysicEngine\Particle.h">
-    <ClInclude Include="MathPhysicEngine\Forces\ParticleForceGenerator.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="MathPhysicEngine\Forces\ParticleForceRegistry.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="MathPhysicEngine\Forces\ParticleGravity.h">
-    <ClInclude Include="Sources\GameObject.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="MathPhysicEngine\Forces\ParticleDrag.h">
-    <ClInclude Include="Headers\Component.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
+    <ClInclude Include="External Librairies\IMGUI\imconfig.h" />
+    <ClInclude Include="External Librairies\IMGUI\imgui.h" />
+    <ClInclude Include="External Librairies\IMGUI\imgui_impl_glfw.h" />
+    <ClInclude Include="External Librairies\IMGUI\imgui_impl_vulkan.h" />
+    <ClInclude Include="External Librairies\IMGUI\imgui_internal.h" />
+    <ClInclude Include="External Librairies\IMGUI\imstb_textedit.h" />
+    <ClInclude Include="GraphicEngine\Camera.h" />
+    <ClInclude Include="GraphicEngine\VisualGameObject.h" />
+    <ClInclude Include="GraphicEngine\GraphicDevice.h" />
+    <ClInclude Include="GraphicEngine\GraphicsMotor.h" />
+    <ClInclude Include="GraphicEngine\KeyboardInput.h" />
+    <ClInclude Include="GraphicEngine\Model.h" />
+    <ClInclude Include="GraphicEngine\Renderer.h" />
+    <ClInclude Include="GraphicEngine\SimpleRenderSystem.h" />
+    <ClInclude Include="GraphicEngine\SwapChain.h" />
+    <ClInclude Include="GraphicEngine\Utils.h" />
+    <ClInclude Include="GraphicEngine\VKPipeline.h" />
+    <ClInclude Include="GraphicEngine\VulkanHandler.h" />
+    <ClInclude Include="GraphicEngine\Window.h" />
+    <ClInclude Include="MathPhysicEngine\Forces\ConstantForce.h" />
+    <ClInclude Include="MathPhysicEngine\Forces\ParticleSpring.h" />
+    <ClInclude Include="MathPhysicEngine\Vecteur3D.h" />
+    <ClInclude Include="MathPhysicEngine\Forces\ParticleForceGenerator.h" />
+    <ClInclude Include="MathPhysicEngine\Forces\ParticleForceRegistry.h" />
+    <ClInclude Include="MathPhysicEngine\Forces\ParticleGravity.h" />
+    <ClInclude Include="MathPhysicEngine\Forces\ParticleDrag.h" />
+    <ClInclude Include="Headers\Component.h" />
+    <ClInclude Include="Sources\GameObject.h" />
+    <ClInclude Include="Sources\ImGuiEngine.h" />
+    <ClInclude Include="MathPhysicEngine\MathPhysicEngine.h" />
+    <ClInclude Include="MathPhysicEngine\Particle.h" />
+    <ClInclude Include="MathPhysicEngine\Forces\ParticleAnchoredSpring.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Readme.txt" />
