@@ -768,7 +768,6 @@ void ImGuiEngine::SetVisible(bool _visible)
         return;
     }
 
-    std::cout << visible;
     visible = _visible;
 
     if (visible) {
