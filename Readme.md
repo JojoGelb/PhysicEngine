@@ -23,6 +23,10 @@ escape: close window
 
 i: hide/show ImGui
 
+- Blob Inputs :
+
+h,j : move left, right the blob
+
 ## Source
 
 - Graphic Engine:
@@ -53,3 +57,11 @@ Help to implement particule and integration
 Help to implement the collisions:
 
 I. Millington. Game physics engine development
+
+Help to implement the forces:
+
+I. Millington. Game physics engine development, Chapter 5
+
+Help to implement the Springs:
+
+I. Millington. Game physics engine development, Chapter 6
