@@ -2,13 +2,12 @@
 
 #include"Vecteur3D.h"
 #include "Component.h"
-
 struct State
 {
 	Vector3D position;
 	Vector3D velocity;
 	Vector3D acceleration;
-
+	
 	State();
 	State(Vector3D _position, Vector3D _velocity, Vector3D _acceleration);
 	State operator*(const double scalar) const;
@@ -20,7 +19,7 @@ struct State
 class Particle : public Component
 {
 public:
-
+	Vector3D inputValues = { 0.f,0.f,0.f };
 
 	Vector3D position;
 	Vector3D velocity;
@@ -40,6 +39,8 @@ public:
 	float inversedMass;
 
 	Particle(const Vector3D& _position = {0.0f}, const Vector3D& _velocity = { 0.0f }, const Vector3D& _acceleration = { 0.0f }, float _inversedMass = 1.0f, float _damping = 0.999f, float _gravity =  1.0f);
+	~Particle();
+	
 	float GetInverseMass();
 	float GetMass() { return 1 / inversedMass; };
 
@@ -56,6 +57,7 @@ public:
 	void AddForce(Vector3D forceToAdd);
 
 	void ClearSumForce();
+
 
 private:
 

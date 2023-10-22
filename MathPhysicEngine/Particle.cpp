@@ -12,6 +12,13 @@ Particle::Particle(const Vector3D& _position, const Vector3D& _velocity, const V
 	gravityForce = { 0,-gravity,0 };
 }
 
+Particle::~Particle()
+{
+	std::cout << "HEHR";
+	MathPhysicsEngine::GetInstance()->RemoveParticle(this);
+	//MathPhysicsEngine::GetInstance()->GetParticleForceRegistry()->RemoveParticle(this);
+}
+
 float Particle::GetInverseMass()
 {
 	return this->inversedMass;

@@ -15,12 +15,13 @@ private:
 	using Registry = std::vector<ParticleForceEntry>;
 	Registry m_registry;
 
+
 public:
 
 	// Reigstry acccesor;
-	
 	void UpdateForce(float duration);
 	void AddForce(Particle* particle, ParticleForceGenerator* forceGenerator);
+	void DeleteForce(Particle* particle, ParticleForceGenerator* forceGenerator);
 	void RemoveParticle(Particle* particle);
 
 };
