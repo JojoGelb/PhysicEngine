@@ -35,6 +35,8 @@ private:
 	KeyboardInput ImGuiInput;
 
 	std::vector<GameObject*>* gameObjects;
+
+	Vector3D *inputForce;
 public:
 	ImGuiEngine(GLFWwindow* _window, std::vector<GameObject*> * _gameObjects);
 	~ImGuiEngine();

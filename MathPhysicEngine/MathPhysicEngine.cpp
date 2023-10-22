@@ -94,7 +94,6 @@ void MathPhysicsEngine::RemoveParticle(Particle* p)
 				delete link;
 				auto iterator = contactGenerators.begin() + i;
 				contactGenerators.erase(iterator);
-
 			}
 		}
 	}

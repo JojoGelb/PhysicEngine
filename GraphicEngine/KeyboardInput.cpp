@@ -46,3 +46,23 @@ void KeyboardInput::ImGuiControls(
     visibilityTrigger = lastStateImGuiVisibilityTrigger != nextState && nextState == GLFW_PRESS;
     lastStateImGuiVisibilityTrigger = nextState;
 }
+
+
+void KeyboardInput::BlobControls(GLFWwindow* window, Vector3D& inputForce) {
+    if (glfwGetKey(window, keys.closeWindow) == GLFW_PRESS) glfwSetWindowShouldClose(window, true);
+
+    
+    if (glfwGetKey(window, keys.moveLeftBlob) == GLFW_PRESS && glfwGetKey(window, keys.moveRightBlob)) {
+        inputForce = 0.f;
+        return;
+    }
+    if (glfwGetKey(window, keys.moveLeftBlob) == GLFW_PRESS) {
+        inputForce = {-4.f,0.f,0.f };
+        return;
+    }
+    if (glfwGetKey(window, keys.moveRightBlob) == GLFW_PRESS) {
+        inputForce = { 4.f,0.f,0.f };
+        return;
+    }
+    inputForce = { 0.f,0.f,0.f };
+}
