@@ -1,4 +1,5 @@
 #include "ParticleForceRegistry.h"
+#include <iostream>
 
 void ParticleForceRegistry::UpdateForce(float duration)
 {
@@ -13,6 +14,19 @@ void ParticleForceRegistry::AddForce(Particle* particle, ParticleForceGenerator*
 	m_registry.push_back(ParticleForceRegistry::ParticleForceEntry(particle, forceGenerator));
 }
 
+void ParticleForceRegistry::DeleteForce(Particle* particle, ParticleForceGenerator* forceGenerator)
+{
+	for (int i = 0; i < m_registry.size(); i++) {
+		if(m_registry.at(i).particle == particle) {
+			if (m_registry.at(i).forceGenerator = forceGenerator) {
+
+				m_registry.erase(m_registry.begin() + i);
+			}
+
+		}
+	}
+}
+
 void ParticleForceRegistry::RemoveParticle(Particle* particle)
 {
 	for (int i = 0; i < m_registry.size(); i++) {
@@ -21,7 +35,8 @@ void ParticleForceRegistry::RemoveParticle(Particle* particle)
 			
 			auto iterator = m_registry.begin() + i;
 			m_registry.erase(iterator);
-
+			i--;
+			std::cout << "";
 		}
 	
 	}

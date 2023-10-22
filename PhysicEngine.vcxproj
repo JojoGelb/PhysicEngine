@@ -169,6 +169,7 @@
     <ClCompile Include="MathPhysicEngine\Collisions\ParticleLink.cpp" />
     <ClCompile Include="MathPhysicEngine\Collisions\ParticleRod.cpp" />
     <ClCompile Include="MathPhysicEngine\Forces\ConstantForce.cpp" />
+    <ClCompile Include="MathPhysicEngine\Forces\InputForce.cpp" />
     <ClCompile Include="MathPhysicEngine\Forces\ParticleAnchoredSpring.cpp" />
     <ClCompile Include="MathPhysicEngine\Forces\ParticleElasticBungee.cpp" />
     <ClCompile Include="MathPhysicEngine\Forces\ParticleForceGenerator.cpp" />
@@ -211,6 +212,7 @@
     <ClInclude Include="MathPhysicEngine\Collisions\ParticleLink.h" />
     <ClInclude Include="MathPhysicEngine\Collisions\ParticleRod.h" />
     <ClInclude Include="MathPhysicEngine\Forces\ConstantForce.h" />
+    <ClInclude Include="MathPhysicEngine\Forces\InputForce.h" />
     <ClInclude Include="MathPhysicEngine\Forces\ParticleAnchoredSpring.h" />
     <ClInclude Include="MathPhysicEngine\Forces\ParticleElasticBungee.h" />
     <ClInclude Include="MathPhysicEngine\Forces\ParticleSpring.h" />
