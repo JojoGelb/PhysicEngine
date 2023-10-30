@@ -24,4 +24,9 @@ public:
 
 	// Apply the quaternion update by the angular velocity
 	void UpdateByAngularVelocity(const Vector3D& rotation, float duration);
+
+	float w() const { return value[0]; }
+	float i() const { return value[1]; }
+	float j() const { return value[2]; }
+	float k() const { return value[3]; }
 };
