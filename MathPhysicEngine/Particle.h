@@ -19,45 +19,39 @@ struct State
 class Particle : public Component
 {
 public:
+
+	Particle(const Vector3D& _position = { 0.0f }, const Vector3D& _velocity = { 0.0f }, const Vector3D& _acceleration = { 0.0f }, float _inversedMass = 1.0f, float _damping = 0.999f, float _gravity = 1.0f);
+	~Particle();
+
 	Vector3D inputValues = { 0.f,0.f,0.f };
 
 	Vector3D position;
 	Vector3D velocity;
 	Vector3D acceleration;
 
+	Vector3D gravityForce;
+
+	//States
 	State previousState;
 	State currentState;
 	State finalState;
 
-	Vector3D gravityForce;
-
 	float damping;
 	float gravity;
-
-	bool impulse = false;
-	bool printParticleOnTerminal = false;
 	float inversedMass;
-
-	Particle(const Vector3D& _position = {0.0f}, const Vector3D& _velocity = { 0.0f }, const Vector3D& _acceleration = { 0.0f }, float _inversedMass = 1.0f, float _damping = 0.999f, float _gravity =  1.0f);
-	~Particle();
-	
-	float GetInverseMass();
-	float GetMass() { return 1 / inversedMass; };
-
-	void SetTest();
-
-	void AddProjectile();
-
-	void SemiImpliciteEulerIntegration(double t, double dt);
 
 	void Start() override;
 	void Update() override;
 	void Shutdown() override;
 
+	float GetInverseMass();
+	float GetMass() { return 1 / inversedMass; };
+
+	void SemiImpliciteEulerIntegration(double t, double dt);
+
 	void AddForce(Vector3D forceToAdd);
 
 	void ClearSumForce();
-
 
 private:
 

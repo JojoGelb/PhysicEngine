@@ -324,7 +324,7 @@ void ImGuiEngine::ShowEngineImGui()
             if (ImGui::TreeNode("Show particule data")) {
 
                 ImGui::Spacing();
-                if (ImGui::Checkbox(" print particle data on terminal ", &particle->printParticleOnTerminal))
+                //if (ImGui::Checkbox(" print particle data on terminal ", &particle->printParticleOnTerminal))
                 ImGui::Spacing();
 
                 ImGui::Text(" position: %.2f, %.2f, %.2f (m)", particle->position.x, particle->position.y, particle->position.z);
