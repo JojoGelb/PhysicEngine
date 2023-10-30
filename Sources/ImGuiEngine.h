@@ -30,6 +30,8 @@ private:
 
 	void SetVisible(bool _visible);
 
+	void TestIteration2();
+
 	float framerate;
 
 	KeyboardInput ImGuiInput;

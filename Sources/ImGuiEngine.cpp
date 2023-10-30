@@ -352,12 +352,17 @@ void ImGuiEngine::ShowEngineImGui()
     }
     ImGui::End();
 
+    //TestIteration2();
+    
+}
+
+void ImGuiEngine::TestIteration2() {
 
     ImGui::Begin("Phase 2 Test panel");
 
     ImGui::SetNextItemOpen(true, ImGuiCond_Once);
 
-    if (ImGui::TreeNode("Forces")) 
+    if (ImGui::TreeNode("Forces"))
     {
         if (ImGui::Button("Test Gravity")) {
 
@@ -590,10 +595,10 @@ void ImGuiEngine::ShowEngineImGui()
 
         ImGui::TreePop();
     }
-   
+
     ImGui::SetNextItemOpen(true, ImGuiCond_Once);
 
-    if (ImGui::TreeNode("Collisions")) 
+    if (ImGui::TreeNode("Collisions"))
     {
         if (ImGui::Button("Test collision")) {
 
@@ -756,10 +761,11 @@ void ImGuiEngine::ShowEngineImGui()
 
         ImGui::TreePop();
     }
-   
+
 
 
     ImGui::End();
+
 }
 
 void ImGuiEngine::SetVisible(bool _visible)
