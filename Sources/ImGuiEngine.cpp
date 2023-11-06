@@ -411,8 +411,7 @@ void ImGuiEngine::TestIteration2() {
 
         if (ImGui::Button("Test Friction")) {
 
-            for (int i = 0; i < gameObjects->size(); i++) delete gameObjects->at(i);
-            gameObjects->clear();
+            for (int i = 0; i < gameObjects->size(); i++) gameObjects->at(i)->shouldDelete = true;
 
             MathPhysicsEngine* math = MathPhysicsEngine::GetInstance();
             GameObject* go = new GameObject("Friction particle");
@@ -445,8 +444,7 @@ void ImGuiEngine::TestIteration2() {
 
             if (ImGui::Button("Test anchored spring")) {
 
-                for (int i = 0; i < gameObjects->size(); i++) delete gameObjects->at(i);
-                gameObjects->clear();
+                for (int i = 0; i < gameObjects->size(); i++) gameObjects->at(i)->shouldDelete = true;
 
                 GameObject* go = new GameObject("anchord block");
                 MathPhysicsEngine* math = MathPhysicsEngine::GetInstance();
@@ -475,8 +473,7 @@ void ImGuiEngine::TestIteration2() {
 
             if (ImGui::Button("Test spring between two objects")) {
 
-                for (int i = 0; i < gameObjects->size(); i++) delete gameObjects->at(i);
-                gameObjects->clear();
+                for (int i = 0; i < gameObjects->size(); i++) gameObjects->at(i)->shouldDelete = true;
 
                 GameObject* go = new GameObject("spring block 1");
                 MathPhysicsEngine* math = MathPhysicsEngine::GetInstance();
@@ -510,8 +507,7 @@ void ImGuiEngine::TestIteration2() {
 
             if (ImGui::Button("Test elastic bungee between two objects")) {
 
-                for (int i = 0; i < gameObjects->size(); i++) delete gameObjects->at(i);
-                gameObjects->clear();
+                for (int i = 0; i < gameObjects->size(); i++) gameObjects->at(i)->shouldDelete = true;
 
                 GameObject* go = new GameObject("elastic bungee block 1");
                 MathPhysicsEngine* math = MathPhysicsEngine::GetInstance();
@@ -543,8 +539,7 @@ void ImGuiEngine::TestIteration2() {
             ImGui::InputInt("Distance with Main Blob (m)", &distance);
             if (ImGui::Button("Test blob")) {
 
-                for (int i = 0; i < gameObjects->size(); i++) delete gameObjects->at(i);
-                gameObjects->clear();
+                for (int i = 0; i < gameObjects->size(); i++) gameObjects->at(i)->shouldDelete = true;
 
                 GameObject* go = new GameObject("main block");
                 MathPhysicsEngine* math = MathPhysicsEngine::GetInstance();
@@ -621,8 +616,7 @@ void ImGuiEngine::TestIteration2() {
     {
         if (ImGui::Button("Test collision")) {
 
-            for (int i = 0; i < gameObjects->size(); i++) delete gameObjects->at(i);
-            gameObjects->clear();
+            for (int i = 0; i < gameObjects->size(); i++) gameObjects->at(i)->shouldDelete = true;
 
             MathPhysicsEngine* math = MathPhysicsEngine::GetInstance();
             GameObject* go = new GameObject("Left particle");
@@ -665,8 +659,7 @@ void ImGuiEngine::TestIteration2() {
 
         if (ImGui::Button("Test penetration and resting contact")) {
 
-            for (int i = 0; i < gameObjects->size(); i++) delete gameObjects->at(i);
-            gameObjects->clear();
+            for (int i = 0; i < gameObjects->size(); i++) gameObjects->at(i)->shouldDelete = true;
 
             GameObject* go = new GameObject("Heavy non gravity block");
             MathPhysicsEngine* math = MathPhysicsEngine::GetInstance();
@@ -702,8 +695,7 @@ void ImGuiEngine::TestIteration2() {
         if (ImGui::Button("Test ROD")) {
 
 
-            for (int i = 0; i < gameObjects->size(); i++) delete gameObjects->at(i);
-            gameObjects->clear();
+            for (int i = 0; i < gameObjects->size(); i++) gameObjects->at(i)->shouldDelete = true;
 
             GameObject* go = new GameObject("Heavy non gravity block");
             MathPhysicsEngine* math = MathPhysicsEngine::GetInstance();
@@ -737,8 +729,7 @@ void ImGuiEngine::TestIteration2() {
         static int cable = 2;
         ImGui::InputInt("Cable Numbers", &cable);
         if (ImGui::Button("Test Cable")) {
-            for (int i = 0; i < gameObjects->size(); i++) delete gameObjects->at(i);
-            gameObjects->clear();
+            for (int i = 0; i < gameObjects->size(); i++) gameObjects->at(i)->shouldDelete = true;
             GameObject* go;
             Particle* particle;
             VisualGameObject* v;
