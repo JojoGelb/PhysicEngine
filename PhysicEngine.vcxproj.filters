@@ -41,6 +41,9 @@
     <ClCompile Include="MathPhysicEngine\Vecteur3D.cpp" />
     <ClCompile Include="MathPhysicEngine\Forces\ParticleElasticBungee.cpp" />
     <ClCompile Include="MathPhysicEngine\Forces\InputForce.cpp" />
+    <ClCompile Include="MathPhysicEngine\Rigidbody\Quaternion.cpp" />
+    <ClCompile Include="MathPhysicEngine\Rigidbody\Matrix33.cpp" />
+    <ClCompile Include="MathPhysicEngine\Rigidbody\Matrix34.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="External Librairies\IMGUI\imconfig.h" />
@@ -84,6 +87,9 @@
     <ClInclude Include="MathPhysicEngine\Particle.h" />
     <ClInclude Include="MathPhysicEngine\Forces\ParticleElasticBungee.h" />
     <ClInclude Include="MathPhysicEngine\Forces\InputForce.h" />
+    <ClInclude Include="MathPhysicEngine\Rigidbody\Quaternion.h" />
+    <ClInclude Include="MathPhysicEngine\Rigidbody\Matrix33.h" />
+    <ClInclude Include="MathPhysicEngine\Rigidbody\Matrix34.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Readme.txt" />
