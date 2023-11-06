@@ -1,5 +1,6 @@
 #include "VisualGameObject.h"
 #include "GraphicsMotor.h"
+#include <iostream>
 
 glm::mat4 TransformComponent::Mat4() {
     const float c3 = glm::cos(rotation.z);
@@ -74,7 +75,7 @@ VisualGameObject* VisualGameObject::CreatePtrVisualGameObject(std::string modele
 
 VisualGameObject::~VisualGameObject()
 {
-    delete model;
+    std::cout << "Delete model \n";
 }
 
 void VisualGameObject::Start()
@@ -89,4 +90,5 @@ void VisualGameObject::Update()
 void VisualGameObject::Shutdown()
 {
     GraphicsMotor::GetInstance()->GetVulkanHandler().RemoveGameObject2(this);
+    delete model;
 }

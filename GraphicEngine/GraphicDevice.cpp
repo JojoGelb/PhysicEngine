@@ -56,6 +56,7 @@ GraphicDevice::GraphicDevice(Window& window) : window{window} {
 }
 
 GraphicDevice::~GraphicDevice() {
+	std::cout << "Delete GraphicDevice\n";
 	vkDestroyCommandPool(device_, commandPool, nullptr);
 	vkDestroyDevice(device_, nullptr);
 

@@ -65,11 +65,13 @@ int main() {
         t += frameTime;
     }
 
+    //Order is important: do not change this
+    graphicsMotor->Shutdown();
+
     for (auto gameObj : gameObjects) {
         delete gameObj;
     }
-
-    graphicsMotor->Shutdown();
+    
     delete GraphicsMotor::GetInstance();
 
     delete MathPhysicsEngine::GetInstance();
