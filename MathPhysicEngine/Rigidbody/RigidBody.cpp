@@ -1,5 +1,18 @@
 #include "RigidBody.h"
 
+void RigidBody::Integrate(double time, double deltaTime)
+{
+	// 1 Mettre à jour la position
+	// 2 Mettre à jour l’orientation
+	// 3 Calculer les valeurs dérivées
+	// 4 Calculer l’accélération linéaire
+	// 5 Calculer l’accélération angulaire
+	// 6 Mettre à jour la vélocité linéaire
+	// 7 Mettre à jour la vélocité angulaire
+	// 8 Remettre à zéro les accumulateurs
+	ClearAccumulator();
+}
+
 void RigidBody::CalculateDerivedData()
 {
 	// Calculate the transform matrix for the body.
