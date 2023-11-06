@@ -47,7 +47,7 @@ Matrix33 Matrix33::Inverse()
 	float t16 = (t4 * values[8] - t6 * values[7] - t8 * values[8] +
 		t10 * values[7] + t12 * values[5] - t14 * values[4]);
 	// Make sure the determinant is non-zero.
-	if (t16 == (float)0.0f) return;
+	if (t16 == (float)0.0f) return (*this);
 	float t17 = 1 / t16;
 
 	Matrix33 m;
@@ -78,6 +78,8 @@ Matrix33 Matrix33::Transpose()
 	t = values[5];
 	values[5] = values[7];
 	values[7] = t;
+
+	return (*this);
 }
 
 void Matrix33::SetOrientation(const Quaternion& q)

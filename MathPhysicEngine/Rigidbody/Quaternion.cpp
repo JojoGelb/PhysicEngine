@@ -1,4 +1,5 @@
 #include "Quaternion.h"
+#include "../Vecteur3D.h"
 #include <math.h>
 
 void Quaternion::Normalized()

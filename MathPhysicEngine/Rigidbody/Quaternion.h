@@ -1,5 +1,6 @@
 #pragma once
-#include "../Vecteur3D.h"
+
+class Vector3D;
 
 class Quaternion
 {

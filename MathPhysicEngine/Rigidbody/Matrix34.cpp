@@ -1,5 +1,6 @@
 #include "Matrix34.h"
 #include "Quaternion.h"
+#include "../Vecteur3D.h"
 #include <math.h>
 
 Matrix34 Matrix34::operator*(const Matrix34& other) const
@@ -52,7 +53,7 @@ float Matrix34::GetDeterminant()
 Matrix34 Matrix34::Inverse()
 {
 	float det = GetDeterminant();
-	if (det == 0) return;
+	if (det == 0) return (*this);
 	det = ((float)1.0) / det;
 
 	float t0 = values[0];

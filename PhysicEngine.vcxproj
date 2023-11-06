@@ -177,6 +177,9 @@
     <ClCompile Include="MathPhysicEngine\Forces\ParticleGravity.cpp" />
     <ClCompile Include="MathPhysicEngine\Forces\ParticleDrag.cpp" />
     <ClCompile Include="MathPhysicEngine\Forces\ParticleSpring.cpp" />
+    <ClCompile Include="MathPhysicEngine\Rigidbody\Matrix33.cpp" />
+    <ClCompile Include="MathPhysicEngine\Rigidbody\Matrix34.cpp" />
+    <ClCompile Include="MathPhysicEngine\Rigidbody\Quaternion.cpp" />
     <ClCompile Include="Sources\GameObject.cpp" />
     <ClCompile Include="Sources\ImGuiEngine.cpp" />
     <ClCompile Include="MathPhysicEngine\MathPhysicEngine.cpp" />
@@ -216,6 +219,9 @@
     <ClInclude Include="MathPhysicEngine\Forces\ParticleAnchoredSpring.h" />
     <ClInclude Include="MathPhysicEngine\Forces\ParticleElasticBungee.h" />
     <ClInclude Include="MathPhysicEngine\Forces\ParticleSpring.h" />
+    <ClInclude Include="MathPhysicEngine\Rigidbody\Matrix33.h" />
+    <ClInclude Include="MathPhysicEngine\Rigidbody\Matrix34.h" />
+    <ClInclude Include="MathPhysicEngine\Rigidbody\Quaternion.h" />
     <ClInclude Include="MathPhysicEngine\Vecteur3D.h" />
     <ClInclude Include="MathPhysicEngine\Forces\ParticleForceGenerator.h" />
     <ClInclude Include="MathPhysicEngine\Forces\ParticleForceRegistry.h" />
