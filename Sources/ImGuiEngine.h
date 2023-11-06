@@ -31,6 +31,7 @@ private:
 	void SetVisible(bool _visible);
 
 	void TestIteration2();
+	void TestIteration3();
 
 	float framerate;
 

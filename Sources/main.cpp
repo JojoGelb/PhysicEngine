@@ -56,9 +56,12 @@ int main() {
 
         graphicsMotor->Update(frameTime);
 
-        for (auto gameObj : gameObjects) {
-            gameObj->Update();
+        for (int i = gameObjects.size()-1; i >= 0; i--) {
+            if (gameObjects[i]->shouldDelete) { delete gameObjects[i]; gameObjects.erase(gameObjects.begin() + i); continue; }
+            gameObjects[i]->Update();
         }
+
+        //Delete objects here
 
         graphicsMotor->Render();
 

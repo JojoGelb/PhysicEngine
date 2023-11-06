@@ -352,8 +352,27 @@ void ImGuiEngine::ShowEngineImGui()
     }
     ImGui::End();
 
-    //TestIteration2();
-    
+    TestIteration2();
+    //TestIteration3();
+}
+
+void ImGuiEngine::TestIteration3() {
+    ImGui::Begin("Phase 3 Test panel");
+
+    ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+
+    /*
+        - Test rotation brut
+        - Test vélocité angulaire : rotate sur un axe par une quantité = impulsion: pas de force
+        - Test de force: sur un point du carré
+        - Ressort ?
+    */
+
+    if (ImGui::TreeNode("Forces")) {
+        
+    }
+
+    ImGui::End();
 }
 
 void ImGuiEngine::TestIteration2() {
@@ -366,8 +385,8 @@ void ImGuiEngine::TestIteration2() {
     {
         if (ImGui::Button("Test Gravity")) {
 
-            for (int i = 0; i < gameObjects->size(); i++) delete gameObjects->at(i);
-            gameObjects->clear();
+            for (int i = 0; i < gameObjects->size(); i++) gameObjects->at(i)->shouldDelete = true;
+            //gameObjects->clear();
 
             MathPhysicsEngine* math = MathPhysicsEngine::GetInstance();
             GameObject* go = new GameObject("Left particle");
