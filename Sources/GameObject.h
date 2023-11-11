@@ -26,6 +26,8 @@ public:
 
 	const std::string & GetName() const { return name; }
 
+	bool shouldDelete = false;
+
 private:
 	std::string name;
 

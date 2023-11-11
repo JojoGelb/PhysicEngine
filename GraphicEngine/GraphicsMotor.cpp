@@ -32,7 +32,7 @@ void GraphicsMotor::Render()
 void GraphicsMotor::Shutdown()
 {
 	vulkanHandler.Shutdown();
-	window.Shutdown();
+ 	window.Shutdown();
 }
 
 bool GraphicsMotor::ExitCondition()
