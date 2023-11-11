@@ -12,7 +12,7 @@ private:
 
 	Vector3D position;
 	Vector3D velocity;
-	Vector3D acceleration;
+	Vector3D linearAcceleration;
 
 	Vector3D rotation;
 
@@ -26,7 +26,7 @@ private:
 	float gravity;
 	float inversedMass;
 
-
+	Vector3D angularAcceleration;
 	//Linear damping but for rotation
 	float angularDamping;
 
@@ -36,6 +36,9 @@ private:
 
 public:
 
+	RigidBody(const Vector3D& _position = { 0.0f }, const Vector3D& _velocity = { 0.0f }, const Vector3D& _linearAcceleration = { 0.0f }, const Vector3D& _rotation = { 0.0f }, const Quaternion& _orientation = { 0.0f }, const Matrix33& _inverseInertiaTensor = { 0.0f }, float _linearDamping = 0.999f, float _gravity = 1.0f, float _inversedMass = 1.0f, float _angularDamping = 0.999f);
+	~RigidBody();
+
 	//Inherited from component
 	void Start() override;
 	void Update() override;
@@ -43,9 +46,22 @@ public:
 
 	void SetInversedTensorAsACube(float mass, float dx, float dy, float dz);
 
-private:
+	Vector3D GetPosition() { return position; };
+	Vector3D GetVelocity() { return velocity; };
+	Vector3D GetLinearAcceleration() { return linearAcceleration; };
+	float GetLinearDamping() { return linearDamping; };
+	float GetMass();
+
+	Quaternion GetOrientation() { return orientation; };
+	Vector3D GetAngularAcceleration() { return angularAcceleration; };
+	Matrix33 GetInverseInertiaTensor() { return inverseInertiaTensor; };
+	Matrix33 GetInverseInertiaTensorWorld() { return inverseInertiaTensorWorld; };
 
 	void Integrate(double time, double deltaTime);
+
+private:
+	
+
 
 	void CalculateDerivedData();
 
@@ -71,5 +87,6 @@ private:
 	//Get point in world Space with the transform matrix
 	Vector3D GetPointInWorldSpace(const Vector3D localPoint);
 
-	float GetMass();
+
+	
 };

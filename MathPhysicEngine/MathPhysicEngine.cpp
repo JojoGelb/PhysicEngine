@@ -107,8 +107,8 @@ void MathPhysicsEngine::UpdateRigidBodies(float frameTime, double t)
 	//UpdateParticlesSumForces(frameTime);
 
 	//Integrate
-	for (Particle* p : particles) {
-		p->SemiImpliciteEulerIntegration(t, (double)frameTime);
+	for (RigidBody* r : rigidBodies) {
+		r->Integrate(t, (double)frameTime);
 	}
 
 	//Check every contact generator to get the current frame contact list

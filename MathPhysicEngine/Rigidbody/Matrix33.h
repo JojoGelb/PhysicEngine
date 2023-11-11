@@ -26,6 +26,17 @@ public:
 
 	void SetOrientation(const Quaternion& q);
 
+	float A() { return values[0]; };
+	float B() { return values[1]; };
+	float C() { return values[2]; };
+	float D() { return values[3]; };
+	float E() { return values[4]; };
+	float F() { return values[5]; };
+	float G() { return values[6]; };
+	float H() { return values[7]; };
+	float I() { return values[8]; };
+
+
 
 
 

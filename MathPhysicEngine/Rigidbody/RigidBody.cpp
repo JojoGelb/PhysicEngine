@@ -1,4 +1,38 @@
 #include "RigidBody.h"
+#include "../MathPhysicEngine.h"
+
+RigidBody::RigidBody(const Vector3D& _position, const Vector3D& _velocity, const Vector3D& _linearAcceleration, const Vector3D& _rotation, const Quaternion& _orientation, const Matrix33& _inverseInertiaTensor, float _linearDamping, float _gravity, float _inversedMass, float _angularDamping)
+	: position(_position), velocity(_velocity), linearAcceleration(_linearAcceleration), rotation(_rotation), orientation(_orientation), inverseInertiaTensor(_inverseInertiaTensor), linearDamping(_linearDamping), gravity(_gravity), inversedMass(_inversedMass), angularDamping(_angularDamping)
+{
+	//previousState = { 0.0,0.0 ,0.0 };
+	//currentState = { 0.0,0.0 ,0.0 };
+	//finalState = { 0.0,0.0 ,0.0 };
+	forceAccum = { 0,0,0 };
+	torqueAccum = { 0,0,0 };
+	
+	transformMatrix = { 0.0f };
+	SetInversedTensorAsACube(GetMass(), 1.0f, 1.0f, 1.0f);
+}
+
+RigidBody::~RigidBody()
+{
+	MathPhysicsEngine::GetInstance()->RemoveRigidBody(this);
+}
+
+
+void RigidBody::Start()
+{
+	MathPhysicsEngine::GetInstance()->AddRigidBody(this);
+}
+
+void RigidBody::Update()
+{
+}
+
+void RigidBody::Shutdown()
+{
+	MathPhysicsEngine::GetInstance()->RemoveRigidBody(this);
+}
 
 void RigidBody::SetInversedTensorAsACube(float mass, float dx, float dy, float dz)
 {
@@ -19,17 +53,18 @@ void RigidBody::Integrate(double time, double deltaTime)
 
 	// 2 Mettre à jour l’orientation
 	orientation.UpdateByAngularVelocity(rotation, deltaTime);
+
 	// 3 Calculer les valeurs dérivées
 	CalculateDerivedData();
 
 	// 4 Calculer l’accélération linéaire
-	acceleration = forceAccum * inversedMass;
+	linearAcceleration = forceAccum * inversedMass;
 
 	// 5 Calculer l’accélération angulaire
-	Vector3D angularAcceleration = inverseInertiaTensorWorld * torqueAccum;
+	angularAcceleration = inverseInertiaTensorWorld * torqueAccum;
 
 	// 6 Mettre à jour la vélocité linéaire
-	velocity = velocity * linearDamping + (acceleration * deltaTime);
+	velocity = velocity * linearDamping + (linearAcceleration * deltaTime);
 
 	// 7 Mettre à jour la vélocité angulaire
 	orientation.UpdateByAngularVelocity(angularAcceleration, deltaTime);
@@ -97,3 +132,6 @@ float RigidBody::GetMass()
 {
 	return 1.0f/inversedMass;
 }
+
+
+

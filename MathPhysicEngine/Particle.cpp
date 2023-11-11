@@ -53,7 +53,7 @@ void Particle::SemiImpliciteEulerIntegration(double t, double dt)
 
 	/*
 	if (printParticleOnTerminal) {
-		std::cout << "time: " << t << " - Position: " << currentState.position << " Velocity: " << currentState.velocity << currentState.acceleration << "\n";
+		std::cout << "time: " << t << " - Position: " << currentState.position << " Velocity: " << currentState.velocity << currentState.linearAcceleration << "\n";
 	}*/
 
 	currentState = { position ,velocity ,acceleration };

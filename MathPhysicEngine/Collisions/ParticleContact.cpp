@@ -32,12 +32,12 @@ void ParticleContact::ResolveVelocity(float duration)
 
 	// ## Resting contact resolution
 
-	//check velocity buildUp due to acceleration
+	//check velocity buildUp due to linearAcceleration
 	Vector3D accCausedVelocity = particle[0]->acceleration;
 	if (particle[1]) { accCausedVelocity -= particle[1]->acceleration; }
 	float accCausedSepVelocity = accCausedVelocity.DotProduct(contactNormal) * duration;
 
-	//closing velocity due to acceleration buildup
+	//closing velocity due to linearAcceleration buildup
 	//need to remove it
 	if (accCausedSepVelocity < 0) {
 	

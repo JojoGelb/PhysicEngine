@@ -1,6 +1,7 @@
 #include "GameObject.h"
 #include "../MathPhysicEngine/Particle.h"
 #include <VisualGameObject.h>
+#include "../MathPhysicEngine/Rigidbody/RigidBody.h"
 
 GameObject::GameObject(std::string _name): name(_name)
 {
@@ -25,10 +26,18 @@ void GameObject::Update()
 	Particle* p = GetComponentOfType<Particle>();
 	VisualGameObject * v = GetComponentOfType<VisualGameObject>();
 
+	RigidBody* r = GetComponentOfType<RigidBody>();
+
 	if (p != nullptr && v != nullptr) {
 		v->transform.translation.x = p->finalState.position.x;
 		v->transform.translation.y = -p->finalState.position.y;
 		v->transform.translation.z = p->finalState.position.z;
+	}
+
+	if (r != nullptr && v != nullptr) {
+		v->transform.translation.x = r->GetPosition().x;
+		v->transform.translation.y = -r->GetPosition().y;
+		v->transform.translation.z = r->GetPosition().z;
 	}
 }
 
