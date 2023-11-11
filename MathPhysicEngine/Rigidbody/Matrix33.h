@@ -22,6 +22,8 @@ public:
 
 	Matrix33 Transpose();
 
+	void SetDiagonal(float x, float y, float z);
+
 	void SetOrientation(const Quaternion& q);
 
 

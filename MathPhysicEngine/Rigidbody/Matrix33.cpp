@@ -82,6 +82,13 @@ Matrix33 Matrix33::Transpose()
 	return (*this);
 }
 
+void Matrix33::SetDiagonal(float x, float y, float z)
+{
+	values[0] = x;
+	values[4] = y;
+	values[8] = z;
+}
+
 void Matrix33::SetOrientation(const Quaternion& q)
 {
 	values[0] = 1 - (2 * q.j() * q.j() + 2 * q.k() * q.k());

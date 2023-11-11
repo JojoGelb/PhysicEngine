@@ -1,6 +1,7 @@
 #pragma once
 #include "Vecteur3D.h"
 #include "Particle.h"
+#include "Rigidbody/RigidBody.h"
 #include <vector>
 #include "Forces/ParticleForceRegistry.h"
 #include "Collisions/ParticleContact.h"
@@ -32,9 +33,14 @@ public:
 	void Update(double t, float frameTime);
 	void Shutdown();
 
+	//Particles management
 	void AddParticle(Particle* p) { particles.push_back(p); }
 	void RemoveParticle(Particle* p);
 	void SetFinalStates(const double alpha);
+
+	//RigidBodies management
+	void AddRigidBody(RigidBody* r) { rigidBodies.push_back(r); }
+	void RemoveRigidBody(RigidBody* r);
 
 	
 	unsigned GenerateContacts();
@@ -44,15 +50,24 @@ public:
 
 private:
 
-	void UpdateSumForces(float frameTime);
+	void UpdateParticles(float frameTime, double t);
+
+	void UpdateRigidBodies(float frameTime, double t);
+
+
+	void UpdateParticlesSumForces(float frameTime);
 
 	void Init();
 	int maxContactNumber = 10;
 
-	ParticleForceRegistry* particleForceRegistry;
+	std::vector<RigidBody*> rigidBodies;
 
 	std::vector<Particle*> particles;
 
+	//Particle forces
+	ParticleForceRegistry* particleForceRegistry;
+
+	//Particle Contacts
 	ParticleContactResolver contactResolver;
 
 	std::vector<ParticleContactGenerator*> contactGenerators;
