@@ -2,6 +2,8 @@
 #include "../MathPhysicEngine/Particle.h"
 #include <VisualGameObject.h>
 #include "../MathPhysicEngine/Rigidbody/RigidBody.h"
+#include <glm/gtc/quaternion.hpp>
+
 
 GameObject::GameObject(std::string _name): name(_name)
 {
@@ -38,6 +40,13 @@ void GameObject::Update()
 		v->transform.translation.x = r->GetPosition().x;
 		v->transform.translation.y = -r->GetPosition().y;
 		v->transform.translation.z = r->GetPosition().z;
+		glm::quat rotationQuaternion = { r->GetOrientation().w(),
+			r->GetOrientation().i(),r->GetOrientation().j(), r->GetOrientation().k() };
+
+		glm::vec3 eulerAngles = glm::eulerAngles(rotationQuaternion);
+
+		v->transform.rotation = eulerAngles;
+
 	}
 }
 

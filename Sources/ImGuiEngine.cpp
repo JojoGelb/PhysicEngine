@@ -119,9 +119,18 @@ void ImGuiEngine::ShowEngineImGui()
     static float gravity = 1;
     static char name[128] = "cube";
 
+    static float rotationX = 0.0f;
+    static float rotationY = 0.0f;
+    static float rotationZ = 0.0f;
+
     static float angularVelocityX = 0.0f;
     static float angularVelocityY = 0.0f;
     static float angularVelocityZ = 0.0f;
+
+    static float orientationW = 1.0f;
+    static float orientationI = 0.0f;
+    static float orientationJ = 0.0f;
+    static float orientationK = 0.0f;
     /*
     ImGui::Text("3D Model");
     ImGui::BeginListBox("3D Model list box");
@@ -142,6 +151,21 @@ void ImGuiEngine::ShowEngineImGui()
     ImGui::InputFloat("inversed mass  (Kg^-1)", &inversedMass);
     ImGui::InputFloat("damping  (Kg/s)", &damping);
     ImGui::InputFloat("gravity scale", &gravity);
+
+    ImGui::Spacing();
+    ImGui::Text("Angular parameters");
+    ImGui::Text("Initial rotation");
+    ImGui::InputFloat("rot x", &rotationX);
+    ImGui::InputFloat("rot y", &rotationY);
+    ImGui::InputFloat("rot z", &rotationZ);
+
+    ImGui::Text("Initial orientation");
+    ImGui::InputFloat("ori w", &orientationW);
+    ImGui::InputFloat("ori i", &orientationI);
+    ImGui::InputFloat("ori j", &orientationJ);
+    ImGui::InputFloat("ori k", &orientationK);
+
+
     if (ImGui::Button("Add Particle Game Object")) {
         Particle* particle = new Particle
         (
@@ -171,8 +195,8 @@ void ImGuiEngine::ShowEngineImGui()
             Vector3D(positionX, positionY, positionZ),//position
             Vector3D(velocityX, velocityY, velocityZ),//velocity
             Vector3D(0.0f, 0.0f, 0.0f),//Acceleration
-            Vector3D(0.0f, 0.0f, 0.0f),//Rotation
-            Quaternion() //Orientation
+            Vector3D(rotationX, rotationY, rotationZ),//Rotation
+            { orientationW,orientationI,orientationJ,orientationK } //Orientation
            // inversedMass,//
             //damping,
             //gravity
@@ -199,6 +223,8 @@ void ImGuiEngine::ShowEngineImGui()
 
     static std::vector<Vector3D> force(200);
     static std::vector<float> restLength(200);
+    static std::vector<float[4]> orientationVector(200);
+
     static std::vector<float> springConstant(200);
     static std::vector<int> index(200);
 
@@ -337,7 +363,9 @@ void ImGuiEngine::ShowEngineImGui()
                     ImGui::Text("ANGULAR DATA");
                     ImGui::Spacing();
 
-                    ImGui::Text(" orientation: w: %.2f,i: %.2f,j: %.2f,k: %.2f", rigidBody->GetOrientation().w(), rigidBody->GetOrientation().i(),
+                    ImGui::Text(" angular damping: %.2f ", rigidBody->GetAngularDamping());
+                    ImGui::Text("rotation: %.2f, %.2f, %.2f (m)", rigidBody->GetRotation().x, rigidBody->GetRotation().y, rigidBody->GetRotation().z);
+                    ImGui::Text("orientation: w: %.2f,i: %.2f,j: %.2f,k: %.2f", rigidBody->GetOrientation().w(), rigidBody->GetOrientation().i(),
                         rigidBody->GetOrientation().j(), rigidBody->GetOrientation().k());
                     ImGui::Text("angular acceleration: %.2f, %.2f, %.2f (m/s^2) ", rigidBody->GetAngularAcceleration().x, rigidBody->GetAngularAcceleration().y, rigidBody->GetAngularAcceleration().z);
 
@@ -354,7 +382,7 @@ void ImGuiEngine::ShowEngineImGui()
 
 
 
-
+                    // ImGui::InputFloat4(" inversed mass: (Kg^-1)", &rig->inversedMass);
                     //ImGui::Text(" force: %.2f, %.2f, %.2f", particle->force.x, particle->force.y, particle->force.z);
                     //ImGui::Text(" gravity force: %.2f, %.2f, %.2f", particle->gravityForce.x, particle->gravityForce.y, particle->gravityForce.z);
 
@@ -367,7 +395,37 @@ void ImGuiEngine::ShowEngineImGui()
 
                     ImGui::TreePop();
                 }
+
+                if (ImGui::TreeNode("ORIENTATION")) {
+
+                    ImGui::InputFloat("ori w", &orientationVector[0][i]);
+                    ImGui::InputFloat("ori i", &orientationVector[1][i]);
+                    ImGui::InputFloat("ori j", &orientationVector[2][i]);
+                    ImGui::InputFloat("ori k", &orientationVector[3][i]);
+
+
+
+                    ImGui::Spacing();
+
+                    if (ImGui::Button("Apply")) {
+
+                        gameObjects->at(index[i])->GetComponentOfType<RigidBody>()->SetOrientation(orientationVector[0][i], orientationVector[1][i], orientationVector[2][i], orientationVector[3][i]);
+                        //Particle* other = new Particle();
+                       // Vector3D anchoredPos = gameObjects->at(index[i])->GetComponentOfType<Particle>()->position;
+                       // ParticleAnchoredSpring* particleAnchoredSpringApply = new ParticleAnchoredSpring(anchoredPos, restLength[i], springConstant[i]);
+
+                       // MathPhysicsEngine::GetInstance()->GetParticleForceRegistry()->AddForce(particle, particleAnchoredSpringApply);
+
+
+                    }
+
+                    ImGui::TreePop();
+
+                }
             }
+
+          
+
            
 
             ImGui::TreePop();

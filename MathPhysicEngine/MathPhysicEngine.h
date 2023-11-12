@@ -54,7 +54,6 @@ private:
 
 	void UpdateRigidBodies(float frameTime, double t);
 
-
 	void UpdateParticlesSumForces(float frameTime);
 
 	void Init();

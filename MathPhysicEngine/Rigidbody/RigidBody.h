@@ -36,7 +36,7 @@ private:
 
 public:
 
-	RigidBody(const Vector3D& _position = { 0.0f }, const Vector3D& _velocity = { 0.0f }, const Vector3D& _linearAcceleration = { 0.0f }, const Vector3D& _rotation = { 0.0f }, const Quaternion& _orientation = { 0.0f }, const Matrix33& _inverseInertiaTensor = { 0.0f }, float _linearDamping = 0.999f, float _gravity = 1.0f, float _inversedMass = 1.0f, float _angularDamping = 0.999f);
+	RigidBody(const Vector3D& _position = { 0.0f }, const Vector3D& _velocity = { 0.0f }, const Vector3D& _linearAcceleration = { 0.0f }, const Vector3D& _rotation = { 0.0f }, const Quaternion& _orientation = { 1.0f,0.0f,0.0f,0.0f }, const Matrix33& _inverseInertiaTensor = { 0.0f }, float _linearDamping = 0.999f, float _gravity = 1.0f, float _inversedMass = 1.0f, float _angularDamping = 0.999f);
 	~RigidBody();
 
 	//Inherited from component
@@ -45,7 +45,7 @@ public:
 	void Shutdown() override;
 
 	void SetInversedTensorAsACube(float mass, float dx, float dy, float dz);
-
+	void SetOrientation(float w, float i, float j, float k) { orientation = { w,i,j,k }; };
 	Vector3D GetPosition() { return position; };
 	Vector3D GetVelocity() { return velocity; };
 	Vector3D GetLinearAcceleration() { return linearAcceleration; };
@@ -53,9 +53,11 @@ public:
 	float GetMass();
 
 	Quaternion GetOrientation() { return orientation; };
+	Vector3D GetRotation() { return rotation; };
 	Vector3D GetAngularAcceleration() { return angularAcceleration; };
 	Matrix33 GetInverseInertiaTensor() { return inverseInertiaTensor; };
 	Matrix33 GetInverseInertiaTensorWorld() { return inverseInertiaTensorWorld; };
+	float GetAngularDamping() { return angularDamping; };
 
 	void Integrate(double time, double deltaTime);
 

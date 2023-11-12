@@ -1,6 +1,7 @@
 #include "Quaternion.h"
 #include "../Vecteur3D.h"
 #include <math.h>
+#include <iostream>
 
 void Quaternion::Normalized()
 {
@@ -79,10 +80,12 @@ void Quaternion::UpdateByAngularVelocity(const Vector3D& rotation, float duratio
 		rotation.y * duration,
 		rotation.z * duration);
 
+
 	q *= *this;
 
 	value[0] += q.value[0] * (0.5f);
 	value[1] += q.value[1] * (0.5f);
 	value[2] += q.value[2] * (0.5f);
 	value[3] += q.value[3] * (0.5f);
+
 }

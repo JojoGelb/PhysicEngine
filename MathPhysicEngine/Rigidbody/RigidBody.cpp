@@ -53,7 +53,7 @@ void RigidBody::Integrate(double time, double deltaTime)
 
 	// 2 Mettre à jour l’orientation
 	orientation.UpdateByAngularVelocity(rotation, deltaTime);
-
+	orientation.Normalized();
 	// 3 Calculer les valeurs dérivées
 	CalculateDerivedData();
 
@@ -67,7 +67,8 @@ void RigidBody::Integrate(double time, double deltaTime)
 	velocity = velocity * linearDamping + (linearAcceleration * deltaTime);
 
 	// 7 Mettre à jour la vélocité angulaire
-	orientation.UpdateByAngularVelocity(angularAcceleration, deltaTime);
+	rotation = rotation * angularDamping + (angularAcceleration * deltaTime);
+	//orientation.UpdateByAngularVelocity(angularAcceleration, deltaTime);
 
 	// 8 Remettre à zéro les accumulateurs
 	ClearAccumulator();
