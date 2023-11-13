@@ -20,7 +20,7 @@ private:
 	Matrix33 inverseInertiaTensor;
 	Matrix33 inverseInertiaTensorWorld;
 
-	Matrix34 transformMatrix;
+	//Matrix34 transformMatrix;
 
 	float linearDamping;
 	float gravity;
@@ -35,6 +35,8 @@ private:
 	Vector3D torqueAccum;
 
 public:
+
+	Matrix34 transformMatrix;
 
 	RigidBody(const Vector3D& _position = { 0.0f }, const Vector3D& _velocity = { 0.0f }, const Vector3D& _linearAcceleration = { 0.0f }, const Vector3D& _rotation = { 0.0f }, const Quaternion& _orientation = { 1.0f,0.0f,0.0f,0.0f }, const Matrix33& _inverseInertiaTensor = { 0.0f }, float _linearDamping = 0.999f, float _gravity = 1.0f, float _inversedMass = 1.0f, float _angularDamping = 0.999f);
 	~RigidBody();

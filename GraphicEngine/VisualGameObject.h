@@ -15,6 +15,11 @@ struct TransformComponent {
 	glm::mat4 Mat4();
 
 	glm::mat3 NormalMatrix();
+
+	//Bug Fix Code: Let GameObject Handle conversion from Rigidbody transform matrix to this format
+	bool localCalculation = true;
+	glm::mat4 ExternalMat4;
+	glm::mat3 ExternalNormalMatrix;
 };
 
 class VisualGameObject : public Component{

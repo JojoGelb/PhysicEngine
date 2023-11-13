@@ -103,6 +103,7 @@ Matrix34 Matrix34::Inverse()
 
 void Matrix34::SetOrientationAndPosition(const Quaternion& q, const Vector3D& p)
 {
+	// old version by the book
 	values[0] = 1 - (2 * q.j() * q.j() + 2 * q.k() * q.k());
 	values[1] = 2 * q.i() * q.j() + 2 * q.k() * q.w();
 	values[2] = 2 * q.i() * q.k() - 2 * q.j() * q.w();
@@ -115,6 +116,20 @@ void Matrix34::SetOrientationAndPosition(const Quaternion& q, const Vector3D& p)
 	values[9] = 2 * q.j() * q.k() - 2 * q.i() * q.w();
 	values[10] = 1 - (2 * q.i() * q.i() + 2 * q.j() * q.j());
 	values[11] = p.z;
+
+	// other version by the book
+	/*values[0] = 1 - (2 * q.j() * q.j() - 2 * q.k() * q.k());
+	values[1] = 2 * q.i() * q.j() - 2 * q.k() * q.w();
+	values[2] = 2 * q.i() * q.k() + 2 * q.j() * q.w();
+	values[3] = p.x;
+	values[4] = 2 * q.i() * q.j() + 2 * q.k() * q.w();
+	values[5] = 1 - (2 * q.i() * q.i() - 2 * q.k() * q.k());
+	values[6] = 2 * q.j() * q.k() - 2 * q.i() * q.w();
+	values[7] = p.y;
+	values[8] = 2 * q.i() * q.k() - 2 * q.j() * q.w();
+	values[9] = 2 * q.j() * q.k() + 2 * q.i() * q.w();
+	values[10] = 1 - (2 * q.i() * q.i() - 2 * q.j() * q.j());
+	values[11] = p.z;*/
 }
 
 Vector3D Matrix34::TransformPosition(const Vector3D& vector)

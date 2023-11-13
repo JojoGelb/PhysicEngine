@@ -5,10 +5,11 @@ class Quaternion;
 
 class Matrix34 {
 private:
-	float values[12];
+	//float values[12];
 
 	float GetDeterminant();
 public:
+	float values[12];
 
 	Matrix34(
 		float a = 0, float b = 0, float c = 0, float x1 = 0,

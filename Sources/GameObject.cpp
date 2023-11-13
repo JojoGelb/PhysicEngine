@@ -37,15 +37,61 @@ void GameObject::Update()
 	}
 
 	if (r != nullptr && v != nullptr) {
-		v->transform.translation.x = r->GetPosition().x;
-		v->transform.translation.y = -r->GetPosition().y;
-		v->transform.translation.z = r->GetPosition().z;
-		glm::quat rotationQuaternion = { r->GetOrientation().w(),
-			r->GetOrientation().i(),r->GetOrientation().j(), r->GetOrientation().k() };
 
-		glm::vec3 eulerAngles = glm::eulerAngles(rotationQuaternion);
+		//Ankward code to convert from Quaternion (Physic motor) to Tait Bryan angles Y1 Z2 X3
+		//This strange implementation is due to choice made at early stage of the project and progress made through
+		//the course progression
+		v->transform.localCalculation = false;
+		v->transform.ExternalMat4 = glm::mat4{
+			{
+				v->transform.scale.x * r->transformMatrix.values[0],
+				v->transform.scale.x * r->transformMatrix.values[1],
+				v->transform.scale.x * r->transformMatrix.values[2],
+				0.0f,
+			},
+			{
+				v->transform.scale.y * r->transformMatrix.values[4],
+				v->transform.scale.y * r->transformMatrix.values[5],
+				v->transform.scale.y * r->transformMatrix.values[6],
+				0.0f,
 
-		v->transform.rotation = eulerAngles;
+			},
+			{
+				v->transform.scale.z * r->transformMatrix.values[8],
+				v->transform.scale.z * r->transformMatrix.values[9],
+				v->transform.scale.z * r->transformMatrix.values[10],
+				0.0f,
+
+			},
+
+			{
+				r->transformMatrix.values[3],
+				r->transformMatrix.values[7],
+				r->transformMatrix.values[11],
+				1.0f,
+			}
+		
+		};
+		const glm::vec3 invScale = 1.0f / v->transform.scale;
+		v->transform.ExternalNormalMatrix = glm::mat3{
+			{
+				invScale.x * r->transformMatrix.values[0],
+				invScale.x * r->transformMatrix.values[1],
+				invScale.x * r->transformMatrix.values[2],
+
+			},
+			{
+				invScale.y * r->transformMatrix.values[4],
+				invScale.y * r->transformMatrix.values[5],
+				invScale.y * r->transformMatrix.values[6],
+
+			},
+			{
+				invScale.z * r->transformMatrix.values[8],
+				invScale.z * r->transformMatrix.values[9],
+				invScale.z * r->transformMatrix.values[10],
+			}
+		};
 
 	}
 }
