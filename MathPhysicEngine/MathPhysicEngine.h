@@ -30,7 +30,7 @@ public:
 	static MathPhysicsEngine* GetInstance();
 
 
-	void Update(double t, float frameTime);
+	void Update(double t, double frameTime);
 	void Shutdown();
 
 	//Particles management
@@ -50,9 +50,9 @@ public:
 
 private:
 
-	void UpdateParticles(float frameTime, double t);
+	void UpdateParticles(double frameTime, double t);
 
-	void UpdateRigidBodies(float frameTime, double t);
+	void UpdateRigidBodies(double frameTime, double t);
 
 	void UpdateParticlesSumForces(float frameTime);
 

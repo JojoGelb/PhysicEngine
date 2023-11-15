@@ -3,7 +3,7 @@
 #include <iostream>
 #include<math.h>
 
-Vector3D::Vector3D(float x_, float y_, float z_) : x(x_), y(y_), z(z_) {}
+Vector3D::Vector3D(double x_, double y_, double z_) : x(x_), y(y_), z(z_) {}
 
 Vector3D::Vector3D(const Vector3D& v) {
 	x = v.x;
@@ -38,18 +38,18 @@ Vector3D Vector3D::operator-=(const Vector3D& other)
 	return *this;
 }
 
-Vector3D Vector3D::operator*(float scalar) const {
+Vector3D Vector3D::operator*(double scalar) const {
 	return Vector3D(x*scalar,y*scalar,z*scalar);
 }
 
-Vector3D Vector3D::operator*=(float scalar){
+Vector3D Vector3D::operator*=(double scalar){
 	x *= scalar;
 	y *= scalar;
 	z *= scalar;
 	return *this;
 }
 
-Vector3D Vector3D::operator/(float scalar) const{
+Vector3D Vector3D::operator/(double scalar) const{
 	if (scalar == 0) {
 		throw std::runtime_error("Vector 3D Division by zero error.");
 		return Vector3D();
@@ -57,7 +57,7 @@ Vector3D Vector3D::operator/(float scalar) const{
 	return Vector3D(x/scalar,y/scalar,z/scalar);
 }
 
-Vector3D Vector3D::operator/=(float scalar){
+Vector3D Vector3D::operator/=(double scalar){
 	x /= scalar;
 	y /= scalar;
 	z /= scalar;
@@ -76,22 +76,22 @@ bool Vector3D::operator==(const Vector3D& other) const {
 	return (x == other.x && y == other.y && z == other.z);
 }
 
-bool Vector3D::Equal(const Vector3D& other, float epsilon) const {
+bool Vector3D::Equal(const Vector3D& other, double epsilon) const {
 	return std::abs(x - other.x) < epsilon && std::abs(y - other.y) < epsilon && std::abs(z - other.z) < epsilon;
 }
 
-float Vector3D::DotProduct(const Vector3D& other) {
+double Vector3D::DotProduct(const Vector3D& other) {
 	return x* other.x + other.y * y + other.z * z;
 }
 
 Vector3D Vector3D::CrossProduct(const Vector3D& other){
-	float cx = y * other.z - z * other.y;
-	float cy = z * other.x - x * other.z;
-	float cz = x * other.y - y * other.x;
+	double cx = y * other.z - z * other.y;
+	double cy = z * other.x - x * other.z;
+	double cz = x * other.y - y * other.x;
 	return Vector3D(cx, cy, cz);
 }
 
-float Vector3D::GetNorm() const
+double Vector3D::GetNorm() const
 {
 	return std::sqrt(x * x + y * y + z * z);
 }
@@ -106,16 +106,16 @@ Vector3D Vector3D::Normalize()
 	return *this;
 }
 
-float Vector3D::DistanceTo(const Vector3D& other)
+double Vector3D::DistanceTo(const Vector3D& other)
 {
-	float dx = other.x - x;
-	float dy = other.y - y;
-	float dz = other.z - z;
+	double dx = other.x - x;
+	double dy = other.y - y;
+	double dz = other.z - z;
 
 	return std::sqrt(dx * dx + dy * dy + dz * dz);
 }
 
-Vector3D operator*(float scalar, const Vector3D& vector)
+Vector3D operator*(double scalar, const Vector3D& vector)
 {
 	return Vector3D(vector.x * scalar, vector.y * scalar, vector.z * scalar);
 }

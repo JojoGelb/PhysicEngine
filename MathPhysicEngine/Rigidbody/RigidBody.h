@@ -14,8 +14,6 @@ private:
 	Vector3D velocity;
 	Vector3D linearAcceleration;
 
-	Vector3D rotation;
-
 	Quaternion orientation;
 	Matrix33 inverseInertiaTensor;
 	Matrix33 inverseInertiaTensorWorld;
@@ -35,6 +33,8 @@ private:
 	Vector3D torqueAccum;
 
 public:
+
+	Vector3D rotation;
 
 	Matrix34 transformMatrix;
 

@@ -72,7 +72,7 @@ void MathPhysicsEngine::Init()
 	contactGenerators.push_back(new NaiveParticleContactGenerator(1.0f, &particles));
 }
 
-void MathPhysicsEngine::Update(double t,float frameTime)
+void MathPhysicsEngine::Update(double t,double frameTime)
 {
 	UpdateParticles(frameTime, t);
 	
@@ -80,14 +80,14 @@ void MathPhysicsEngine::Update(double t,float frameTime)
 
 }
 
-void MathPhysicsEngine::UpdateParticles(float frameTime, double t)
+void MathPhysicsEngine::UpdateParticles(double frameTime, double t)
 {
 	//Generates Forces
 	UpdateParticlesSumForces(frameTime);
 
 	//Integrate
 	for (Particle* p : particles) {
-		p->SemiImpliciteEulerIntegration(t, (double)frameTime);
+		p->SemiImpliciteEulerIntegration(t, frameTime);
 	}
 
 	//Check every contact generator to get the current frame contact list
@@ -101,14 +101,14 @@ void MathPhysicsEngine::UpdateParticles(float frameTime, double t)
 	}
 }
 
-void MathPhysicsEngine::UpdateRigidBodies(float frameTime, double t)
+void MathPhysicsEngine::UpdateRigidBodies(double frameTime, double t)
 {
 	//Generates Forces
 	//UpdateParticlesSumForces(frameTime);
 
 	//Integrate
 	for (RigidBody* r : rigidBodies) {
-		r->Integrate(t, (double)frameTime);
+		r->Integrate(t, frameTime);
 	}
 
 	//Check every contact generator to get the current frame contact list

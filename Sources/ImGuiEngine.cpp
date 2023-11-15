@@ -239,9 +239,9 @@ void ImGuiEngine::ShowEngineImGui()
 
             if (ImGui::TreeNode("Add Unique constant force")){
 
-                ImGui::InputFloat("force x (N)", &force[i].x);
-                ImGui::InputFloat("force y (N)", &force[i].y);
-                ImGui::InputFloat("force z (N)", &force[i].z);
+                ImGui::InputDouble("force x (N)", &force[i].x);
+                ImGui::InputDouble("force y (N)", &force[i].y);
+                ImGui::InputDouble("force z (N)", &force[i].z);
 
                 ImGui::Spacing();
 
@@ -545,7 +545,7 @@ void ImGuiEngine::TestIteration2() {
                 go->AddComponent(particleSpring);
 
                 math->GetParticleForceRegistry()->AddForce(particleSpring, math->particleGravity);
-                ParticleAnchoredSpring* particleAnchoredSpring = new ParticleAnchoredSpring(particleAnchord->position, anchoredSpringConstant, anchoredSpringRestLength);
+                ParticleAnchoredSpring* particleAnchoredSpring = new ParticleAnchoredSpring(particleAnchord->position,(float) anchoredSpringConstant, (float)anchoredSpringRestLength);
 
                 math->GetParticleForceRegistry()->AddForce(particleSpring, particleAnchoredSpring);
 
@@ -659,23 +659,23 @@ void ImGuiEngine::TestIteration2() {
                     go->AddComponent(v);
                     gameObjects->push_back(go);
 
-                    ParticleSpring* particleAnchoredSpring = new ParticleSpring(particleAnchord, anchoredSpringConstant, anchoredSpringRestLength);
+                    ParticleSpring* particleAnchoredSpring = new ParticleSpring(particleAnchord, (float)anchoredSpringConstant, (float)anchoredSpringRestLength);
                     math->GetParticleForceRegistry()->AddForce(particleSpring, particleAnchoredSpring);
 
                     if (i != 1) {
-                        particleAnchoredSpring = new ParticleSpring(blobs.back(), anchoredSpringConstant, anchoredSpringRestLength);
+                        particleAnchoredSpring = new ParticleSpring(blobs.back(), (float)anchoredSpringConstant, (float)anchoredSpringRestLength);
                         math->GetParticleForceRegistry()->AddForce(particleSpring, particleAnchoredSpring);
 
-                        particleAnchoredSpring = new ParticleSpring(particleSpring, anchoredSpringConstant, anchoredSpringRestLength);
+                        particleAnchoredSpring = new ParticleSpring(particleSpring, (float)anchoredSpringConstant, (float)anchoredSpringRestLength);
                         math->GetParticleForceRegistry()->AddForce(blobs.back(), particleAnchoredSpring);
                     }
 
                     if (i == maxBlob) {
 
-                        particleAnchoredSpring = new ParticleSpring(blobs.front(), anchoredSpringConstant, anchoredSpringRestLength);
+                        particleAnchoredSpring = new ParticleSpring(blobs.front(), (float)anchoredSpringConstant, (float)anchoredSpringRestLength);
                         math->GetParticleForceRegistry()->AddForce(particleSpring, particleAnchoredSpring);
 
-                        particleAnchoredSpring = new ParticleSpring(particleSpring, anchoredSpringConstant, anchoredSpringRestLength);
+                        particleAnchoredSpring = new ParticleSpring(particleSpring, (float)anchoredSpringConstant, (float)anchoredSpringRestLength);
                         math->GetParticleForceRegistry()->AddForce(blobs.front(), particleAnchoredSpring);
                     }
 
