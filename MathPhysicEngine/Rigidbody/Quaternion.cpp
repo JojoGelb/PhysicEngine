@@ -5,7 +5,7 @@
 
 void Quaternion::Normalized()
 {
-	float mag = 0;
+	double mag = 0;
 	for (int i = 0; i < 4; i++) {
 		mag += value[i] * value[i];
 	}
@@ -16,7 +16,7 @@ void Quaternion::Normalized()
 		return;
 	}
 
-	mag = (1.0f) / sqrtf(mag);
+	mag = (1.0f) / sqrt(mag);
 
 	for (int i = 0; i < 4; i++) {
 		value[i] *= mag;
@@ -73,7 +73,7 @@ void Quaternion::RotateByVector(const Vector3D& vector)
 
 }
 
-void Quaternion::UpdateByAngularVelocity(const Vector3D& rotation, float duration)
+void Quaternion::UpdateByAngularVelocity(const Vector3D& rotation, double duration)
 {
 	Quaternion q(0,
 		rotation.x * duration,

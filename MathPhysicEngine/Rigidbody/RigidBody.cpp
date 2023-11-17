@@ -68,7 +68,6 @@ void RigidBody::Integrate(double time, double deltaTime)
 
 	// 7 Mettre à jour la vélocité angulaire
 	rotation = rotation * angularDamping + (angularAcceleration * deltaTime);
-	//orientation.UpdateByAngularVelocity(angularAcceleration, deltaTime);
 
 	// 8 Remettre à zéro les accumulateurs
 	ClearAccumulator();

@@ -40,7 +40,7 @@ Vector3D Matrix34::operator*(const Vector3D& vector) const
 	);
 }
 
-float Matrix34::GetDeterminant()
+double Matrix34::GetDeterminant()
 {
 	return values[8] * values[5] * values[2] +
 		values[4] * values[9] * values[2] +
@@ -52,22 +52,22 @@ float Matrix34::GetDeterminant()
 
 Matrix34 Matrix34::Inverse()
 {
-	float det = GetDeterminant();
+	double det = GetDeterminant();
 	if (det == 0) return (*this);
-	det = ((float)1.0) / det;
+	det = ((double)1.0) / det;
 
-	float t0 = values[0];
-	float t1 = values[1];
-	float t2 = values[2];
-	float t3 = values[3];
-	float t4 = values[4];
-	float t5 = values[5];
-	float t6 = values[6];
-	float t7 = values[7];
-	float t8 = values[8];
-	float t9 = values[9];
-	float t10 = values[10];
-	float t11 = values[11];
+	double t0 = values[0];
+	double t1 = values[1];
+	double t2 = values[2];
+	double t3 = values[3];
+	double t4 = values[4];
+	double t5 = values[5];
+	double t6 = values[6];
+	double t7 = values[7];
+	double t8 = values[8];
+	double t9 = values[9];
+	double t10 = values[10];
+	double t11 = values[11];
 
 	values[0] = (-t9 * t6 + t5 * t10) * det;
 	values[4] = (t8 * t6 - t4 * t10) * det;

@@ -37,18 +37,18 @@ Vector3D Matrix33::operator*(const Vector3D& vector) const
 
 Matrix33 Matrix33::Inverse()
 {
-	float t4 = values[0] * values[4];
-	float t6 = values[0] * values[5];
-	float t8 = values[1] * values[3];
-	float t10 = values[2] * values[3];
-	float t12 = values[1] * values[6];
-	float t14 = values[2] * values[6];
+	double t4 = values[0] * values[4];
+	double t6 = values[0] * values[5];
+	double t8 = values[1] * values[3];
+	double t10 = values[2] * values[3];
+	double t12 = values[1] * values[6];
+	double t14 = values[2] * values[6];
 	// Calculate the determinant.
-	float t16 = (t4 * values[8] - t6 * values[7] - t8 * values[8] +
+	double t16 = (t4 * values[8] - t6 * values[7] - t8 * values[8] +
 		t10 * values[7] + t12 * values[5] - t14 * values[4]);
 	// Make sure the determinant is non-zero.
-	if (t16 == (float)0.0f) return (*this);
-	float t17 = 1 / t16;
+	if (t16 == (double)0.0f) return (*this);
+	double t17 = 1 / t16;
 
 	Matrix33 m;
 
@@ -67,7 +67,7 @@ Matrix33 Matrix33::Inverse()
 
 Matrix33 Matrix33::Transpose()
 {
-	float t = values[1];
+	double t = values[1];
 	values[1] = values[3];
 	values[3] = t;
 
@@ -82,7 +82,7 @@ Matrix33 Matrix33::Transpose()
 	return (*this);
 }
 
-void Matrix33::SetDiagonal(float x, float y, float z)
+void Matrix33::SetDiagonal(double x, double y, double z)
 {
 	values[0] = x;
 	values[4] = y;

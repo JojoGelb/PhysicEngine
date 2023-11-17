@@ -20,6 +20,13 @@ GameObject::~GameObject()
 
 void GameObject::Update()
 {
+
+	RigidBody* r = GetComponentOfType<RigidBody>();
+	//test line;
+	if (r != nullptr) {
+		r->rotation.y = 2.0f;
+	}
+
 	for(Component* comp: components)
 	{
 		comp->Update();
@@ -28,12 +35,12 @@ void GameObject::Update()
 	Particle* p = GetComponentOfType<Particle>();
 	VisualGameObject * v = GetComponentOfType<VisualGameObject>();
 
-	RigidBody* r = GetComponentOfType<RigidBody>();
+
 
 	if (p != nullptr && v != nullptr) {
-		v->transform.translation.x = p->finalState.position.x;
-		v->transform.translation.y = -p->finalState.position.y;
-		v->transform.translation.z = p->finalState.position.z;
+		v->transform.translation.x = (float)p->finalState.position.x;
+		v->transform.translation.y = (float)-p->finalState.position.y;
+		v->transform.translation.z = (float)p->finalState.position.z;
 	}
 
 	if (r != nullptr && v != nullptr) {
