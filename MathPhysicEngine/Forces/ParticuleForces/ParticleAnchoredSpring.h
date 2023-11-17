@@ -1,7 +1,7 @@
 #pragma once
-#include "ParticleForceGenerator.h"
+#include "../ForceGenerator.h"
 class ParticleAnchoredSpring :
-    public ParticleForceGenerator
+    public ForceGenerator
 {
 private:
     Vector3D anchor;

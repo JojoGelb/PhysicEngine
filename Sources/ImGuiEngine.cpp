@@ -6,13 +6,13 @@
 #include"GLFW/glfw3.h"
 #include "../MathPhysicEngine/Particle.h"
 #include "../MathPhysicEngine/MathPhysicEngine.h"
-#include "../MathPhysicEngine/Forces/ParticleGravity.h"
-#include "../MathPhysicEngine/Forces/ConstantForce.h"
-#include "../MathPhysicEngine/Forces/ParticleSpring.h"
-#include "../MathPhysicEngine/Forces/ParticleAnchoredSpring.h"
+#include "../MathPhysicEngine/Forces/ParticuleForces/ParticleGravity.h"
+#include "../MathPhysicEngine/Forces/ParticuleForces/ConstantForce.h"
+#include "../MathPhysicEngine/Forces/ParticuleForces/ParticleSpring.h"
+#include "../MathPhysicEngine/Forces/ParticuleForces/ParticleAnchoredSpring.h"
 #include <random>
-#include "../MathPhysicEngine/Forces/ParticleElasticBungee.h"
-#include "../MathPhysicEngine/Forces/InputForce.h"
+#include "../MathPhysicEngine/Forces/ParticuleForces/ParticleElasticBungee.h"
+#include "../MathPhysicEngine/Forces/ParticuleForces/InputForce.h"
 
 
 ImGuiEngine::ImGuiEngine(GLFWwindow* _window, std::vector<GameObject*>* _gameObjects): window(_window), gameObjects(_gameObjects)

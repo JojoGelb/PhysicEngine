@@ -10,7 +10,7 @@
 #include "Collisions/ParticleRod.h"
 #include "Collisions/ParticleCable.h"
 
-#include "Forces/ParticleGravity.h"
+#include "Forces/ParticuleForces/ParticleGravity.h"
 
 class MathPhysicsEngine {
 

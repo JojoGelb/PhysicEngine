@@ -1,7 +1,7 @@
 #pragma once
-#include "ParticleForceGenerator.h"
+#include "../ForceGenerator.h"
 class InputForce :
-    public ParticleForceGenerator
+    public ForceGenerator
 {
 private:
 public:
