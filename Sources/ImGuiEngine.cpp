@@ -237,8 +237,9 @@ void ImGuiEngine::ShowEngineImGui()
         auto rigidBody = gameObjects->at(i)->GetComponentOfType<RigidBody>();
 
         if (ImGui::TreeNode( ( std::to_string(i) + ". " + gameObjects->at(i)->GetName()).c_str())) {
-
-            if (ImGui::TreeNode("Add Unique constant force")){
+            if(particle)
+            {
+                if (ImGui::TreeNode("Add Unique constant force")){
 
                 ImGui::InputDouble("force x (N)", &force[i].x);
                 ImGui::InputDouble("force y (N)", &force[i].y);
@@ -262,7 +263,7 @@ void ImGuiEngine::ShowEngineImGui()
 
                 ImGui::TreePop();
             }
-
+            }
             /*
             if (ImGui::TreeNode("Add spring force")) {
 
@@ -438,11 +439,11 @@ void ImGuiEngine::ShowEngineImGui()
     ImGui::End();
 
     TestIteration2();
-    //TestIteration3();
+    TestIteration3();
 }
 
 void ImGuiEngine::TestIteration3() {
-    ImGui::Begin("Phase 3 Test panel");
+    ImGui::Begin("Phase 3 Test RIGIDBODY panel");
 
     ImGui::SetNextItemOpen(true, ImGuiCond_Once);
 
@@ -455,6 +456,59 @@ void ImGuiEngine::TestIteration3() {
 
     if (ImGui::TreeNode("Forces")) {
         
+        if (ImGui::Button("Test Gravity")) {
+
+            for (int i = 0; i < gameObjects->size(); i++) gameObjects->at(i)->shouldDelete = true;
+            //gameObjects->clear();
+
+            MathPhysicsEngine* math = MathPhysicsEngine::GetInstance();
+            GameObject* go = new GameObject("rigidBody");
+            RigidBody* rigidbody = new RigidBody
+            (
+                Vector3D(-10, 0, 20),
+                Vector3D(10, 10, 0),
+                Vector3D(0.0f, 0.0f, 0.0f),
+                Vector3D(0.0f, 0.0f, 2.0f),
+                { 1,0,0,0 }
+            );
+            RigidBodyGravity* rigidBodyGravity = new RigidBodyGravity({ 0.0f,-10.0f,0.0f });
+            math->GetRigidBodyForceRegistry()->AddForce(rigidbody, rigidBodyGravity);
+            go->AddComponent(rigidbody);
+
+            VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject("Models/colored_cube.obj");
+            go->AddComponent(v);
+            gameObjects->push_back(go);
+
+        }
+
+        if (ImGui::Button("Test angular damping")) {
+
+            for (int i = 0; i < gameObjects->size(); i++) gameObjects->at(i)->shouldDelete = true;
+
+            MathPhysicsEngine* math = MathPhysicsEngine::GetInstance();
+            GameObject* go = new GameObject("damping rigidBody");
+            RigidBody* rigidBody = new RigidBody
+            (
+                Vector3D(0, 0, 5),
+                Vector3D(0, 0, 0),
+                Vector3D(0.0f, 0.0f, 0.0f),
+                Vector3D(0, 0, 20),
+                { 1,0,0,0 },
+                1.0f,
+                0.95f,
+                1.0f,
+                1.0f,
+                0.95f                
+            );
+
+            go->AddComponent(rigidBody);
+
+            VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject("Models/colored_cube.obj");
+            go->AddComponent(v);
+            gameObjects->push_back(go);
+        }
+
+        ImGui::TreePop();
     }
 
     ImGui::End();
@@ -462,7 +516,7 @@ void ImGuiEngine::TestIteration3() {
 
 void ImGuiEngine::TestIteration2() {
 
-    ImGui::Begin("Phase 2 Test panel");
+    ImGui::Begin("Phase 2 Test PARTICULES panel");
 
     ImGui::SetNextItemOpen(true, ImGuiCond_Once);
 
