@@ -5,6 +5,20 @@
 #include "Matrix33.h"
 #include "Quaternion.h"
 
+struct RigidBodyState
+{
+	//Vector3D position;
+	//Vector3D velocity;
+	//Vector3D acceleration;
+
+	Matrix34 transformMatrix;
+	RigidBodyState();
+	RigidBodyState(Matrix34 _transformMatrix);
+	RigidBodyState operator*(const double scalar) const;
+	RigidBodyState operator+(const RigidBodyState& other) const;
+
+
+};
 class RigidBody : public Component {
 
 private:
@@ -35,6 +49,11 @@ private:
 
 public:
 
+	//States
+	RigidBodyState previousState;
+	RigidBodyState currentState;
+	RigidBodyState finalState;
+	
 	Vector3D rotation;
 
 	Matrix34 transformMatrix;

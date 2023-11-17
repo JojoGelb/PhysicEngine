@@ -20,6 +20,10 @@ public:
 
 	Vector3D operator*(const Vector3D& vector)const;
 
+	Matrix34 operator*(const double& other)const;
+
+	Matrix34 operator+(const Matrix34& other)const;
+	
 	Matrix34 Inverse();
 
 	void SetOrientationAndPosition(const Quaternion& q, const Vector3D& p);

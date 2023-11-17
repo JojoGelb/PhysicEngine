@@ -1,16 +1,40 @@
 #include "RigidBody.h"
 #include "../MathPhysicEngine.h"
 
+RigidBodyState::RigidBodyState()
+{
+	
+}
+
+RigidBodyState::RigidBodyState(Matrix34 _transformMatrix)
+	:transformMatrix(_transformMatrix)
+{
+}
+
+RigidBodyState RigidBodyState::operator*(const double scalar) const
+{
+	return {this->transformMatrix * scalar};
+}
+
+RigidBodyState RigidBodyState::operator+(const RigidBodyState& other) const
+{
+	return {this->transformMatrix + other.transformMatrix};
+}
+
 RigidBody::RigidBody(const Vector3D& _position, const Vector3D& _velocity, const Vector3D& _linearAcceleration, const Vector3D& _rotation, const Quaternion& _orientation, const Matrix33& _inverseInertiaTensor, float _linearDamping, float _gravity, float _inversedMass, float _angularDamping)
 	: position(_position), velocity(_velocity), linearAcceleration(_linearAcceleration), rotation(_rotation), orientation(_orientation), inverseInertiaTensor(_inverseInertiaTensor), linearDamping(_linearDamping), gravity(_gravity), inversedMass(_inversedMass), angularDamping(_angularDamping)
 {
-	//previousState = { 0.0,0.0 ,0.0 };
-	//currentState = { 0.0,0.0 ,0.0 };
-	//finalState = { 0.0,0.0 ,0.0 };
+	previousState = { 0.0f };
+	currentState = { 0.0f };
+	finalState = { 0.0f };
+	
 	forceAccum = { 0,0,0 };
 	torqueAccum = { 0,0,0 };
 	
 	transformMatrix = { 0.0f };
+
+	angularAcceleration = { 0,0,0 };
+
 	SetInversedTensorAsACube(GetMass(), 1.0f, 1.0f, 1.0f);
 }
 
@@ -48,6 +72,9 @@ void RigidBody::SetInversedTensorAsACube(float mass, float dx, float dy, float d
 
 void RigidBody::Integrate(double time, double deltaTime)
 {
+
+	previousState = { transformMatrix };
+	
 	// 1 Mettre à jour la position
 	position = position + (velocity * deltaTime);
 
@@ -71,6 +98,8 @@ void RigidBody::Integrate(double time, double deltaTime)
 
 	// 8 Remettre à zéro les accumulateurs
 	ClearAccumulator();
+
+	currentState = { transformMatrix };
 }
 
 void RigidBody::CalculateDerivedData()

@@ -156,6 +156,10 @@ void MathPhysicsEngine::SetFinalStates(const double alpha)
 	for (Particle* p : particles) {
 		p->finalState = p->currentState * alpha + p->previousState * (1.0 - alpha);
 	}
+
+	for (RigidBody* r : rigidBodies) {
+		r->finalState = r->currentState * alpha + r->previousState * (1.0 - alpha);
+	}
 }
 
 ParticleForceRegistry* MathPhysicsEngine::GetParticleForceRegistry()

@@ -47,30 +47,30 @@ void GameObject::Update()
 		v->transform.localCalculation = false;
 		v->transform.ExternalMat4 = glm::mat4{
 			{
-				v->transform.scale.x * r->transformMatrix.values[0],
-				v->transform.scale.x * r->transformMatrix.values[1],
-				v->transform.scale.x * r->transformMatrix.values[2],
+				v->transform.scale.x * r->finalState.transformMatrix.values[0],
+				v->transform.scale.x * r->finalState.transformMatrix.values[1],
+				v->transform.scale.x * r->finalState.transformMatrix.values[2],
 				0.0f,
 			},
 			{
-				v->transform.scale.y * r->transformMatrix.values[4],
-				v->transform.scale.y * r->transformMatrix.values[5],
-				v->transform.scale.y * r->transformMatrix.values[6],
+				v->transform.scale.y * r->finalState.transformMatrix.values[4],
+				v->transform.scale.y * r->finalState.transformMatrix.values[5],
+				v->transform.scale.y * r->finalState.transformMatrix.values[6],
 				0.0f,
 
 			},
 			{
-				v->transform.scale.z * r->transformMatrix.values[8],
-				v->transform.scale.z * r->transformMatrix.values[9],
-				v->transform.scale.z * r->transformMatrix.values[10],
+				v->transform.scale.z * r->finalState.transformMatrix.values[8],
+				v->transform.scale.z * r->finalState.transformMatrix.values[9],
+				v->transform.scale.z * r->finalState.transformMatrix.values[10],
 				0.0f,
 
 			},
 
 			{
-				r->transformMatrix.values[3],
-				- r->transformMatrix.values[7],
-				r->transformMatrix.values[11],
+				r->finalState.transformMatrix.values[3],
+				- r->finalState.transformMatrix.values[7],
+				r->finalState.transformMatrix.values[11],
 				1.0f,
 			}
 		
@@ -78,21 +78,21 @@ void GameObject::Update()
 		const glm::vec3 invScale = 1.0f / v->transform.scale;
 		v->transform.ExternalNormalMatrix = glm::mat3{
 			{
-				invScale.x * r->transformMatrix.values[0],
-				invScale.x * r->transformMatrix.values[1],
-				invScale.x * r->transformMatrix.values[2],
+				invScale.x * r->finalState.transformMatrix.values[0],
+				invScale.x * r->finalState.transformMatrix.values[1],
+				invScale.x * r->finalState.transformMatrix.values[2],
 
 			},
 			{
-				invScale.y * r->transformMatrix.values[4],
-				invScale.y * r->transformMatrix.values[5],
-				invScale.y * r->transformMatrix.values[6],
+				invScale.y * r->finalState.transformMatrix.values[4],
+				invScale.y * r->finalState.transformMatrix.values[5],
+				invScale.y * r->finalState.transformMatrix.values[6],
 
 			},
 			{
-				invScale.z * r->transformMatrix.values[8],
-				invScale.z * r->transformMatrix.values[9],
-				invScale.z * r->transformMatrix.values[10],
+				invScale.z * r->finalState.transformMatrix.values[8],
+				invScale.z * r->finalState.transformMatrix.values[9],
+				invScale.z * r->finalState.transformMatrix.values[10],
 			}
 		};
 

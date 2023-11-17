@@ -40,6 +40,44 @@ Vector3D Matrix34::operator*(const Vector3D& vector) const
 	);
 }
 
+Matrix34 Matrix34::operator*(const double& other) const
+{
+	return Matrix34(
+		values[0] * other,
+		values[1] * other,
+		values[2] * other,
+		values[3] * other,
+
+		values[4] * other,
+		values[5] * other,
+		values[6] * other,
+		values[7] * other,
+
+		values[8] * other,
+		values[9] * other,
+		values[10] * other,
+		values[11] * other
+	);
+}
+
+Matrix34 Matrix34::operator+(const Matrix34& other) const
+{
+	return Matrix34(
+	values[0] + other.values[0],
+	values[1] + other.values[1],
+	values[2] + other.values[2],
+	values[3] + other.values[3],
+	values[4] + other.values[4],
+	values[5] + other.values[5],
+	values[6] + other.values[6],
+	values[7] + other.values[7],
+	values[8] + other.values[8],
+	values[9] + other.values[9],
+	values[10] + other.values[10],
+	values[11] + other.values[11]
+	);
+}
+
 double Matrix34::GetDeterminant()
 {
 	return values[8] * values[5] * values[2] +
