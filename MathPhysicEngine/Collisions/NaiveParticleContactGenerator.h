@@ -13,7 +13,7 @@ public:
 
 
 
-	// Hérité via ParticleContactGenerator
+	// HÃ©ritÃ© via ParticleContactGenerator
 	unsigned int AddContact(std::vector<ParticleContact*>& contacts, unsigned int limit) const override;
 
 	NaiveParticleContactGenerator(float radius, std::vector<Particle*>* particles)

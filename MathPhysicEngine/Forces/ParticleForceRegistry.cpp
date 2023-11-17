@@ -9,12 +9,12 @@ void ParticleForceRegistry::UpdateForce(float duration)
 	}
 }
 
-void ParticleForceRegistry::AddForce(Particle* particle, ForceGenerator* forceGenerator)
+void ParticleForceRegistry::AddForce(Particle* particle, ParticuleForceGenerator* forceGenerator)
 {
 	m_registry.push_back(ParticleForceRegistry::ParticleForceEntry(particle, forceGenerator));
 }
 
-void ParticleForceRegistry::DeleteForce(Particle* particle, ForceGenerator* forceGenerator)
+void ParticleForceRegistry::DeleteForce(Particle* particle, ParticuleForceGenerator* forceGenerator)
 {
 	for (int i = 0; i < m_registry.size(); i++) {
 		if(m_registry.at(i).particle == particle) {
@@ -42,4 +42,4 @@ void ParticleForceRegistry::RemoveParticle(Particle* particle)
 	}
 }
 
-ParticleForceRegistry::ParticleForceEntry::ParticleForceEntry(Particle* particle, ForceGenerator* forceGenerator) : particle(particle), forceGenerator(forceGenerator){}
+ParticleForceRegistry::ParticleForceEntry::ParticleForceEntry(Particle* particle, ParticuleForceGenerator* forceGenerator) : particle(particle), forceGenerator(forceGenerator){}

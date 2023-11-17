@@ -1,7 +1,7 @@
 #pragma once
-#include "../ForceGenerator.h"
+#include "ParticuleForceGenerator.h"
 class ParticleElasticBungee :
-    public ForceGenerator
+    public ParticuleForceGenerator
 {
 private:
     Particle* other;

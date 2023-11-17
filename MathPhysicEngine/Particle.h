@@ -58,7 +58,7 @@ private:
 	Vector3D sumForce;
 	void SetInverseMass(float mass);
 
-	// Hérité via Component
+	// HÃ©ritÃ© via Component
 
 };
 

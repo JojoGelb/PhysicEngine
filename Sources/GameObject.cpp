@@ -22,11 +22,7 @@ void GameObject::Update()
 {
 
 	RigidBody* r = GetComponentOfType<RigidBody>();
-	//test line;
-	if (r != nullptr) {
-		r->rotation.y = 2.0f;
-	}
-
+	
 	for(Component* comp: components)
 	{
 		comp->Update();
@@ -73,7 +69,7 @@ void GameObject::Update()
 
 			{
 				r->transformMatrix.values[3],
-				r->transformMatrix.values[7],
+				- r->transformMatrix.values[7],
 				r->transformMatrix.values[11],
 				1.0f,
 			}

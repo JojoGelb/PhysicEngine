@@ -13,6 +13,7 @@ MathPhysicsEngine::~MathPhysicsEngine()
 	}
 
 	delete particleForceRegistry;
+	delete rigidBodyForceRegistry;
 
 	for (ParticleContactGenerator* p : contactGenerators) {
 		delete p;
@@ -36,7 +37,7 @@ MathPhysicsEngine* MathPhysicsEngine::GetInstance()
 void MathPhysicsEngine::RemoveRigidBody(RigidBody* r)
 {
 	rigidBodies.erase(std::remove(rigidBodies.begin(), rigidBodies.end(), r), rigidBodies.end());
-	//particleForceRegistry->RemoveParticle(p);
+	rigidBodyForceRegistry->RemoveRigidBody(r);
 	/*
 	for (int i = contactGenerators.size() - 1; i > -1; i--) {
 
@@ -69,6 +70,8 @@ unsigned MathPhysicsEngine::GenerateContacts()
 void MathPhysicsEngine::Init()
 {
 	particleForceRegistry = new ParticleForceRegistry();
+	rigidBodyForceRegistry = new RigidBodyForceRegistry();
+	
 	contactGenerators.push_back(new NaiveParticleContactGenerator(1.0f, &particles));
 }
 
@@ -126,6 +129,7 @@ void MathPhysicsEngine::UpdateRigidBodies(double frameTime, double t)
 void MathPhysicsEngine::Shutdown()
 {
 	delete this->particleForceRegistry;
+	delete this->rigidBodyForceRegistry;
 }
 
 void MathPhysicsEngine::RemoveParticle(Particle* p)
@@ -159,6 +163,11 @@ ParticleForceRegistry* MathPhysicsEngine::GetParticleForceRegistry()
 	return this->particleForceRegistry;
 }
 
+RigidBodyForceRegistry* MathPhysicsEngine::GetRigidBodyForceRegistry()
+{
+	return this->rigidBodyForceRegistry;
+}
+
 void MathPhysicsEngine::UpdateParticlesSumForces(float frameTime)
 {
 
@@ -167,6 +176,7 @@ void MathPhysicsEngine::UpdateParticlesSumForces(float frameTime)
 	}
 
 	particleForceRegistry->UpdateForce(frameTime);
+	rigidBodyForceRegistry->UpdateForce(frameTime);
 
 }
 MathPhysicsEngine* MathPhysicsEngine::singleton_ = nullptr;

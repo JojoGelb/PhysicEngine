@@ -1,7 +1,7 @@
 #pragma once
-#include "../ForceGenerator.h"
+#include "ParticuleForceGenerator.h"
 class ParticleDrag :
-    public ForceGenerator
+    public ParticuleForceGenerator
 {
 private:
     //Drag coeffiecents

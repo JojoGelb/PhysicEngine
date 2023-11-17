@@ -9,6 +9,7 @@
 #include "Collisions/ParticleContactGenerator.h"
 #include "Collisions/ParticleRod.h"
 #include "Collisions/ParticleCable.h"
+#include "Forces/RigidBodyForceRegistry.h"
 
 #include "Forces/ParticuleForces/ParticleGravity.h"
 
@@ -47,6 +48,7 @@ public:
 
 
 	ParticleForceRegistry* GetParticleForceRegistry();
+	RigidBodyForceRegistry* GetRigidBodyForceRegistry();
 
 private:
 
@@ -72,6 +74,9 @@ private:
 	std::vector<ParticleContactGenerator*> contactGenerators;
 
 	std::vector<ParticleContact*> particlesContact;
+
+	//RigidBody forces
+	RigidBodyForceRegistry* rigidBodyForceRegistry;
 
 
 public:

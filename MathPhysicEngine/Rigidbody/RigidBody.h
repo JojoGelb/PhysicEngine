@@ -22,6 +22,7 @@ private:
 
 	float linearDamping;
 	float gravity;
+	
 	float inversedMass;
 
 	Vector3D angularAcceleration;
@@ -46,6 +47,7 @@ public:
 	void Update() override;
 	void Shutdown() override;
 
+	void SetGravityScale(float gravityScale) { gravity = gravityScale; };
 	void SetInversedTensorAsACube(float mass, float dx, float dy, float dz);
 	void SetOrientation(float w, float i, float j, float k) { orientation = { w,i,j,k }; };
 	Vector3D GetPosition() { return position; };
@@ -53,7 +55,8 @@ public:
 	Vector3D GetLinearAcceleration() { return linearAcceleration; };
 	float GetLinearDamping() { return linearDamping; };
 	float GetMass();
-
+	float GetGravity() { return gravity; };
+	float GetInversedMass() { return inversedMass; };
 	Quaternion GetOrientation() { return orientation; };
 	Vector3D GetRotation() { return rotation; };
 	Vector3D GetAngularAcceleration() { return angularAcceleration; };
@@ -63,6 +66,8 @@ public:
 
 	void Integrate(double time, double deltaTime);
 
+	//add force on the center of mass, no torque generated
+	void AddForce(const Vector3D force);
 private:
 	
 
@@ -73,8 +78,7 @@ private:
 
 	void TransformInertiaTensorInWorld(const Quaternion& orientation);
 
-	//add force on the center of mass, no torque generated
-	void AddForce(const Vector3D force);
+
 
 	//add force at a point in world coordinate.
 	void AddForceAtPoint(const Vector3D force, const Vector3D worldPoint);

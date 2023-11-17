@@ -13,6 +13,7 @@
 #include <random>
 #include "../MathPhysicEngine/Forces/ParticuleForces/ParticleElasticBungee.h"
 #include "../MathPhysicEngine/Forces/ParticuleForces/InputForce.h"
+#include "../MathPhysicEngine/Forces/RigidBodyForces/RigidBodyGravity.h"
 
 
 ImGuiEngine::ImGuiEngine(GLFWwindow* _window, std::vector<GameObject*>* _gameObjects): window(_window), gameObjects(_gameObjects)
@@ -201,13 +202,13 @@ void ImGuiEngine::ShowEngineImGui()
             //damping,
             //gravity
         );
+        rigidBody->SetGravityScale(gravity);
         GameObject* go = new GameObject(name);
 
         go->AddComponent(rigidBody);
 
-        //ParticleGravity* particleGravity = new ParticleGravity({ 0.0f,-10.0f,0.0f });
-        //MathPhysicsEngine::GetInstance()->GetParticleForceRegistry()->AddForce(particle, particleGravity);
-
+        RigidBodyGravity* rigidBodyGravity = new RigidBodyGravity({ 0.0f,-10.0f,0.0f });
+        MathPhysicsEngine::GetInstance()->GetRigidBodyForceRegistry()->AddForce(rigidBody, rigidBodyGravity);
 
         VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject("Models/colored_cube.obj");
         go->AddComponent(v);
