@@ -154,7 +154,7 @@ Vector3D RigidBody::GetPointInLocalSpace(const Vector3D worldPoint)
 
 Vector3D RigidBody::GetPointInWorldSpace(const Vector3D localPoint)
 {
-	return Vector3D();
+	return transformMatrix.TransformPosition(localPoint);
 }
 
 float RigidBody::GetMass()

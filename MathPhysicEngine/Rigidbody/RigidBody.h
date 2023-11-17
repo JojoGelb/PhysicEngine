@@ -87,6 +87,19 @@ public:
 
 	//add force on the center of mass, no torque generated
 	void AddForce(const Vector3D force);
+
+	//add force at a point in world coordinate.
+	void AddForceAtPoint(const Vector3D force, const Vector3D worldPoint);
+
+	// add force a point in local coordinate.
+	void AddForceAtBodyPoint(const Vector3D force, const Vector3D localPoint);
+	
+	//Get point in local Space with the transform matrix
+	Vector3D GetPointInLocalSpace(const Vector3D worldPoint);
+
+	//Get point in world Space with the transform matrix
+	Vector3D GetPointInWorldSpace(const Vector3D localPoint);
+
 private:
 	
 
@@ -97,23 +110,10 @@ private:
 
 	void TransformInertiaTensorInWorld(const Quaternion& orientation);
 
-
-
-	//add force at a point in world coordinate.
-	void AddForceAtPoint(const Vector3D force, const Vector3D worldPoint);
-
-	// add force a point in local coordinate.
-	void AddForceAtBodyPoint(const Vector3D force, const Vector3D localPoint);
-
 	//called each frame to clear forceAccum and torqueAccum
 	void ClearAccumulator();
 	
-	//Get point in local Space with the transform matrix
-	Vector3D GetPointInLocalSpace(const Vector3D worldPoint);
-
-	//Get point in world Space with the transform matrix
-	Vector3D GetPointInWorldSpace(const Vector3D localPoint);
-
+	
 
 	
 };

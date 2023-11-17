@@ -175,12 +175,15 @@ Vector3D Matrix34::TransformPosition(const Vector3D& vector)
 	return Vector3D(
 		vector.x * values[0] +
 		vector.y * values[1] +
-		vector.z * values[2],
+		vector.z * values[2] +
+		values[3],
 		vector.x * values[4] +
 		vector.y * values[5] +
-		vector.z * values[6],
+		vector.z * values[6]+
+		values[7],
 		vector.x * values[8] +
 		vector.y * values[9] +
-		vector.z * values[10]
+		vector.z * values[10]+
+		values[11]
 	);
 }
