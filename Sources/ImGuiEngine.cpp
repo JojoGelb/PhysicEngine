@@ -439,7 +439,7 @@ void ImGuiEngine::ShowEngineImGui()
     }
     ImGui::End();
 
-    TestIteration2();
+    //TestIteration2();
     TestIteration3();
 }
 
@@ -507,6 +507,52 @@ void ImGuiEngine::TestIteration3() {
             VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject("Models/colored_cube.obj");
             go->AddComponent(v);
             gameObjects->push_back(go);
+        }
+
+        static int rod = 2;
+        ImGui::InputInt("rod Numbers", &rod);
+        if (ImGui::Button("Test ROD?")) {
+
+
+            for (int i = 0; i < gameObjects->size(); i++) gameObjects->at(i)->shouldDelete = true;
+
+            GameObject* go = new GameObject("Heavy non gravity block");
+            MathPhysicsEngine* math = MathPhysicsEngine::GetInstance();
+            RigidBodyGravity* rigidBodyGravity = new RigidBodyGravity({ 0.0f,-10.0f,0.0f });
+
+            RigidBody* rb = new RigidBody(  Vector3D(0, 0, 20), //position
+                                            Vector3D(0, 0, 0), //velocite
+                                            Vector3D(0, 0, 0), //acceleration line
+                                            Vector3D(0,0,0), //rotation
+                                            Quaternion(1,0,0,0), //orientation
+                                            Matrix33(), //invers tensor
+                                            0, //linear damp
+                                            0.0f, //gravity
+                                            .000001f, //invers mass
+                                            0); //angular damping
+            go->AddComponent(rb);
+            VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject("Models/colored_cube.obj");
+            go->AddComponent(v);
+            gameObjects->push_back(go);
+
+            for (int i = 0; i < rod; i++) {
+
+                GameObject* go2 = new GameObject("Rod Extremity " + std::to_string(i));
+
+
+                RigidBody* r2 = new RigidBody(Vector3D(0.1, 5 * (i + 1), 20), Vector3D(0, 0, 0), Vector3D(0, 0, 0), 1, 0.999f, 1);
+                go2->AddComponent(r2);
+                math->GetRigidBodyForceRegistry()->AddForce(r2, rigidBodyGravity);
+                VisualGameObject* v2 = VisualGameObject::CreatePtrVisualGameObject("Models/colored_cube.obj");
+                go2->AddComponent(v2);
+
+                gameObjects->push_back(go2);
+
+                math->TestRigidbodyRodCollisionSetup(r2, rb, 5);
+
+                rb = r2;
+            }
+
         }
 
         ImGui::TreePop();

@@ -1,6 +1,6 @@
 #pragma once
 #include "../Vecteur3D.h"
-#include "Component.h"
+#include "../../Headers/Component.h"
 #include "Matrix34.h"
 #include "Matrix33.h"
 #include "Quaternion.h"
@@ -24,8 +24,8 @@ class RigidBody : public Component {
 private:
 	//Same as Particle :
 
-	Vector3D position;
-	Vector3D velocity;
+
+
 	Vector3D linearAcceleration;
 
 	Quaternion orientation;
@@ -48,6 +48,9 @@ private:
 	Vector3D torqueAccum;
 
 public:
+
+	Vector3D position;
+	Vector3D velocity;
 
 	//States
 	RigidBodyState previousState;

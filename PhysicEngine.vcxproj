@@ -923,6 +923,12 @@
     <ClCompile Include="MathPhysicEngine\Rigidbody\Matrix34.cpp" />
     <ClCompile Include="MathPhysicEngine\Rigidbody\Quaternion.cpp" />
     <ClCompile Include="MathPhysicEngine\Rigidbody\RigidBody.cpp" />
+    <ClCompile Include="MathPhysicEngine\RigidbodyTest\RigidbodyContactGenerator.cpp" />
+    <ClCompile Include="MathPhysicEngine\RigidbodyTest\RigidBodyContactTest.cpp" />
+    <ClCompile Include="MathPhysicEngine\RigidbodyTest\RigidBodyContactResolver.cpp" />
+    <ClCompile Include="MathPhysicEngine\RigidbodyTest\RigidBodyLink.cpp" />
+    <ClCompile Include="MathPhysicEngine\RigidbodyTest\RigidBodyRod.cpp" />
+    <ClCompile Include="MathPhysicEngine\RigidbodyTest\NaiveRigidBodyContactGenerator.cpp" />
     <ClCompile Include="Sources\GameObject.cpp" />
     <ClCompile Include="Sources\ImGuiEngine.cpp" />
     <ClCompile Include="MathPhysicEngine\MathPhysicEngine.cpp" />
@@ -976,6 +982,12 @@
     <ClInclude Include="MathPhysicEngine\Vecteur3D.h" />
     <ClInclude Include="MathPhysicEngine\Forces\ParticleForceRegistry.h" />
     <ClInclude Include="Headers\Component.h" />
+    <ClInclude Include="MathPhysicEngine\RigidbodyTest\RigidbodyContactGenerator.h" />
+    <ClInclude Include="MathPhysicEngine\RigidbodyTest\RigidBodyContactTest.h" />
+    <ClInclude Include="MathPhysicEngine\RigidbodyTest\RigidBodyContactResolver.h" />
+    <ClInclude Include="MathPhysicEngine\RigidbodyTest\RigidBodyLink.h" />
+    <ClInclude Include="MathPhysicEngine\RigidbodyTest\RigidBodyRod.h" />
+    <ClInclude Include="MathPhysicEngine\RigidbodyTest\NaiveRigidBodyContactGenerator.h" />
     <ClInclude Include="Sources\GameObject.h" />
     <ClInclude Include="Sources\ImGuiEngine.h" />
     <ClInclude Include="MathPhysicEngine\MathPhysicEngine.h" />

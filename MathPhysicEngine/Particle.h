@@ -1,7 +1,7 @@
 #pragma once
 
 #include"Vecteur3D.h"
-#include "Component.h"
+#include "../Headers/Component.h"
 struct State
 {
 	Vector3D position;

@@ -1,6 +1,8 @@
 #include "MathPhysicEngine.h"
 #include <iostream>
 #include "Collisions/NaiveParticleContactGenerator.h"
+#include "RigidbodyTest/RigidBodyLink.h"
+#include "RigidbodyTest/NaiveRigidBodyContactGenerator.h"
 
 MathPhysicsEngine::MathPhysicsEngine()
 {
@@ -12,10 +14,18 @@ MathPhysicsEngine::~MathPhysicsEngine()
 		delete p;
 	}
 
+	for (RigidBodyContactTest* p : rigidbodyContact) {
+		delete p;
+	}
+
 	delete particleForceRegistry;
 	delete rigidBodyForceRegistry;
 
 	for (ParticleContactGenerator* p : contactGenerators) {
+		delete p;
+	}
+
+	for (RigidbodyContactGeneratorTest* p : rigidbodyContactGenerator) {
 		delete p;
 	}
 }
@@ -38,21 +48,21 @@ void MathPhysicsEngine::RemoveRigidBody(RigidBody* r)
 {
 	rigidBodies.erase(std::remove(rigidBodies.begin(), rigidBodies.end(), r), rigidBodies.end());
 	rigidBodyForceRegistry->RemoveRigidBody(r);
-	/*
-	for (int i = contactGenerators.size() - 1; i > -1; i--) {
+	
+	for (int i = rigidbodyContactGenerator.size() - 1; i > -1; i--) {
 
-		if (ParticleLink* link = dynamic_cast<ParticleLink*>(contactGenerators.at(i))) {
-			if (link->particle[0] == p || link->particle[1] == p) {
+		if (RigidBodyLink* link = dynamic_cast<RigidBodyLink*>(contactGenerators.at(i))) {
+			if (link->rigidBody[0] == r || link->rigidBody[1] == r) {
 
 				delete link;
 				auto iterator = contactGenerators.begin() + i;
 				contactGenerators.erase(iterator);
 			}
 		}
-	}*/
+	}
 }
 
-unsigned MathPhysicsEngine::GenerateContacts()
+unsigned MathPhysicsEngine::GenerateParticleContacts()
 {
 	//TODO OPTIMIZE
 	for (ParticleContact* p : particlesContact) delete p;
@@ -67,12 +77,28 @@ unsigned MathPhysicsEngine::GenerateContacts()
 	return static_cast<unsigned int>(particlesContact.size());
 }
 
+unsigned MathPhysicsEngine::GenerateRigidBodyContacts()
+{
+	//TODO OPTIMIZE
+	for (RigidBodyContactTest* p : rigidbodyContact) delete p;
+	rigidbodyContact.clear();
+
+	for (RigidbodyContactGeneratorTest* g : rigidbodyContactGenerator) {
+		unsigned used = g->AddContact(rigidbodyContact, maxContactNumber);
+
+		if (rigidbodyContact.size() >= maxContactNumber) break;
+	}
+
+	return static_cast<unsigned int>(rigidbodyContact.size());
+}
+
 void MathPhysicsEngine::Init()
 {
 	particleForceRegistry = new ParticleForceRegistry();
 	rigidBodyForceRegistry = new RigidBodyForceRegistry();
 	
 	contactGenerators.push_back(new NaiveParticleContactGenerator(1.0f, &particles));
+	rigidbodyContactGenerator.push_back(new NaiveRigidBodyContactGenerator(1.0f, &rigidBodies));
 }
 
 void MathPhysicsEngine::Update(double t,double frameTime)
@@ -94,13 +120,13 @@ void MathPhysicsEngine::UpdateParticles(double frameTime, double t)
 	}
 
 	//Check every contact generator to get the current frame contact list
-	unsigned usedContacts = GenerateContacts();
+	unsigned usedContacts = GenerateParticleContacts();
 
 	//Solve the contacts
 	if (usedContacts) {
 		//number of iteration = double contacts number 
-		contactResolver.SetIterationNumber(usedContacts * 2);
-		contactResolver.ResolveContacts(particlesContact, frameTime);
+		particleContactResolver.SetIterationNumber(usedContacts * 2);
+		particleContactResolver.ResolveContacts(particlesContact, frameTime);
 	}
 }
 
@@ -115,15 +141,15 @@ void MathPhysicsEngine::UpdateRigidBodies(double frameTime, double t)
 	}
 
 	//Check every contact generator to get the current frame contact list
-	//unsigned usedContacts = GenerateContacts();
+	unsigned usedContacts = GenerateRigidBodyContacts();
 
 	//Solve the contacts
-	/*
+	
 	if (usedContacts) {
 		//number of iteration = double contacts number 
-		contactResolver.SetIterationNumber(usedContacts * 2);
-		contactResolver.ResolveContacts(particlesContact, frameTime);
-	}*/
+		rigidbodyContactResolver.SetIterationNumber(usedContacts * 2);
+		rigidbodyContactResolver.ResolveContacts(rigidbodyContact, frameTime);
+	}
 }
 
 void MathPhysicsEngine::Shutdown()
