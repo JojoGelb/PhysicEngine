@@ -32,7 +32,6 @@ unsigned int NaiveRigidBodyContactGenerator::AddContact(std::vector<RigidBodyCon
 				if (contacts.size() >= limit) {
 					return numAddedContacts;
 				}
-
 			}
 		}
 	}

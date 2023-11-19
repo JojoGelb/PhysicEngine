@@ -156,7 +156,7 @@ void ImGuiEngine::ShowEngineImGui()
 
     ImGui::Spacing();
     ImGui::Text("Angular parameters");
-    ImGui::Text("Initial rotation");
+    ImGui::Text("Initial rotation speed");
     ImGui::InputFloat("rot x", &rotationX);
     ImGui::InputFloat("rot y", &rotationY);
     ImGui::InputFloat("rot z", &rotationZ);
