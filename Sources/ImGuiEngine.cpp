@@ -167,7 +167,7 @@ void ImGuiEngine::ShowEngineImGui()
     ImGui::InputFloat("ori j", &orientationJ);
     ImGui::InputFloat("ori k", &orientationK);
 
-
+    
     if (ImGui::Button("Add Particle Game Object")) {
         Particle* particle = new Particle
         (
@@ -186,7 +186,7 @@ void ImGuiEngine::ShowEngineImGui()
         MathPhysicsEngine::GetInstance()->GetParticleForceRegistry()->AddForce(particle, particleGravity);
 
 
-        VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject("Models/colored_cube.obj");
+        VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
         go->AddComponent(v);
 
         gameObjects->push_back(go);
@@ -211,12 +211,28 @@ void ImGuiEngine::ShowEngineImGui()
         RigidBodyGravity* rigidBodyGravity = new RigidBodyGravity({ 0.0f,-10.0f,0.0f });
         MathPhysicsEngine::GetInstance()->GetRigidBodyForceRegistry()->AddForce(rigidBody, rigidBodyGravity);
 
-        VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject("Models/colored_cube.obj");
+        VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
         go->AddComponent(v);
 
         gameObjects->push_back(go);
     }
 
+   
+    if (ImGui::Button("Colored Cube"))
+    {
+        modelePath = "Models/colored_cube.obj";
+    }
+    ImGui::SameLine();
+    if (ImGui::Button("Sphere"))
+    {
+        modelePath = "Models/sphere.obj";
+    }
+   
+    if (ImGui::Button("Smooth vase"))
+    {
+        modelePath = "Models/smooth_vase.obj";
+    }
+    
     ImGui::End();
 
     ImGui::Begin("Objects List");
@@ -476,7 +492,7 @@ void ImGuiEngine::TestIteration3() {
             math->GetRigidBodyForceRegistry()->AddForce(rigidbody, rigidBodyGravity);
             go->AddComponent(rigidbody);
 
-            VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject("Models/colored_cube.obj");
+            VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
             go->AddComponent(v);
             gameObjects->push_back(go);
 
@@ -504,7 +520,7 @@ void ImGuiEngine::TestIteration3() {
 
             go->AddComponent(rigidBody);
 
-            VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject("Models/colored_cube.obj");
+            VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
             go->AddComponent(v);
             gameObjects->push_back(go);
         }
@@ -531,7 +547,7 @@ void ImGuiEngine::TestIteration3() {
                                             .000001f, //invers mass
                                             0); //angular damping
             go->AddComponent(rb);
-            VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject("Models/colored_cube.obj");
+            VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
             go->AddComponent(v);
             gameObjects->push_back(go);
 
@@ -543,7 +559,7 @@ void ImGuiEngine::TestIteration3() {
                 RigidBody* r2 = new RigidBody(Vector3D(0.1, 5 * (i + 1), 20), Vector3D(0, 0, 0), Vector3D(0, 0, 0), 1, 0.999f, 1);
                 go2->AddComponent(r2);
                 math->GetRigidBodyForceRegistry()->AddForce(r2, rigidBodyGravity);
-                VisualGameObject* v2 = VisualGameObject::CreatePtrVisualGameObject("Models/colored_cube.obj");
+                VisualGameObject* v2 = VisualGameObject::CreatePtrVisualGameObject(modelePath);
                 go2->AddComponent(v2);
 
                 gameObjects->push_back(go2);
@@ -579,7 +595,7 @@ void ImGuiEngine::TestIteration3() {
                 .000001f, //invers mass
                 0); //angular damping
             go->AddComponent(rb);
-            v = VisualGameObject::CreatePtrVisualGameObject("Models/colored_cube.obj");
+            v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
             go->AddComponent(v);
             gameObjects->push_back(go);
 
@@ -599,7 +615,7 @@ void ImGuiEngine::TestIteration3() {
                 RigidBody* r2 = new RigidBody(Vector3D(posx, posy, 20), Vector3D(0, 0, 0), Vector3D(0, 0, 0), 1, 1, 1);
                 go2->AddComponent(r2);
                 math->GetRigidBodyForceRegistry()->AddForce(r2, rigidBodyGravity);
-                VisualGameObject* v2 = VisualGameObject::CreatePtrVisualGameObject("Models/colored_cube.obj");
+                VisualGameObject* v2 = VisualGameObject::CreatePtrVisualGameObject(modelePath);
                 go2->AddComponent(v2);
 
                 gameObjects->push_back(go2);
@@ -646,7 +662,7 @@ void ImGuiEngine::TestIteration3() {
                     );
                 
                 go->AddComponent(rigidBodySpring1);
-                VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject("Models/colored_cube.obj");
+                VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
                 go->AddComponent(v);
                 gameObjects->push_back(go);
 
@@ -679,7 +695,7 @@ void ImGuiEngine::TestIteration3() {
                 
                 math->GetRigidBodyForceRegistry()->AddForce(rigidBodySpring1, rigidBodySpringForce2);
 
-                v = VisualGameObject::CreatePtrVisualGameObject("Models/colored_cube.obj");
+                v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
                 go->AddComponent(v);
                 gameObjects->push_back(go);
             }
@@ -715,7 +731,7 @@ void ImGuiEngine::TestIteration3() {
                     );
                 
                 go->AddComponent(rigidBodySpring1);
-                VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject("Models/colored_cube.obj");
+                VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
                 go->AddComponent(v);
                 gameObjects->push_back(go);
 
@@ -738,7 +754,7 @@ void ImGuiEngine::TestIteration3() {
                     );
                 math->GetRigidBodyForceRegistry()->AddForce(rigidBodySpring2, rigidBodySpringForce);
 
-                v = VisualGameObject::CreatePtrVisualGameObject("Models/colored_cube.obj");
+                v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
                 go->AddComponent(v);
                 gameObjects->push_back(go);
 
@@ -780,7 +796,7 @@ void ImGuiEngine::TestIteration2() {
             math->GetParticleForceRegistry()->AddForce(particle, particleGravity);
             go->AddComponent(particle);
 
-            VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject("Models/colored_cube.obj");
+            VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
             go->AddComponent(v);
             gameObjects->push_back(go);
 
@@ -804,7 +820,7 @@ void ImGuiEngine::TestIteration2() {
 
             go->AddComponent(particle);
 
-            VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject("Models/colored_cube.obj");
+            VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
             go->AddComponent(v);
             gameObjects->push_back(go);
         }
@@ -828,7 +844,7 @@ void ImGuiEngine::TestIteration2() {
 
                 Particle* particleAnchord = new Particle(Vector3D(0, 5, 20), Vector3D(0, 0, 0), Vector3D(0, 0, 0), 0.00000001f, 1, 1.0f);
                 go->AddComponent(particleAnchord);
-                VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject("Models/colored_cube.obj");
+                VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
                 go->AddComponent(v);
                 gameObjects->push_back(go);
 
@@ -842,7 +858,7 @@ void ImGuiEngine::TestIteration2() {
 
                 math->GetParticleForceRegistry()->AddForce(particleSpring, particleAnchoredSpring);
 
-                v = VisualGameObject::CreatePtrVisualGameObject("Models/colored_cube.obj");
+                v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
                 go->AddComponent(v);
                 gameObjects->push_back(go);
 
@@ -857,7 +873,7 @@ void ImGuiEngine::TestIteration2() {
 
                 Particle* particleSpring1 = new Particle(Vector3D(0, 5, 20), Vector3D(0, 0, 0), Vector3D(0, 0, 0), 1, 0.99f, 1.0f);
                 go->AddComponent(particleSpring1);
-                VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject("Models/colored_cube.obj");
+                VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
                 go->AddComponent(v);
                 gameObjects->push_back(go);
 
@@ -872,7 +888,7 @@ void ImGuiEngine::TestIteration2() {
                 ParticleSpring* particleSpringForce2 = new ParticleSpring(particleSpring2, 8, 6);
                 math->GetParticleForceRegistry()->AddForce(particleSpring1, particleSpringForce2);
 
-                v = VisualGameObject::CreatePtrVisualGameObject("Models/colored_cube.obj");
+                v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
                 go->AddComponent(v);
                 gameObjects->push_back(go);
             }
@@ -886,7 +902,7 @@ void ImGuiEngine::TestIteration2() {
 
                 Particle* particleSpring1 = new Particle(Vector3D(0, 5, 20), Vector3D(0, 0, 0), Vector3D(0, 0, 0), 1, 0.8f, 1.0f);
                 go->AddComponent(particleSpring1);
-                VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject("Models/colored_cube.obj");
+                VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
                 go->AddComponent(v);
                 gameObjects->push_back(go);
                 go = new GameObject("elastic bungee block 2");
@@ -901,7 +917,7 @@ void ImGuiEngine::TestIteration2() {
                 math->GetParticleForceRegistry()->AddForce(particleSpring1, particleElasticBungeeForce2);
 
 
-                v = VisualGameObject::CreatePtrVisualGameObject("Models/colored_cube.obj");
+                v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
                 go->AddComponent(v);
                 gameObjects->push_back(go);
 
@@ -924,7 +940,7 @@ void ImGuiEngine::TestIteration2() {
                 InputForce* newInputForce = new InputForce();
 
                 MathPhysicsEngine::GetInstance()->GetParticleForceRegistry()->AddForce(particleAnchord, newInputForce);
-                VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject("Models/colored_cube.obj");
+                VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
                 go->AddComponent(v);
                 gameObjects->push_back(go);
 
@@ -943,7 +959,7 @@ void ImGuiEngine::TestIteration2() {
                     Particle* particleSpring = new Particle(mainPosition + positions[i - 1], Vector3D(0, 0, 0), Vector3D(0, 0, 0), 1, 0.99f, 1.0f);
                     go->AddComponent(particleSpring);
 
-                    v = VisualGameObject::CreatePtrVisualGameObject("Models/colored_cube.obj");
+                    v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
                     go->AddComponent(v);
                     gameObjects->push_back(go);
 
@@ -968,10 +984,6 @@ void ImGuiEngine::TestIteration2() {
                     }
 
                     blobs.push_back(particleSpring);
-
-
-
-
                 }
 
             }
@@ -1005,7 +1017,7 @@ void ImGuiEngine::TestIteration2() {
             math->GetParticleForceRegistry()->AddForce(particle, particleGravity);
             go->AddComponent(particle);
 
-            VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject("Models/colored_cube.obj");
+            VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
             go->AddComponent(v);
             gameObjects->push_back(go);
 
@@ -1024,7 +1036,7 @@ void ImGuiEngine::TestIteration2() {
             math->GetParticleForceRegistry()->AddForce(particle2, particleGravity2);
             go2->AddComponent(particle2);
 
-            v = VisualGameObject::CreatePtrVisualGameObject("Models/colored_cube.obj");
+            v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
             go2->AddComponent(v);
             gameObjects->push_back(go2);
         }
@@ -1038,7 +1050,7 @@ void ImGuiEngine::TestIteration2() {
 
             Particle* particle = new Particle(Vector3D(0, 0, 20), Vector3D(0, 0, 0), Vector3D(0, 0, 0), 0.00000001f, 1, 1.0f);
             go->AddComponent(particle);
-            VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject("Models/colored_cube.obj");
+            VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
             go->AddComponent(v);
             gameObjects->push_back(go);
 
@@ -1047,7 +1059,7 @@ void ImGuiEngine::TestIteration2() {
             particle = new Particle(Vector3D(0, 5, 20), Vector3D(0, 0, 0), Vector3D(0, 0, 0), 1, 0.95f, 1.0f);
             go->AddComponent(particle);
             math->GetParticleForceRegistry()->AddForce(particle, math->particleGravity);
-            v = VisualGameObject::CreatePtrVisualGameObject("Models/colored_cube.obj");
+            v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
             go->AddComponent(v);
             gameObjects->push_back(go);
 
@@ -1074,7 +1086,7 @@ void ImGuiEngine::TestIteration2() {
 
             Particle* particle = new Particle(Vector3D(0, 0, 20), Vector3D(0, 0, 0), Vector3D(0, 0, 0), 0.00000001f, 1, 1.0f);
             go->AddComponent(particle);
-            VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject("Models/colored_cube.obj");
+            VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
             go->AddComponent(v);
             gameObjects->push_back(go);
 
@@ -1086,7 +1098,7 @@ void ImGuiEngine::TestIteration2() {
                 Particle* p2 = new Particle(Vector3D(0.1, 5 * (i + 1), 20), Vector3D(0, 0, 0), Vector3D(0, 0, 0), 1, 0.999f, 1);
                 go2->AddComponent(p2);
                 math->GetParticleForceRegistry()->AddForce(p2, math->particleGravity);
-                VisualGameObject* v2 = VisualGameObject::CreatePtrVisualGameObject("Models/colored_cube.obj");
+                VisualGameObject* v2 = VisualGameObject::CreatePtrVisualGameObject(modelePath);
                 go2->AddComponent(v2);
 
                 gameObjects->push_back(go2);
@@ -1111,7 +1123,7 @@ void ImGuiEngine::TestIteration2() {
 
             particle = new Particle(Vector3D(0, 0, 20), Vector3D(0, 0, 0), Vector3D(0, 0, 0), 0.00000001f, 1, 1.0f);
             go->AddComponent(particle);
-            v = VisualGameObject::CreatePtrVisualGameObject("Models/colored_cube.obj");
+            v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
             go->AddComponent(v);
             gameObjects->push_back(go);
 
@@ -1131,7 +1143,7 @@ void ImGuiEngine::TestIteration2() {
                 Particle* p2 = new Particle(Vector3D(posx, posy, 20), Vector3D(0, 0, 0), Vector3D(0, 0, 0), 1, 1, 1);
                 go2->AddComponent(p2);
                 math->GetParticleForceRegistry()->AddForce(p2, math->particleGravity);
-                VisualGameObject* v2 = VisualGameObject::CreatePtrVisualGameObject("Models/colored_cube.obj");
+                VisualGameObject* v2 = VisualGameObject::CreatePtrVisualGameObject(modelePath);
                 go2->AddComponent(v2);
 
                 gameObjects->push_back(go2);

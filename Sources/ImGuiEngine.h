@@ -22,7 +22,7 @@ private:
 	ImVec4 clear_color;
 
 	GLFWwindow* window;
-
+	const char* modelePath = "Models/colored_cube.obj";
 
 
 	void ShowDemoImGui();
