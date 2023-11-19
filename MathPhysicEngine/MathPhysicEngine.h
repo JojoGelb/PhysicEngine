@@ -16,6 +16,7 @@
 #include "RigidbodyTest/RigidbodyContactGenerator.h"
 #include "RigidbodyTest/RigidBodyContactResolver.h"
 #include "RigidbodyTest/RigidBodyRod.h"
+#include "RigidbodyTest/RigidBodyCable.h"
 
 class MathPhysicsEngine {
 
@@ -101,6 +102,10 @@ public:
 
 	void TestRigidbodyRodCollisionSetup(RigidBody* a, RigidBody* b, float cableLen) {
 		rigidbodyContactGenerator.push_back(new RigidBodyRod(a, b, cableLen));
+	}
+
+	void TestRigidbodyCableCollisionSetup(RigidBody* a, RigidBody* b, float cableLen) {
+		rigidbodyContactGenerator.push_back(new RigidBodyCable(a, b, cableLen, 1));
 	}
 
 	ParticleGravity* particleGravity = new ParticleGravity({ 0.0f,-10.0f,0.0f });

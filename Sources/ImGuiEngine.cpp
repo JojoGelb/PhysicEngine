@@ -555,6 +555,61 @@ void ImGuiEngine::TestIteration3() {
 
         }
 
+        static int cable = 2;
+        ImGui::InputInt("Cable Numbers", &cable);
+        if (ImGui::Button("Test Cable?")) {
+            for (int i = 0; i < gameObjects->size(); i++) gameObjects->at(i)->shouldDelete = true;
+
+            RigidBodyGravity* rigidBodyGravity = new RigidBodyGravity({ 0.0f,-10.0f,0.0f });
+
+            GameObject* go;
+            VisualGameObject* v;
+            MathPhysicsEngine* math = MathPhysicsEngine::GetInstance();
+
+            go = new GameObject("Heavy non gravity block");
+
+            RigidBody* rb = new RigidBody(Vector3D(0, 0, 20), //position
+                Vector3D(0, 0, 0), //velocite
+                Vector3D(0, 0, 0), //acceleration line
+                Vector3D(0, 0, 0), //rotation
+                Quaternion(1, 0, 0, 0), //orientation
+                Matrix33(), //invers tensor
+                0, //linear damp
+                0.0f, //gravity
+                .000001f, //invers mass
+                0); //angular damping
+            go->AddComponent(rb);
+            v = VisualGameObject::CreatePtrVisualGameObject("Models/colored_cube.obj");
+            go->AddComponent(v);
+            gameObjects->push_back(go);
+
+
+
+            std::random_device rd;
+            std::mt19937 gen(rd());
+            std::uniform_real_distribution<float> dis(-5.0f, 5.0f);
+
+            for (int i = 0; i < cable; i++) {
+
+                GameObject* go2 = new GameObject("Cable extremity " + std::to_string(i));
+
+                float posx = dis(gen);
+                float posy = dis(gen);
+
+                RigidBody* r2 = new RigidBody(Vector3D(posx, posy, 20), Vector3D(0, 0, 0), Vector3D(0, 0, 0), 1, 1, 1);
+                go2->AddComponent(r2);
+                math->GetRigidBodyForceRegistry()->AddForce(r2, rigidBodyGravity);
+                VisualGameObject* v2 = VisualGameObject::CreatePtrVisualGameObject("Models/colored_cube.obj");
+                go2->AddComponent(v2);
+
+                gameObjects->push_back(go2);
+
+                math->TestRigidbodyCableCollisionSetup(r2, rb, 10);
+            }
+
+        }
+
+
         ImGui::TreePop();
 
         if (ImGui::TreeNode("Springs"))

@@ -929,6 +929,7 @@
     <ClCompile Include="MathPhysicEngine\RigidbodyTest\RigidBodyLink.cpp" />
     <ClCompile Include="MathPhysicEngine\RigidbodyTest\RigidBodyRod.cpp" />
     <ClCompile Include="MathPhysicEngine\RigidbodyTest\NaiveRigidBodyContactGenerator.cpp" />
+    <ClCompile Include="MathPhysicEngine\RigidbodyTest\RigidBodyCable.cpp" />
     <ClCompile Include="Sources\GameObject.cpp" />
     <ClCompile Include="Sources\ImGuiEngine.cpp" />
     <ClCompile Include="MathPhysicEngine\MathPhysicEngine.cpp" />
@@ -988,6 +989,7 @@
     <ClInclude Include="MathPhysicEngine\RigidbodyTest\RigidBodyLink.h" />
     <ClInclude Include="MathPhysicEngine\RigidbodyTest\RigidBodyRod.h" />
     <ClInclude Include="MathPhysicEngine\RigidbodyTest\NaiveRigidBodyContactGenerator.h" />
+    <ClInclude Include="MathPhysicEngine\RigidbodyTest\RigidBodyCable.h" />
     <ClInclude Include="Sources\GameObject.h" />
     <ClInclude Include="Sources\ImGuiEngine.h" />
     <ClInclude Include="MathPhysicEngine\MathPhysicEngine.h" />
