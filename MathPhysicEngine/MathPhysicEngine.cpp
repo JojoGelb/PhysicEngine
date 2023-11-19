@@ -51,8 +51,26 @@ void MathPhysicsEngine::RemoveRigidBody(RigidBody* r)
 	
 	for (int i = rigidbodyContactGenerator.size() - 1; i > -1; i--) {
 
-		if (RigidBodyLink* link = dynamic_cast<RigidBodyLink*>(contactGenerators.at(i))) {
+		if (RigidBodyLink* link = dynamic_cast<RigidBodyLink*>(rigidbodyContactGenerator.at(i))) {
 			if (link->rigidBody[0] == r || link->rigidBody[1] == r) {
+
+				delete link;
+				auto iterator = rigidbodyContactGenerator.begin() + i;
+				rigidbodyContactGenerator.erase(iterator);
+			}
+		}
+	}
+}
+
+void MathPhysicsEngine::RemoveParticle(Particle* p)
+{
+	particles.erase(std::remove(particles.begin(), particles.end(), p), particles.end());
+	particleForceRegistry->RemoveParticle(p);
+
+	for (int i = contactGenerators.size() - 1; i > -1; i--) {
+
+		if (ParticleLink* link = dynamic_cast<ParticleLink*>(contactGenerators.at(i))) {
+			if (link->particle[0] == p || link->particle[1] == p) {
 
 				delete link;
 				auto iterator = contactGenerators.begin() + i;
@@ -60,6 +78,7 @@ void MathPhysicsEngine::RemoveRigidBody(RigidBody* r)
 			}
 		}
 	}
+
 }
 
 unsigned MathPhysicsEngine::GenerateParticleContacts()
@@ -158,24 +177,7 @@ void MathPhysicsEngine::Shutdown()
 	delete this->rigidBodyForceRegistry;
 }
 
-void MathPhysicsEngine::RemoveParticle(Particle* p)
-{
-	particles.erase(std::remove(particles.begin(), particles.end(), p), particles.end()); 
-	particleForceRegistry->RemoveParticle(p);
 
-	for (int i = contactGenerators.size()-1; i >-1; i--) {
-
-		if (ParticleLink* link = dynamic_cast<ParticleLink*>(contactGenerators.at(i))) {
-			if (link->particle[0] == p || link->particle[1] == p) {
-
-				delete link;
-				auto iterator = contactGenerators.begin() + i;
-				contactGenerators.erase(iterator);
-			}
-		}
-	}
-
-}
 
 void MathPhysicsEngine::SetFinalStates(const double alpha)
 {
