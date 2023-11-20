@@ -727,6 +727,19 @@ void ImGuiEngine::TestIteration3() {
             ImGui::InputFloat3("anchored point", anchoredconnectionPointBlock);
             static float springconnectionPointBlock[3] = { 0.0f,0.0f,0.0f};
             ImGui::InputFloat3("spring point", springconnectionPointBlock);
+
+            //static float springconnectionPointBlock[3] = { 0.0f,0.0f,0.0f};
+            //ImGui::InputFloat3("spring point", springconnectionPointBlock);
+            
+            static float anchoredAngularDampling = 0.7f;
+            ImGui::InputFloat("Angular Dampling", &anchoredAngularDampling);
+
+            static float anchoredLinearDampling = 0.9f;
+            ImGui::InputFloat("linear Dampling", &anchoredLinearDampling);
+            
+            
+            static float anchoredGravityScale = 0.0f;
+            ImGui::InputFloat("Gravity scale", &anchoredGravityScale);
             
             if (ImGui::Button("Test anchored")) {
 
@@ -744,7 +757,8 @@ void ImGuiEngine::TestIteration3() {
                     { 1,0,0,0 }
                     );
 
-                
+                //rbSpringAnchored1->SetAngularDamping(anchoredAngularDampling);
+
                 go->AddComponent(rbSpringAnchored1);
                 VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
                 go->AddComponent(v);
@@ -760,19 +774,28 @@ void ImGuiEngine::TestIteration3() {
                     Vector3D(springRotationBlock[0], springRotationBlock[1], springRotationBlock[2]),
                     { 1,0,0,0 }
                    );
+
+                rbSpringAnchored2->SetGravityScale(anchoredGravityScale);
+                rbSpringAnchored2->SetAngularDamping(anchoredAngularDampling);
+                rbSpringAnchored2->SetLinearDamping(anchoredLinearDampling);
                 go->AddComponent(rbSpringAnchored2);
 
-                RigidBodySpring* rbAnchoredForce = new RigidBodySpring(rbSpringAnchored1,
-                    {anchoredconnectionPointBlock[0],anchoredconnectionPointBlock[1],anchoredconnectionPointBlock[2]},
-                    {springconnectionPointBlock[0],springconnectionPointBlock[1],springconnectionPointBlock[2]},
-                    anchoredSpringConstant,
-                    anchoredSpringRestLength
-                    );
-                math->GetRigidBodyForceRegistry()->AddForce(rbSpringAnchored2, rbAnchoredForce);
+                
 
                 v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
                 go->AddComponent(v);
                 gameObjects->push_back(go);
+
+                RigidBodySpring* rbAnchoredForce = new RigidBodySpring(rbSpringAnchored1,
+                    {springconnectionPointBlock[0],springconnectionPointBlock[1],springconnectionPointBlock[2]},
+                    {anchoredconnectionPointBlock[0],anchoredconnectionPointBlock[1],anchoredconnectionPointBlock[2]},
+                    anchoredSpringConstant,
+                    anchoredSpringRestLength
+                    );
+                math->GetRigidBodyForceRegistry()->AddForce(rbSpringAnchored2, rbAnchoredForce);
+                
+                RigidBodyGravity* rigidBodyGravity2 = new RigidBodyGravity({ 0.0f,-10.0f,0.0f });
+                MathPhysicsEngine::GetInstance()->GetRigidBodyForceRegistry()->AddForce(rbSpringAnchored2, rigidBodyGravity2);
 
             }
 

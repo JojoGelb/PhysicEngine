@@ -32,7 +32,7 @@ RigidBody::RigidBody(const std::string _inertiaTensorSelection, const Vector3D& 
 	torqueAccum = { 0,0,0 };
 	
 	transformMatrix = { 0.0f };
-
+	CalculateTransformMatrix(transformMatrix, position, orientation);
 	angularAcceleration = { 0,0,0 };
 
 	if(inertiaTensorSelection == "sphere")
@@ -100,6 +100,7 @@ void RigidBody::Integrate(double time, double deltaTime)
 	// 2 Mettre à jour l’orientation
 	orientation.UpdateByAngularVelocity(rotation, deltaTime);
 	orientation.Normalized();
+	
 	// 3 Calculer les valeurs dérivées
 	CalculateDerivedData();
 

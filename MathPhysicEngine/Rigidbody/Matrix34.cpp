@@ -186,4 +186,6 @@ Vector3D Matrix34::TransformPosition(const Vector3D& vector)
 		vector.z * values[10]+
 		values[11]
 	);
+
+	
 }
