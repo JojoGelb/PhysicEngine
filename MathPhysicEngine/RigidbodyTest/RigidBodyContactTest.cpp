@@ -1,24 +1,24 @@
-#include "ParticleContact.h"
+#include "RigidBodyContactTest.h"
 #include <iostream>
-void ParticleContact::Resolve(float duration)
+void RigidBodyContactTest::Resolve(float duration)
 {
 	ResolveVelocity(duration);
 
 	ResolveInterpenetration();
 }
 
-float ParticleContact::CalculateSeparatingVelocity()
+float RigidBodyContactTest::CalculateSeparatingVelocity()
 {
-	Vector3D relativeVelocity = particle[0]->velocity;
-	if (particle[1]) {
-		relativeVelocity -= particle[1]->velocity;
+	Vector3D relativeVelocity = rigidbody[0]->velocity;
+	if (rigidbody[1]) {
+		relativeVelocity -= rigidbody[1]->velocity;
 	}
 
 	return relativeVelocity.DotProduct(contactNormal);
 }
 
 //Give proper impulse to solve contact
-void ParticleContact::ResolveVelocity(float duration)
+void RigidBodyContactTest::ResolveVelocity(float duration)
 {
 	//Velocity in direction of contact
 	float seperatingVelocity = CalculateSeparatingVelocity();
@@ -33,14 +33,14 @@ void ParticleContact::ResolveVelocity(float duration)
 	// ## Resting contact resolution
 
 	//check velocity buildUp due to linearAcceleration
-	Vector3D accCausedVelocity = particle[0]->acceleration;
-	if (particle[1]) { accCausedVelocity -= particle[1]->acceleration; }
+	Vector3D accCausedVelocity = rigidbody[0]->GetLinearAcceleration();
+	if (rigidbody[1]) { accCausedVelocity -= rigidbody[1]->GetLinearAcceleration(); }
 	float accCausedSepVelocity = accCausedVelocity.DotProduct(contactNormal) * duration;
 
 	//closing velocity due to linearAcceleration buildup
 	//need to remove it
 	if (accCausedSepVelocity < 0) {
-	
+
 		newSepVelocity += restitution * accCausedSepVelocity;
 
 		if (newSepVelocity < 0) newSepVelocity = 0;
@@ -49,10 +49,10 @@ void ParticleContact::ResolveVelocity(float duration)
 
 	float deltaVelocity = newSepVelocity - seperatingVelocity;
 
-	
-	float totalInverseMass = particle[0]->GetInverseMass();
-	if (particle[1]) {
-		totalInverseMass += particle[1]->GetInverseMass();
+
+	float totalInverseMass = rigidbody[0]->GetInversedMass();
+	if (rigidbody[1]) {
+		totalInverseMass += rigidbody[1]->GetInversedMass();
 	}
 
 	//all particle has infinite mass
@@ -62,48 +62,48 @@ void ParticleContact::ResolveVelocity(float duration)
 
 	Vector3D impulsePerIMass = contactNormal * impulse;
 
-	particle[0]->velocity = particle[0]->velocity + impulsePerIMass * particle[0]->GetInverseMass();
+	rigidbody[0]->velocity = rigidbody[0]->velocity + impulsePerIMass * rigidbody[0]->GetInversedMass();
 
-	if (particle[1]) {
-		particle[1]->velocity = particle[1]->velocity + impulsePerIMass * -particle[1]->GetInverseMass();
+	if (rigidbody[1]) {
+		rigidbody[1]->velocity = rigidbody[1]->velocity + impulsePerIMass * -rigidbody[1]->GetInversedMass();
 	}
 }
 
-void ParticleContact::ResolveInterpenetration()
+void RigidBodyContactTest::ResolveInterpenetration()
 {
 
 	if (penetration <= 0) return;
 
-	float totalInversMass = particle[0]->GetInverseMass();
-	if (particle[1]) {
-		totalInversMass += particle[1]->GetInverseMass();
+	float totalInversMass = rigidbody[0]->GetInversedMass();
+	if (rigidbody[1]) {
+		totalInversMass += rigidbody[1]->GetInversedMass();
 	}
 
 	if (totalInversMass <= 0) return;
 
 	Vector3D movePerIMass = contactNormal * (penetration / totalInversMass);
 
-	Vector3D particleAMovement = movePerIMass * particle[0]->GetInverseMass();
+	Vector3D particleAMovement = movePerIMass * rigidbody[0]->GetInversedMass();
 	Vector3D particleBMovement;
-	if (particle[1]) {
-		particleBMovement = movePerIMass * -particle[1]->GetInverseMass();
+	if (rigidbody[1]) {
+		particleBMovement = movePerIMass * -rigidbody[1]->GetInversedMass();
 	}
 	else {
 		particleBMovement = Vector3D();
 	}
 
-	particle[0]->position += particleAMovement;
+	rigidbody[0]->position += particleAMovement;
 
-	if (particle[1]) {
-		particle[1]->position += particleBMovement;
+	if (rigidbody[1]) {
+		rigidbody[1]->position += particleBMovement;
 	}
 
 	/*Same book, different edition
 	Vector3D movePerIMass = contactNormal * (-penetration / totalInversMass);
-	particle[0]->position += movePerIMass * particle[0]->GetInverseMass();
+	rigidbody[0]->position += movePerIMass * rigidbody[0]->GetInversedMass();
 
-	if (particle[1]) {
-		particle[1]->position += movePerIMass * particle[1]->GetInverseMass();
+	if (rigidbody[1]) {
+		rigidbody[1]->position += movePerIMass * rigidbody[1]->GetInversedMass();
 	}*/
 
 	//PATCH: this line prevent the ResolveInterpenetration to be called several times during a frame

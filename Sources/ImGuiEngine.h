@@ -22,13 +22,16 @@ private:
 	ImVec4 clear_color;
 
 	GLFWwindow* window;
-
-
+	const char* modelePath = "Models/colored_cube.obj";
+	std::string modeleInertiaTensor =  "cuboid";
 
 	void ShowDemoImGui();
 	void ShowEngineImGui();
 
 	void SetVisible(bool _visible);
+
+	void TestIteration2();
+	void TestIteration3();
 
 	float framerate;
 

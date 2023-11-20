@@ -1,7 +1,7 @@
 #pragma once
-#include "ParticleForceGenerator.h"
+#include "ParticuleForceGenerator.h"
 class ConstantForce :
-    public ParticleForceGenerator
+    public ParticuleForceGenerator
 {
 private:
     Vector3D m_constantForce;
