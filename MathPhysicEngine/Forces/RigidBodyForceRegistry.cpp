@@ -18,7 +18,7 @@ void RigidBodyForceRegistry::DeleteForce(RigidBody* rigidBody, RigidBodyForceGen
 {
 	for (int i = 0; i < m_registry.size(); i++) {
 		if(m_registry.at(i).rigidBody == rigidBody) {
-			if (m_registry.at(i).forceGenerator = forceGenerator) {
+			if (m_registry.at(i).forceGenerator == forceGenerator) {
 
 				m_registry.erase(m_registry.begin() + i);
 			}

@@ -21,8 +21,8 @@ RigidBodyState RigidBodyState::operator+(const RigidBodyState& other) const
 	return {this->transformMatrix + other.transformMatrix};
 }
 
-RigidBody::RigidBody(const Vector3D& _position, const Vector3D& _velocity, const Vector3D& _linearAcceleration, const Vector3D& _rotation, const Quaternion& _orientation, const Matrix33& _inverseInertiaTensor, float _linearDamping, float _gravity, float _inversedMass, float _angularDamping)
-	: position(_position), velocity(_velocity), linearAcceleration(_linearAcceleration), rotation(_rotation), orientation(_orientation), inverseInertiaTensor(_inverseInertiaTensor), linearDamping(_linearDamping), gravity(_gravity), inversedMass(_inversedMass), angularDamping(_angularDamping)
+RigidBody::RigidBody(const std::string _inertiaTensorSelection, const Vector3D& _position, const Vector3D& _velocity, const Vector3D& _linearAcceleration, const Vector3D& _rotation, const Quaternion& _orientation, const Matrix33& _inverseInertiaTensor, float _linearDamping, float _gravity, float _inversedMass, float _angularDamping)
+	: inertiaTensorSelection(_inertiaTensorSelection), position(_position), velocity(_velocity), linearAcceleration(_linearAcceleration), rotation(_rotation), orientation(_orientation), inverseInertiaTensor(_inverseInertiaTensor), linearDamping(_linearDamping), gravity(_gravity), inversedMass(_inversedMass), angularDamping(_angularDamping)
 {
 	previousState = { 0.0f };
 	currentState = { 0.0f };
@@ -35,7 +35,14 @@ RigidBody::RigidBody(const Vector3D& _position, const Vector3D& _velocity, const
 
 	angularAcceleration = { 0,0,0 };
 
-	SetInversedTensorAsACube(GetMass(), 1.0f, 1.0f, 1.0f);
+	if(inertiaTensorSelection == "sphere")
+	{
+		SetInversedTensorAsASphere(GetMass(), 1.0f);
+	}
+	else
+	{
+		SetInversedTensorAsACube(GetMass(), 1.0f, 1.0f, 1.0f);
+	}
 }
 
 RigidBody::~RigidBody()
@@ -67,6 +74,18 @@ void RigidBody::SetInversedTensorAsACube(float mass, float dx, float dy, float d
 	float zAxe = 1.0f / 12.0f * mass * (dx * dx + dy * dy);
 
 	inverseInertiaTensor.SetDiagonal(xAxe, yAxe, zAxe);
+	inverseInertiaTensor = inverseInertiaTensor.Inverse();
+
+	
+}
+
+void RigidBody::SetInversedTensorAsASphere(float mass, float radius)
+{
+	inverseInertiaTensor = { 0.0f};
+
+	float axe = 2.0f / 5.0f * mass * radius * radius;
+
+	inverseInertiaTensor.SetDiagonal(axe, axe, axe);
 	inverseInertiaTensor = inverseInertiaTensor.Inverse();
 }
 
@@ -120,6 +139,9 @@ void RigidBody::TransformInertiaTensorInWorld(const Quaternion& orientation)
 	Matrix33 rotationMatrix;
 	rotationMatrix.SetOrientation(orientation);
 	inverseInertiaTensorWorld = rotationMatrix * inverseInertiaTensor * rotationMatrix.Inverse();
+
+	
+	inverseInertiaTensorWorld.DeleteMinusZero();
 }
 
 void RigidBody::AddForce(const Vector3D force)

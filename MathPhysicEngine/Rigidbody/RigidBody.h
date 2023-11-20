@@ -24,7 +24,7 @@ class RigidBody : public Component {
 private:
 	//Same as Particle :
 
-
+	std::string inertiaTensorSelection = "Cuboid";
 
 	Vector3D linearAcceleration;
 
@@ -61,7 +61,7 @@ public:
 
 	Matrix34 transformMatrix;
 
-	RigidBody(const Vector3D& _position = { 0.0f }, const Vector3D& _velocity = { 0.0f }, const Vector3D& _linearAcceleration = { 0.0f }, const Vector3D& _rotation = { 0.0f }, const Quaternion& _orientation = { 1.0f,0.0f,0.0f,0.0f }, const Matrix33& _inverseInertiaTensor = { 0.0f }, float _linearDamping = 0.999f, float _gravity = 1.0f, float _inversedMass = 1.0f, float _angularDamping = 0.999f);
+	RigidBody(const std::string _inertiaTensorSelection = "cuboid" ,const Vector3D& _position = { 0.0f }, const Vector3D& _velocity = { 0.0f }, const Vector3D& _linearAcceleration = { 0.0f }, const Vector3D& _rotation = { 0.0f }, const Quaternion& _orientation = { 1.0f,0.0f,0.0f,0.0f }, const Matrix33& _inverseInertiaTensor = { 0.0f }, float _linearDamping = 0.999f, float _gravity = 1.0f, float _inversedMass = 1.0f, float _angularDamping = 0.99f);
 	~RigidBody();
 
 	//Inherited from component
@@ -71,6 +71,7 @@ public:
 
 	void SetGravityScale(float gravityScale) { gravity = gravityScale; };
 	void SetInversedTensorAsACube(float mass, float dx, float dy, float dz);
+	void SetInversedTensorAsASphere(float mass, float radius);
 	void SetOrientation(float w, float i, float j, float k) { orientation = { w,i,j,k }; };
 	Vector3D GetPosition() { return position; };
 	Vector3D GetVelocity() { return velocity; };
@@ -103,6 +104,7 @@ public:
 	//Get point in world Space with the transform matrix
 	Vector3D GetPointInWorldSpace(const Vector3D localPoint);
 
+	void ClearAccumulator();
 private:
 	
 
@@ -114,7 +116,7 @@ private:
 	void TransformInertiaTensorInWorld(const Quaternion& orientation);
 
 	//called each frame to clear forceAccum and torqueAccum
-	void ClearAccumulator();
+	
 	
 	
 

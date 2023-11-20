@@ -19,6 +19,7 @@ public:
 	Vector3D operator*(const Vector3D& vector)const;
 
 	Matrix33 Inverse();
+	void DeleteMinusZero();
 
 	Matrix33 Transpose();
 

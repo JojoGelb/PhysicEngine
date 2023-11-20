@@ -18,7 +18,7 @@ void ParticleForceRegistry::DeleteForce(Particle* particle, ParticuleForceGenera
 {
 	for (int i = 0; i < m_registry.size(); i++) {
 		if(m_registry.at(i).particle == particle) {
-			if (m_registry.at(i).forceGenerator = forceGenerator) {
+			if (m_registry.at(i).forceGenerator == forceGenerator) {
 
 				m_registry.erase(m_registry.begin() + i);
 			}

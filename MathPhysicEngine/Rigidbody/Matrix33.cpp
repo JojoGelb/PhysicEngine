@@ -1,5 +1,7 @@
 #include "Matrix33.h"
 
+#include <iostream>
+
 #include "../Vecteur3D.h"
 #include "Quaternion.h"
 
@@ -62,7 +64,19 @@ Matrix33 Matrix33::Inverse()
 	m.values[7] = -(values[0] * values[7] - t12) * t17;
 	m.values[8] = (t4 - t8) * t17;
 
+	m.DeleteMinusZero();
 	return m;
+}
+
+void Matrix33::DeleteMinusZero()
+{
+	for (int i = 0; i <= 8; i++)
+	{
+		if (values[i] < 0.0000001 && values[i] > -0.0000001)
+		{
+			values[i] = 0;
+		}
+	}
 }
 
 Matrix33 Matrix33::Transpose()
@@ -87,6 +101,18 @@ void Matrix33::SetDiagonal(double x, double y, double z)
 	values[0] = x;
 	values[4] = y;
 	values[8] = z;
+
+	
+
+	Matrix33 tri = Matrix33(2,-1,0,0,3,1,-4,2,5);
+	tri = tri.Inverse();
+
+	for (auto val : tri.values)
+	{
+		std::cout << val << ", ";
+	}
+	
+	std::cout << std::endl;
 }
 
 void Matrix33::SetOrientation(const Quaternion& q)

@@ -207,6 +207,10 @@ void MathPhysicsEngine::UpdateParticlesSumForces(float frameTime)
 		p->ClearSumForce();
 	}
 
+	for (RigidBody* r : rigidBodies) {
+		r->ClearAccumulator();
+	}	
+	
 	particleForceRegistry->UpdateForce(frameTime);
 	rigidBodyForceRegistry->UpdateForce(frameTime);
 

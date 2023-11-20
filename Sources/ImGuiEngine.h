@@ -23,7 +23,7 @@ private:
 
 	GLFWwindow* window;
 	const char* modelePath = "Models/colored_cube.obj";
-
+	std::string modeleInertiaTensor =  "cuboid";
 
 	void ShowDemoImGui();
 	void ShowEngineImGui();
