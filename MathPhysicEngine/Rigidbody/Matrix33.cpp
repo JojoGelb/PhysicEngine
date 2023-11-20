@@ -1,5 +1,7 @@
 #include "Matrix33.h"
 
+#include <iostream>
+
 #include "../Vecteur3D.h"
 #include "Quaternion.h"
 
@@ -37,18 +39,18 @@ Vector3D Matrix33::operator*(const Vector3D& vector) const
 
 Matrix33 Matrix33::Inverse()
 {
-	float t4 = values[0] * values[4];
-	float t6 = values[0] * values[5];
-	float t8 = values[1] * values[3];
-	float t10 = values[2] * values[3];
-	float t12 = values[1] * values[6];
-	float t14 = values[2] * values[6];
+	double t4 = values[0] * values[4];
+	double t6 = values[0] * values[5];
+	double t8 = values[1] * values[3];
+	double t10 = values[2] * values[3];
+	double t12 = values[1] * values[6];
+	double t14 = values[2] * values[6];
 	// Calculate the determinant.
-	float t16 = (t4 * values[8] - t6 * values[7] - t8 * values[8] +
+	double t16 = (t4 * values[8] - t6 * values[7] - t8 * values[8] +
 		t10 * values[7] + t12 * values[5] - t14 * values[4]);
 	// Make sure the determinant is non-zero.
-	if (t16 == (float)0.0f) return (*this);
-	float t17 = 1 / t16;
+	if (t16 == (double)0.0f) return (*this);
+	double t17 = 1 / t16;
 
 	Matrix33 m;
 
@@ -62,12 +64,24 @@ Matrix33 Matrix33::Inverse()
 	m.values[7] = -(values[0] * values[7] - t12) * t17;
 	m.values[8] = (t4 - t8) * t17;
 
+	m.DeleteMinusZero();
 	return m;
+}
+
+void Matrix33::DeleteMinusZero()
+{
+	for (int i = 0; i <= 8; i++)
+	{
+		if (values[i] < 0.0000001 && values[i] > -0.0000001)
+		{
+			values[i] = 0;
+		}
+	}
 }
 
 Matrix33 Matrix33::Transpose()
 {
-	float t = values[1];
+	double t = values[1];
 	values[1] = values[3];
 	values[3] = t;
 
@@ -80,6 +94,25 @@ Matrix33 Matrix33::Transpose()
 	values[7] = t;
 
 	return (*this);
+}
+
+void Matrix33::SetDiagonal(double x, double y, double z)
+{
+	values[0] = x;
+	values[4] = y;
+	values[8] = z;
+
+	
+
+	Matrix33 tri = Matrix33(2,-1,0,0,3,1,-4,2,5);
+	tri = tri.Inverse();
+
+	for (auto val : tri.values)
+	{
+		std::cout << val << ", ";
+	}
+	
+	std::cout << std::endl;
 }
 
 void Matrix33::SetOrientation(const Quaternion& q)

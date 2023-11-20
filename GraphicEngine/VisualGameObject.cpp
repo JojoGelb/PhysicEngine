@@ -3,6 +3,7 @@
 #include <iostream>
 
 glm::mat4 TransformComponent::Mat4() {
+    if (!localCalculation) return ExternalMat4;
     const float c3 = glm::cos(rotation.z);
     const float s3 = glm::sin(rotation.z);
     const float c2 = glm::cos(rotation.x);
@@ -32,6 +33,7 @@ glm::mat4 TransformComponent::Mat4() {
 }
 
 glm::mat3 TransformComponent::NormalMatrix() {
+    if (!localCalculation) return ExternalNormalMatrix;
     const float c3 = glm::cos(rotation.z);
     const float s3 = glm::sin(rotation.z);
     const float c2 = glm::cos(rotation.x);
@@ -69,7 +71,7 @@ VisualGameObject* VisualGameObject::CreatePtrVisualGameObject(std::string modele
     visual->model = lveModel;
     visual->transform.translation = { 0.0f, .0f, 0.0f };
     visual->transform.scale = { 1.f, 1.f, 1.f };
-
+    visual->transform.rotation = { 0.0f, .0f, 0.0f };
     return visual;
 }
 

@@ -7,11 +7,11 @@ class Quaternion
 private:
 
 	//w, i,j,k
-	float value[4];
+	double value[4];
 
 public:
 
-	Quaternion(float w = 0, float i = 0, float j = 0, float k = 0) :value{w,i,j,k} {};
+	Quaternion(double w = 0, double i = 0, double j = 0, double k = 0) :value{w,i,j,k} {};
 
 	// normalize by multipling the quaternion by the inverse of its magnitude
 	void Normalized();
@@ -24,10 +24,10 @@ public:
 	void RotateByVector(const Vector3D& vector);
 
 	// Apply the quaternion update by the angular velocity
-	void UpdateByAngularVelocity(const Vector3D& rotation, float duration);
+	void UpdateByAngularVelocity(const Vector3D& rotation, double duration);
 
-	float w() const { return value[0]; }
-	float i() const { return value[1]; }
-	float j() const { return value[2]; }
-	float k() const { return value[3]; }
+	double w() const { return value[0]; }
+	double i() const { return value[1]; }
+	double j() const { return value[2]; }
+	double k() const { return value[3]; }
 };
