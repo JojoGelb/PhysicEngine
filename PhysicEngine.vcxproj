@@ -151,6 +151,8 @@
     <ClCompile Include="External Librairies\IMGUI\imgui_tables.cpp" />
     <ClCompile Include="External Librairies\IMGUI\imgui_widgets.cpp" />
     <ClCompile Include="GraphicEngine\Camera.cpp" />
+    <ClCompile Include="GraphicEngine\lve_buffer.cpp" />
+    <ClCompile Include="GraphicEngine\lve_descriptors.cpp" />
     <ClCompile Include="GraphicEngine\VisualGameObject.cpp" />
     <ClCompile Include="GraphicEngine\GraphicDevice.cpp" />
     <ClCompile Include="GraphicEngine\GraphicsMotor.cpp" />
@@ -940,6 +942,9 @@
     <ClInclude Include="External Librairies\IMGUI\imgui_internal.h" />
     <ClInclude Include="External Librairies\IMGUI\imstb_textedit.h" />
     <ClInclude Include="GraphicEngine\Camera.h" />
+    <ClInclude Include="GraphicEngine\lve_buffer.h" />
+    <ClInclude Include="GraphicEngine\lve_descriptors.h" />
+    <ClInclude Include="GraphicEngine\lve_frame_info.h" />
     <ClInclude Include="GraphicEngine\VisualGameObject.h" />
     <ClInclude Include="GraphicEngine\GraphicDevice.h" />
     <ClInclude Include="GraphicEngine\GraphicsMotor.h" />

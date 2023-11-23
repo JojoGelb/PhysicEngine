@@ -47,6 +47,12 @@ bool BoundingSphere::overlaps(const BoundingSphere *other) const
     return distanceSquared < (radius+other->radius)*(radius+other->radius);
 }
 
-/*float BoundingSphere::GetSize() const{
+float BoundingSphere::GetSize() const{
     return radius;
-}*/
+}
+
+double BoundingSphere::GetGrowth(const BoundingSphere &other) const
+{
+    BoundingSphere newSphere(*this, other);
+    return newSphere.radius;
+}

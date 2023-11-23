@@ -1,6 +1,7 @@
 #pragma once
 
 #include "GraphicDevice.h"
+#include "lve_buffer.h"
 
 // libs
 #define GLM_FORCE_RADIANS
@@ -57,12 +58,10 @@ private:
     
     GraphicDevice& graphicDevice;
 
-    VkBuffer vertexBuffer;
-    VkDeviceMemory vertexBufferMemory;
+    std::unique_ptr<LveBuffer> vertexBuffer;
     uint32_t vertexCount;
 
     bool hasIndexBuffer = false;
-    VkBuffer indexBuffer;
-    VkDeviceMemory indexBufferMemory;
+    std::unique_ptr<LveBuffer> indexBuffer;
     uint32_t indexCount;
 };

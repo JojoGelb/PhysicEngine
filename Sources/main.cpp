@@ -63,7 +63,7 @@ int main() {
 
         //Delete objects here
 
-        graphicsMotor->Render();
+        graphicsMotor->Render(frameTime);
 
         t += frameTime;
     }

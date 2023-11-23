@@ -23,9 +23,9 @@ void GraphicsMotor::Update(float frameTime)
 	vulkanHandler.Update(frameTime);
 }
 
-void GraphicsMotor::Render()
+void GraphicsMotor::Render(float frameTime)
 {
-	vulkanHandler.Render();
+	vulkanHandler.Render(frameTime);
 	//imguiHandler.Render();
 }
 

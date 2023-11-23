@@ -2,6 +2,7 @@
 #include <iostream>
 #include "Collisions/NaiveParticleContactGenerator.h"
 
+
 MathPhysicsEngine::MathPhysicsEngine()
 {
 }
@@ -124,6 +125,21 @@ void MathPhysicsEngine::UpdateRigidBodies(double frameTime, double t)
 	//Calculate contacts
 
 	//Broad phase
+	std::vector<PotentialContact> potentialContacts = std::vector<PotentialContact>();
+
+	//clean the tree
+	delete bvhRoot;
+	bvhRoot = nullptr;
+
+	//repopulate the tree
+	for(RigidBody* r : rigidBodies) {
+		if(bvhRoot == nullptr) {
+			bvhRoot = new BVHNode<BoundingSphere>(nullptr, BoundingSphere(r->position, 1.0f), r);
+		}else {
+			bvhRoot->insert(r, BoundingSphere(r->position, 1.0f));
+		}
+	}
+
 	
 }
 

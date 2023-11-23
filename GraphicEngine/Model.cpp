@@ -43,7 +43,7 @@ Model::Model(GraphicDevice& device, const std::vector<Vertex>& vertices) : graph
     CreateVertexBuffers(vertices);
 }
 
-Model::~Model() {
+/*Model::~Model() {
     vkDestroyBuffer(graphicDevice.Device(), vertexBuffer, nullptr);
     vkFreeMemory(graphicDevice.Device(), vertexBufferMemory, nullptr);
 
@@ -51,39 +51,48 @@ Model::~Model() {
         vkDestroyBuffer(graphicDevice.Device(), indexBuffer, nullptr);
         vkFreeMemory(graphicDevice.Device(), indexBufferMemory, nullptr);
     }
-}
+}*/
+
+Model::~Model() {}
 
 void Model::CreateVertexBuffers(const std::vector<Vertex>& vertices) {
     vertexCount = static_cast<uint32_t>(vertices.size());
     assert(vertexCount >= 3 && "Vertex count must be at least 3");
     VkDeviceSize bufferSize = sizeof(vertices[0]) * vertexCount;
+    uint32_t vertexSize = sizeof(vertices[0]);
 
-    VkBuffer stagingBuffer;
-    VkDeviceMemory stagingBufferMemory;
+    //VkBuffer stagingBuffer;
+    //VkDeviceMemory stagingBufferMemory;
 
-    graphicDevice.CreateBuffer(
+    /*graphicDevice.CreateBuffer(
         bufferSize,
         VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
         VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT,
         stagingBuffer,
-        stagingBufferMemory);
+        stagingBufferMemory);*/
 
-    void* data;
-    vkMapMemory(graphicDevice.Device(), stagingBufferMemory, 0, bufferSize, 0, &data);
-    memcpy(data, vertices.data(), static_cast<size_t>(bufferSize));
-    vkUnmapMemory(graphicDevice.Device(), stagingBufferMemory);
 
-    graphicDevice.CreateBuffer(
-        bufferSize,
-        VK_BUFFER_USAGE_VERTEX_BUFFER_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT,
-        VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT,
-        vertexBuffer,
-        vertexBufferMemory);
+    LveBuffer stagingBuffer{
+      graphicDevice,
+      vertexSize,
+      vertexCount,
+      VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
+      VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT,
+  };
 
-    graphicDevice.CopyBuffer(stagingBuffer, vertexBuffer, bufferSize);
+    stagingBuffer.map();
+  stagingBuffer.writeToBuffer((void *)vertices.data());
 
-    vkDestroyBuffer(graphicDevice.Device(), stagingBuffer, nullptr);
-    vkFreeMemory(graphicDevice.Device(), stagingBufferMemory, nullptr);
+  vertexBuffer = std::make_unique<LveBuffer>(
+      graphicDevice,
+      vertexSize,
+      vertexCount,
+      VK_BUFFER_USAGE_VERTEX_BUFFER_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT,
+      VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
+
+
+
+    graphicDevice.CopyBuffer(stagingBuffer.getBuffer(), vertexBuffer->getBuffer(), bufferSize);
 }
 
 void Model::CreateIndexBuffers(const std::vector<uint32_t>& indices) {
@@ -95,32 +104,27 @@ void Model::CreateIndexBuffers(const std::vector<uint32_t>& indices) {
     }
 
     VkDeviceSize bufferSize = sizeof(indices[0]) * indexCount;
+    uint32_t indexSize = sizeof(indices[0]);
+    
+    LveBuffer stagingBuffer{
+      graphicDevice,
+      indexSize,
+      indexCount,
+      VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
+      VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT,
+  };
 
-    VkBuffer stagingBuffer;
-    VkDeviceMemory stagingBufferMemory;
-    graphicDevice.CreateBuffer(
-        bufferSize,
-        VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
-        VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT,
-        stagingBuffer,
-        stagingBufferMemory);
+    stagingBuffer.map();
+    stagingBuffer.writeToBuffer((void *)indices.data());
 
-    void* data;
-    vkMapMemory(graphicDevice.Device(), stagingBufferMemory, 0, bufferSize, 0, &data);
-    memcpy(data, indices.data(), static_cast<size_t>(bufferSize));
-    vkUnmapMemory(graphicDevice.Device(), stagingBufferMemory);
+    indexBuffer = std::make_unique<LveBuffer>(
+      graphicDevice,
+      indexSize,
+      indexCount,
+      VK_BUFFER_USAGE_INDEX_BUFFER_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT,
+      VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
 
-    graphicDevice.CreateBuffer(
-        bufferSize,
-        VK_BUFFER_USAGE_INDEX_BUFFER_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT,
-        VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT,
-        indexBuffer,
-        indexBufferMemory);
-
-    graphicDevice.CopyBuffer(stagingBuffer, indexBuffer, bufferSize);
-
-    vkDestroyBuffer(graphicDevice.Device(), stagingBuffer, nullptr);
-    vkFreeMemory(graphicDevice.Device(), stagingBufferMemory, nullptr);
+   graphicDevice.CopyBuffer(stagingBuffer.getBuffer(), indexBuffer->getBuffer(), bufferSize);
 }
 
 void Model::Draw(VkCommandBuffer commandBuffer) {
@@ -133,12 +137,12 @@ void Model::Draw(VkCommandBuffer commandBuffer) {
 }
 
 void Model::Bind(VkCommandBuffer commandBuffer) {
-    VkBuffer buffers[] = { vertexBuffer };
+    VkBuffer buffers[] = {vertexBuffer->getBuffer()};
     VkDeviceSize offsets[] = { 0 };
     vkCmdBindVertexBuffers(commandBuffer, 0, 1, buffers, offsets);
 
     if (hasIndexBuffer) {
-        vkCmdBindIndexBuffer(commandBuffer, indexBuffer, 0, VK_INDEX_TYPE_UINT32);
+        vkCmdBindIndexBuffer(commandBuffer, indexBuffer->getBuffer(), 0, VK_INDEX_TYPE_UINT32);
     }
 }
 

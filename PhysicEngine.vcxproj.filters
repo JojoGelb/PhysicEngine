@@ -49,6 +49,8 @@
     <ClCompile Include="MathPhysicEngine\Rigidbody\RigidBody.cpp" />
     <ClCompile Include="MathPhysicEngine\RigidBodyContacts\BoundingSphere.cpp" />
     <ClCompile Include="MathPhysicEngine\RigidBodyContacts\BVHNode.cpp" />
+    <ClCompile Include="GraphicEngine\lve_buffer.cpp" />
+    <ClCompile Include="GraphicEngine\lve_descriptors.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="External Librairies\IMGUI\imconfig.h" />
@@ -102,6 +104,9 @@
     <ClInclude Include="MathPhysicEngine\Rigidbody\RigidBody.h" />
     <ClInclude Include="MathPhysicEngine\RigidBodyContacts\BHVNode.h" />
     <ClInclude Include="MathPhysicEngine\RigidBodyContacts\BoundingSphere.h" />
+    <ClInclude Include="GraphicEngine\lve_buffer.h" />
+    <ClInclude Include="GraphicEngine\lve_frame_info.h" />
+    <ClInclude Include="GraphicEngine\lve_descriptors.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Readme.txt" />

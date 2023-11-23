@@ -14,5 +14,7 @@ public:
     BoundingSphere(const BoundingSphere &one, const BoundingSphere &two);
 
     bool overlaps(const BoundingSphere *other) const;
-    //float GetSize() const;
+    float GetSize() const;
+
+    double GetGrowth(const BoundingSphere &other) const; 
 };

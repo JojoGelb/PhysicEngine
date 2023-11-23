@@ -3,6 +3,7 @@
 #include <vulkan/vulkan_core.h>
 #include <GraphicDevice.h>
 #include "Renderer.h"
+#include "lve_descriptors.h"
 
 #include "VisualGameObject.h" 
 
@@ -23,7 +24,7 @@ public:
 	~VulkanHandler();
 
 	void Update(float frameTime = 0);
-	void Render();
+	void Render(float frameTime);
 
 	void Shutdown();
 
@@ -42,13 +43,20 @@ private:
 	GraphicDevice graphicDevice;
 	Renderer renderer;
 
+	// note: order of declarations matters
+  	std::unique_ptr<LveDescriptorPool> globalPool{};
+
 	std::vector<VisualGameObject*> objects2;
 
 
 	Window & window;
 
-	SimpleRenderSystem renderSystem;
+	SimpleRenderSystem * renderSystem;
 	Camera camera;
 	KeyboardInput cameraController;
 	VisualGameObject * viewerObject;
+
+	std::vector<std::unique_ptr<LveBuffer>> uboBuffers;
+	std::vector<VkDescriptorSet> globalDescriptorSets;
+	//LveBuffer globalUboBuffer;
 };
