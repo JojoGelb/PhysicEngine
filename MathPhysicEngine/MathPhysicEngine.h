@@ -12,11 +12,6 @@
 #include "Forces/RigidBodyForceRegistry.h"
 
 #include "Forces/ParticuleForces/ParticleGravity.h"
-#include "RigidbodyTest/RigidBodyContactTest.h"
-#include "RigidbodyTest/RigidbodyContactGenerator.h"
-#include "RigidbodyTest/RigidBodyContactResolver.h"
-#include "RigidbodyTest/RigidBodyRod.h"
-#include "RigidbodyTest/RigidBodyCable.h"
 
 class MathPhysicsEngine {
 
@@ -50,7 +45,6 @@ public:
 
 	
 	unsigned GenerateParticleContacts();
-	unsigned GenerateRigidBodyContacts();
 
 
 	ParticleForceRegistry* GetParticleForceRegistry();
@@ -77,14 +71,9 @@ private:
 	//Particle Contacts
 	ParticleContactResolver particleContactResolver;
 
-	RigidBodyContactResolver rigidbodyContactResolver;
-
 	std::vector<ParticleContactGenerator*> contactGenerators; 
 
 	std::vector<ParticleContact*> particlesContact; 
-
-	std::vector<RigidBodyContactTest*> rigidbodyContact;
-	std::vector<RigidbodyContactGeneratorTest*> rigidbodyContactGenerator;
 
 	//RigidBody forces
 	RigidBodyForceRegistry* rigidBodyForceRegistry;
@@ -98,14 +87,6 @@ public:
 
 	void TestRodCollisionSetup(Particle* a, Particle* b, float cableLen) {
 		contactGenerators.push_back(new ParticleRod(a, b, cableLen));
-	}
-
-	void TestRigidbodyRodCollisionSetup(RigidBody* a, RigidBody* b, float cableLen) {
-		rigidbodyContactGenerator.push_back(new RigidBodyRod(a, b, cableLen));
-	}
-
-	void TestRigidbodyCableCollisionSetup(RigidBody* a, RigidBody* b, float cableLen) {
-		rigidbodyContactGenerator.push_back(new RigidBodyCable(a, b, cableLen, 1));
 	}
 
 	ParticleGravity* particleGravity = new ParticleGravity({ 0.0f,-10.0f,0.0f });

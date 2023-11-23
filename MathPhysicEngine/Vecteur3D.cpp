@@ -96,6 +96,11 @@ double Vector3D::GetNorm() const
 	return std::sqrt(x * x + y * y + z * z);
 }
 
+double Vector3D::GetSquareNorm() const
+{
+	return x * x + y * y + z * z;
+}
+
 Vector3D Vector3D::Normalize()
 {
 	if (GetNorm() == 0) {

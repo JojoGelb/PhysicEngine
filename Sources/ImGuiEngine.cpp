@@ -461,7 +461,20 @@ void ImGuiEngine::ShowEngineImGui()
     ImGui::End();
 
     //TestIteration2();
-    TestIteration3();
+    //TestIteration3();
+    TestIteration4();
+}
+
+void ImGuiEngine::TestIteration4() {
+    ImGui::Begin("Phase 4 Test RIGIDBODY panel");
+    ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+
+    if (ImGui::Button("Test Gravity")) {
+        //Do sth
+    }
+
+    ImGui::End();
+
 }
 
 void ImGuiEngine::TestIteration3() {
@@ -501,7 +514,6 @@ void ImGuiEngine::TestIteration3() {
             VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
             go->AddComponent(v);
             gameObjects->push_back(go);
-
         }
 
         if (ImGui::Button("Test angular damping")) {
@@ -532,7 +544,7 @@ void ImGuiEngine::TestIteration3() {
             gameObjects->push_back(go);
         }
 
-        static int rod = 2;
+        /*static int rod = 2;
         ImGui::InputInt("rod Numbers", &rod);
         if (ImGui::Button("Test ROD?")) {
 
@@ -573,7 +585,7 @@ void ImGuiEngine::TestIteration3() {
 
                 gameObjects->push_back(go2);
 
-                math->TestRigidbodyRodCollisionSetup(r2, rb, 5);
+                //math->TestRigidbodyRodCollisionSetup(r2, rb, 5);
 
                 rb = r2;
             }
@@ -637,7 +649,7 @@ void ImGuiEngine::TestIteration3() {
         }
 
 
-        ImGui::TreePop();
+        ImGui::TreePop();*/
 
         if (ImGui::TreeNode("Springs"))
         {
@@ -1192,9 +1204,9 @@ void ImGuiEngine::TestIteration2() {
 
         }
 
-        ImGui::TreePop();
+        
     }
-
+    ImGui::TreePop();
 
 
     ImGui::End();
