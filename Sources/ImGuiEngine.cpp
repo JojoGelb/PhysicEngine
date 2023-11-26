@@ -3,7 +3,7 @@
 
 #include "vulkan/vulkan_core.h"
 #include <iostream>
-#include"GLFW/glfw3.h"
+#include "GLFW/glfw3.h"
 #include "../MathPhysicEngine/Particle.h"
 #include "../MathPhysicEngine/MathPhysicEngine.h"
 #include "../MathPhysicEngine/Forces/ParticuleForces/ParticleGravity.h"
@@ -16,8 +16,7 @@
 #include "../MathPhysicEngine/Forces/RigidBodyForces/RigidBodyGravity.h"
 #include "../MathPhysicEngine/Forces/RigidBodyForces/RigidBodySpring.h"
 
-
-ImGuiEngine::ImGuiEngine(GLFWwindow* _window, std::vector<GameObject*>* _gameObjects): window(_window), gameObjects(_gameObjects)
+ImGuiEngine::ImGuiEngine(GLFWwindow *_window, std::vector<GameObject *> *_gameObjects) : window(_window), gameObjects(_gameObjects)
 {
     this->clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
@@ -38,10 +37,10 @@ void ImGuiEngine::Update(float frameTime)
     framerate = frameTime;
 
     ImGuiInput.ImGuiControls(window, visibilityTrigger);
-    if(inputForce)
+    if (inputForce)
         ImGuiInput.BlobControls(window, *inputForce);
 
-    if(visibilityTrigger)
+    if (visibilityTrigger)
         SetVisible(!visible);
 
     // Start the Dear ImGui frame
@@ -49,15 +48,13 @@ void ImGuiEngine::Update(float frameTime)
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
 
-    if (visible) {
+    if (visible)
+    {
 
-        //Show Demo ImGUI
+        // Show Demo ImGUI
         ShowEngineImGui();
     }
-
 }
-
-
 
 void ImGuiEngine::ShowDemoImGui()
 {
@@ -65,26 +62,26 @@ void ImGuiEngine::ShowDemoImGui()
     if (this->show_demo_window)
         ImGui::ShowDemoWindow(&this->show_demo_window);
 
-    ImGuiIO& io = ImGui::GetIO(); (void)io;
+    ImGuiIO &io = ImGui::GetIO();
+    (void)io;
 
-    //std::cout << "ou";
+    // std::cout << "ou";
 
     // 2. Show a simple window that we create ourselves. We use a Begin/End pair to create a named window.
     {
         static int counter = 0;
         static float f = 0.0f;
 
+        ImGui::Begin("Hello, world!"); // Create a window called "Hello, world!" and append into it.
 
-        ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
-
-        ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
-        ImGui::Checkbox("Demo Window", &this->show_demo_window);      // Edit bools storing our window open/close state
+        ImGui::Text("This is some useful text.");                // Display some text (you can use a format strings too)
+        ImGui::Checkbox("Demo Window", &this->show_demo_window); // Edit bools storing our window open/close state
         ImGui::Checkbox("Another Window", &this->show_another_window);
 
-        ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
-        ImGui::ColorEdit3("clear color", (float*)&this->clear_color); // Edit 3 floats representing a color
+        ImGui::SliderFloat("float", &f, 0.0f, 1.0f);                   // Edit 1 float using a slider from 0.0f to 1.0f
+        ImGui::ColorEdit3("clear color", (float *)&this->clear_color); // Edit 3 floats representing a color
 
-        if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
+        if (ImGui::Button("Button")) // Buttons return true when clicked (most widgets return true when edited/activated)
             counter++;
         ImGui::SameLine();
         ImGui::Text("counter = %d", counter);
@@ -96,13 +93,12 @@ void ImGuiEngine::ShowDemoImGui()
     // 3. Show another simple window.
     if (this->show_another_window)
     {
-        ImGui::Begin("Another Window", &this->show_another_window);   // Pass a pointer to our bool variable (the window will have a closing button that will clear the bool when clicked)
+        ImGui::Begin("Another Window", &this->show_another_window); // Pass a pointer to our bool variable (the window will have a closing button that will clear the bool when clicked)
         ImGui::Text("Hello from another window!");
         if (ImGui::Button("Close Me"))
             this->show_another_window = false;
         ImGui::End();
     }
-
 }
 
 void ImGuiEngine::ShowEngineImGui()
@@ -167,58 +163,54 @@ void ImGuiEngine::ShowEngineImGui()
     ImGui::InputFloat("ori j", &orientationJ);
     ImGui::InputFloat("ori k", &orientationK);
 
-    
-    if (ImGui::Button("Add Particle Game Object")) {
-        Particle* particle = new Particle
-        (
+    if (ImGui::Button("Add Particle Game Object"))
+    {
+        Particle *particle = new Particle(
             Vector3D(positionX, positionY, positionZ),
             Vector3D(velocityX, velocityY, velocityZ),
             Vector3D(0.0f, 0.0f, 0.0f),
             inversedMass,
             damping,
-            gravity
-        );
-        GameObject* go = new GameObject(name);
+            gravity);
+        GameObject *go = new GameObject(name);
 
         go->AddComponent(particle);
 
-        ParticleGravity* particleGravity = new ParticleGravity({ 0.0f,-10.0f,0.0f });
+        ParticleGravity *particleGravity = new ParticleGravity({0.0f, -10.0f, 0.0f});
         MathPhysicsEngine::GetInstance()->GetParticleForceRegistry()->AddForce(particle, particleGravity);
 
-
-        VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
+        VisualGameObject *v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
         go->AddComponent(v);
 
         gameObjects->push_back(go);
     }
-    if (ImGui::Button("Add RigidBody Game Object")) {
-        RigidBody* rigidBody = new RigidBody
-        (
+    if (ImGui::Button("Add RigidBody Game Object"))
+    {
+        RigidBody *rigidBody = new RigidBody(
             modeleInertiaTensor,
-            Vector3D(positionX, positionY, positionZ),//position
-            Vector3D(velocityX, velocityY, velocityZ),//velocity
-            Vector3D(0.0f, 0.0f, 0.0f),//Acceleration
-            Vector3D(rotationX, rotationY, rotationZ),//Rotation
-            { orientationW,orientationI,orientationJ,orientationK } //Orientation
-           // inversedMass,//
-            //damping,
-            //gravity
+            Vector3D(positionX, positionY, positionZ),               // position
+            Vector3D(velocityX, velocityY, velocityZ),               // velocity
+            Vector3D(0.0f, 0.0f, 0.0f),                              // Acceleration
+            Vector3D(rotationX, rotationY, rotationZ),               // Rotation
+            {orientationW, orientationI, orientationJ, orientationK} // Orientation
+            // inversedMass,//
+            // damping,
+            // gravity
         );
         rigidBody->SetGravityScale(gravity);
-        GameObject* go = new GameObject(name);
+        GameObject *go = new GameObject(name);
 
         go->AddComponent(rigidBody);
 
-        RigidBodyGravity* rigidBodyGravity = new RigidBodyGravity({ 0.0f,-10.0f,0.0f });
+        RigidBodyGravity *rigidBodyGravity = new RigidBodyGravity({0.0f, -10.0f, 0.0f});
         MathPhysicsEngine::GetInstance()->GetRigidBodyForceRegistry()->AddForce(rigidBody, rigidBodyGravity);
 
-        VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
+        VisualGameObject *v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
         go->AddComponent(v);
 
         gameObjects->push_back(go);
     }
 
-   
     if (ImGui::Button("Colored Cube"))
     {
         modelePath = "Models/colored_cube.obj";
@@ -229,15 +221,14 @@ void ImGuiEngine::ShowEngineImGui()
     {
         modelePath = "Models/sphere.obj";
         modeleInertiaTensor = "sphere";
-
     }
-   
+
     if (ImGui::Button("Smooth vase"))
     {
         modelePath = "Models/smooth_vase.obj";
         modeleInertiaTensor = "cuboid";
     }
-    
+
     ImGui::End();
 
     ImGui::Begin("Objects List");
@@ -251,47 +242,47 @@ void ImGuiEngine::ShowEngineImGui()
     static std::vector<float> springConstant(200);
     static std::vector<int> index(200);
 
-
-
     for (int i = 0; i < gameObjects->size(); i++)
     {
         auto particle = gameObjects->at(i)->GetComponentOfType<Particle>();
         auto rigidBody = gameObjects->at(i)->GetComponentOfType<RigidBody>();
 
-        if (ImGui::TreeNode( ( std::to_string(i) + ". " + gameObjects->at(i)->GetName()).c_str())) {
-            if(particle)
+        if (ImGui::TreeNode((std::to_string(i) + ". " + gameObjects->at(i)->GetName()).c_str()))
+        {
+            if (particle)
             {
-                if (ImGui::TreeNode("Add Unique constant force")){
+                if (ImGui::TreeNode("Add Unique constant force"))
+                {
 
-                ImGui::InputDouble("force x (N)", &force[i].x);
-                ImGui::InputDouble("force y (N)", &force[i].y);
-                ImGui::InputDouble("force z (N)", &force[i].z);
+                    ImGui::InputDouble("force x (N)", &force[i].x);
+                    ImGui::InputDouble("force y (N)", &force[i].y);
+                    ImGui::InputDouble("force z (N)", &force[i].z);
 
-                ImGui::Spacing();
+                    ImGui::Spacing();
 
-                if (ImGui::Button("Apply Input force")) {
-                    InputForce* newInputForce = new InputForce();
-                    particle->inputValues = force[i];
+                    if (ImGui::Button("Apply Input force"))
+                    {
+                        InputForce *newInputForce = new InputForce();
+                        particle->inputValues = force[i];
 
-                    MathPhysicsEngine::GetInstance()->GetParticleForceRegistry()->AddForce(particle, newInputForce);
+                        MathPhysicsEngine::GetInstance()->GetParticleForceRegistry()->AddForce(particle, newInputForce);
+                    }
+
+                    if (ImGui::Button("Apply constant force"))
+                    {
+                        ConstantForce *newConstantForce = new ConstantForce(force[i]);
+                        MathPhysicsEngine::GetInstance()->GetParticleForceRegistry()->AddForce(particle, newConstantForce);
+                    }
+
+                    ImGui::TreePop();
                 }
-
-                if (ImGui::Button("Apply constant force")) {
-                    ConstantForce* newConstantForce = new ConstantForce(force[i]);
-                    MathPhysicsEngine::GetInstance()->GetParticleForceRegistry()->AddForce(particle, newConstantForce);
-                }
-
-                
-
-                ImGui::TreePop();
-            }
             }
             /*
             if (ImGui::TreeNode("Add spring force")) {
 
                 //ImGui::PushID(i+10);
 
-              
+
                 ImGui::InputInt("Index", &index[i]);
                 ImGui::InputFloat("rest Length", &restLength[i]);
                 ImGui::InputFloat("spring Constant", &springConstant[i]);
@@ -302,7 +293,7 @@ void ImGuiEngine::ShowEngineImGui()
 
                 if (ImGui::Button("Apply spring force")) {
 
-                    
+
                     //Particle* other = new Particle();
                     ParticleSpring* particleSpring = new ParticleSpring(gameObjects->at(index[i])->GetComponentOfType<Particle>(), restLength[i], springConstant[i]);
                     ParticleSpring* otherSpring = new ParticleSpring(particle, restLength[i], springConstant[i]);
@@ -335,42 +326,46 @@ void ImGuiEngine::ShowEngineImGui()
                     ParticleAnchoredSpring* particleAnchoredSpringApply = new ParticleAnchoredSpring(anchoredPos, restLength[i], springConstant[i]);
 
                     MathPhysicsEngine::GetInstance()->GetParticleForceRegistry()->AddForce(particle, particleAnchoredSpringApply);
-                    
-                
+
+
                 }
 
                 ImGui::TreePop();
 
             }*/
-            if (particle) {
-                if (ImGui::TreeNode("Show PARTICULE data")) {
-
-                ImGui::Spacing();
-                //if (ImGui::Checkbox(" print particle data on terminal ", &particle->printParticleOnTerminal))
-                ImGui::Spacing();
-
-                ImGui::Text(" position: %.2f, %.2f, %.2f (m)", particle->position.x, particle->position.y, particle->position.z);
-                ImGui::Text(" velocity: %.2f, %.2f, %.2f (m/s)", particle->velocity.x, particle->velocity.y, particle->velocity.z);
-                ImGui::Text(" acceleration: %.2f, %.2f, %.2f (m/s^2)", particle->acceleration.x, particle->acceleration.y, particle->acceleration.z);
-                
-                //ImGui::Text(" force: %.2f, %.2f, %.2f", particle->force.x, particle->force.y, particle->force.z);
-                //ImGui::Text(" gravity force: %.2f, %.2f, %.2f", particle->gravityForce.x, particle->gravityForce.y, particle->gravityForce.z);
-
-                ImGui::Spacing();
-                ImGui::Spacing();
-
-                ImGui::InputFloat(" inversed mass: (Kg^-1)", &particle->inversedMass);
-                ImGui::InputFloat(" gravity scale: ", &particle->gravity);
-                ImGui::InputFloat(" damping: (Kg/s)", &particle->damping);
-
-                ImGui::TreePop();
-                }
-            }
-            if (rigidBody) {
-                if (ImGui::TreeNode("Show RIGIDBODY data")) {
+            if (particle)
+            {
+                if (ImGui::TreeNode("Show PARTICULE data"))
+                {
 
                     ImGui::Spacing();
-                    //if (ImGui::Checkbox(" print particle data on terminal ", &particle->printParticleOnTerminal))
+                    // if (ImGui::Checkbox(" print particle data on terminal ", &particle->printParticleOnTerminal))
+                    ImGui::Spacing();
+
+                    ImGui::Text(" position: %.2f, %.2f, %.2f (m)", particle->position.x, particle->position.y, particle->position.z);
+                    ImGui::Text(" velocity: %.2f, %.2f, %.2f (m/s)", particle->velocity.x, particle->velocity.y, particle->velocity.z);
+                    ImGui::Text(" acceleration: %.2f, %.2f, %.2f (m/s^2)", particle->acceleration.x, particle->acceleration.y, particle->acceleration.z);
+
+                    // ImGui::Text(" force: %.2f, %.2f, %.2f", particle->force.x, particle->force.y, particle->force.z);
+                    // ImGui::Text(" gravity force: %.2f, %.2f, %.2f", particle->gravityForce.x, particle->gravityForce.y, particle->gravityForce.z);
+
+                    ImGui::Spacing();
+                    ImGui::Spacing();
+
+                    ImGui::InputFloat(" inversed mass: (Kg^-1)", &particle->inversedMass);
+                    ImGui::InputFloat(" gravity scale: ", &particle->gravity);
+                    ImGui::InputFloat(" damping: (Kg/s)", &particle->damping);
+
+                    ImGui::TreePop();
+                }
+            }
+            if (rigidBody)
+            {
+                if (ImGui::TreeNode("Show RIGIDBODY data"))
+                {
+
+                    ImGui::Spacing();
+                    // if (ImGui::Checkbox(" print particle data on terminal ", &particle->printParticleOnTerminal))
                     ImGui::Spacing();
 
                     ImGui::Spacing();
@@ -390,7 +385,7 @@ void ImGuiEngine::ShowEngineImGui()
                     ImGui::Text(" angular damping: %.2f ", rigidBody->GetAngularDamping());
                     ImGui::Text("rotation: %.2f, %.2f, %.2f (m)", rigidBody->GetRotation().x, rigidBody->GetRotation().y, rigidBody->GetRotation().z);
                     ImGui::Text("orientation: w: %.2f,i: %.2f,j: %.2f,k: %.2f", rigidBody->GetOrientation().w(), rigidBody->GetOrientation().i(),
-                        rigidBody->GetOrientation().j(), rigidBody->GetOrientation().k());
+                                rigidBody->GetOrientation().j(), rigidBody->GetOrientation().k());
                     ImGui::Text("angular acceleration: %.2f, %.2f, %.2f (m/s^2) ", rigidBody->GetAngularAcceleration().x, rigidBody->GetAngularAcceleration().y, rigidBody->GetAngularAcceleration().z);
 
                     ImGui::Text("inverse Inertia Tensor: ");
@@ -404,11 +399,9 @@ void ImGuiEngine::ShowEngineImGui()
                     ImGui::Text("%.2f, %.2f, %.2f", rigidBody->GetInverseInertiaTensorWorld().D(), rigidBody->GetInverseInertiaTensorWorld().E(), rigidBody->GetInverseInertiaTensorWorld().F());
                     ImGui::Text("%.2f, %.2f, %.2f", rigidBody->GetInverseInertiaTensorWorld().G(), rigidBody->GetInverseInertiaTensorWorld().H(), rigidBody->GetInverseInertiaTensorWorld().I());
 
-
-
                     // ImGui::InputFloat4(" inversed mass: (Kg^-1)", &rig->inversedMass);
-                    //ImGui::Text(" force: %.2f, %.2f, %.2f", particle->force.x, particle->force.y, particle->force.z);
-                    //ImGui::Text(" gravity force: %.2f, %.2f, %.2f", particle->gravityForce.x, particle->gravityForce.y, particle->gravityForce.z);
+                    // ImGui::Text(" force: %.2f, %.2f, %.2f", particle->force.x, particle->force.y, particle->force.z);
+                    // ImGui::Text(" gravity force: %.2f, %.2f, %.2f", particle->gravityForce.x, particle->gravityForce.y, particle->gravityForce.z);
 
                     ImGui::Spacing();
                     ImGui::Spacing();
@@ -420,126 +413,143 @@ void ImGuiEngine::ShowEngineImGui()
                     ImGui::TreePop();
                 }
 
-                if (ImGui::TreeNode("ORIENTATION")) {
+                if (ImGui::TreeNode("ORIENTATION"))
+                {
 
                     ImGui::InputFloat("ori w", &orientationVector[0][i]);
                     ImGui::InputFloat("ori i", &orientationVector[1][i]);
                     ImGui::InputFloat("ori j", &orientationVector[2][i]);
                     ImGui::InputFloat("ori k", &orientationVector[3][i]);
 
-
-
                     ImGui::Spacing();
 
-                    if (ImGui::Button("Apply")) {
+                    if (ImGui::Button("Apply"))
+                    {
 
                         gameObjects->at(index[i])->GetComponentOfType<RigidBody>()->SetOrientation(orientationVector[0][i], orientationVector[1][i], orientationVector[2][i], orientationVector[3][i]);
-                        //Particle* other = new Particle();
-                       // Vector3D anchoredPos = gameObjects->at(index[i])->GetComponentOfType<Particle>()->position;
-                       // ParticleAnchoredSpring* particleAnchoredSpringApply = new ParticleAnchoredSpring(anchoredPos, restLength[i], springConstant[i]);
+                        // Particle* other = new Particle();
+                        // Vector3D anchoredPos = gameObjects->at(index[i])->GetComponentOfType<Particle>()->position;
+                        // ParticleAnchoredSpring* particleAnchoredSpringApply = new ParticleAnchoredSpring(anchoredPos, restLength[i], springConstant[i]);
 
-                       // MathPhysicsEngine::GetInstance()->GetParticleForceRegistry()->AddForce(particle, particleAnchoredSpringApply);
-
-
+                        // MathPhysicsEngine::GetInstance()->GetParticleForceRegistry()->AddForce(particle, particleAnchoredSpringApply);
                     }
 
                     ImGui::TreePop();
-
                 }
             }
 
-          
-
-           
-
             ImGui::TreePop();
             ImGui::Spacing();
-         
         }
-           
     }
     ImGui::End();
 
-    //TestIteration2();
-    //TestIteration3();
+    // TestIteration2();
+    // TestIteration3();
     TestIteration4();
+    TesGraphicMotor();
 }
 
-void ImGuiEngine::TestIteration4() {
+void ImGuiEngine::TesGraphicMotor()
+{
+    ImGui::Begin("Test GraphicMotor");
+    ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+
+    if (ImGui::Button("Spawn components"))
+    {
+        GameObject *go = new GameObject("floor");
+        VisualGameObject *v = VisualGameObject::CreatePtrVisualGameObject("Models/quad model.obj");
+        v->transform.translation = {0.f, .5f, 0.f};
+        go->AddComponent(v);
+        gameObjects->push_back(go);
+
+        go = new GameObject("Vase");
+        v = VisualGameObject::CreatePtrVisualGameObject("Models/smooth_vase.obj");
+        v->transform.translation = {.5f, .5f, 0.f};
+        go->AddComponent(v);
+        gameObjects->push_back(go);
+    }
+
+    ImGui::End();
+}
+
+void ImGuiEngine::TestIteration4()
+{
     ImGui::Begin("Phase 4 Test RIGIDBODY panel");
     ImGui::SetNextItemOpen(true, ImGuiCond_Once);
 
-    if (ImGui::Button("Test Gravity")) {
-        //Do sth
+    if (ImGui::Button("Test Gravity"))
+    {
     }
 
     ImGui::End();
-
 }
 
-void ImGuiEngine::TestIteration3() {
+void ImGuiEngine::TestIteration3()
+{
     ImGui::Begin("Phase 3 Test RIGIDBODY panel");
 
     ImGui::SetNextItemOpen(true, ImGuiCond_Once);
 
     /*
         - Test rotation brut
-        - Test vélocité angulaire : rotate sur un axe par une quantité = impulsion: pas de force
-        - Test de force: sur un point du carré
+        - Test vï¿½locitï¿½ angulaire : rotate sur un axe par une quantitï¿½ = impulsion: pas de force
+        - Test de force: sur un point du carrï¿½
         - Ressort ?
     */
 
-    if (ImGui::TreeNode("Forces")) {
-        
-        if (ImGui::Button("Test Gravity")) {
+    if (ImGui::TreeNode("Forces"))
+    {
 
-            for (int i = 0; i < gameObjects->size(); i++) gameObjects->at(i)->shouldDelete = true;
-            //gameObjects->clear();
+        if (ImGui::Button("Test Gravity"))
+        {
 
-            MathPhysicsEngine* math = MathPhysicsEngine::GetInstance();
-            GameObject* go = new GameObject("rigidBody");
-            RigidBody* rigidbody = new RigidBody
-            (
+            for (int i = 0; i < gameObjects->size(); i++)
+                gameObjects->at(i)->shouldDelete = true;
+            // gameObjects->clear();
+
+            MathPhysicsEngine *math = MathPhysicsEngine::GetInstance();
+            GameObject *go = new GameObject("rigidBody");
+            RigidBody *rigidbody = new RigidBody(
                 modeleInertiaTensor,
                 Vector3D(-10, 0, 20),
                 Vector3D(10, 10, 0),
                 Vector3D(0.0f, 0.0f, 0.0f),
                 Vector3D(0.0f, 0.0f, 2.0f),
-                { 1,0,0,0 }
-            );
-            RigidBodyGravity* rigidBodyGravity = new RigidBodyGravity({ 0.0f,-10.0f,0.0f });
+                {1, 0, 0, 0});
+            RigidBodyGravity *rigidBodyGravity = new RigidBodyGravity({0.0f, -10.0f, 0.0f});
             math->GetRigidBodyForceRegistry()->AddForce(rigidbody, rigidBodyGravity);
             go->AddComponent(rigidbody);
 
-            VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
+            VisualGameObject *v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
             go->AddComponent(v);
             gameObjects->push_back(go);
         }
 
-        if (ImGui::Button("Test angular damping")) {
+        if (ImGui::Button("Test angular damping"))
+        {
 
-            for (int i = 0; i < gameObjects->size(); i++) gameObjects->at(i)->shouldDelete = true;
+            for (int i = 0; i < gameObjects->size(); i++)
+                gameObjects->at(i)->shouldDelete = true;
 
-            MathPhysicsEngine* math = MathPhysicsEngine::GetInstance();
-            GameObject* go = new GameObject("damping rigidBody");
-            RigidBody* rigidBody = new RigidBody
-            (
+            MathPhysicsEngine *math = MathPhysicsEngine::GetInstance();
+            GameObject *go = new GameObject("damping rigidBody");
+            RigidBody *rigidBody = new RigidBody(
                 modeleInertiaTensor,
                 Vector3D(0, 0, 5),
                 Vector3D(0, 0, 0),
                 Vector3D(0.0f, 0.0f, 0.0f),
                 Vector3D(0, 0, 20),
-                { 1,0,0,0 },
+                {1, 0, 0, 0},
                 1.0f,
                 0.95f,
                 1.0f,
                 1.0f,
-                0.95f                
-            );
+                0.95f);
 
             go->AddComponent(rigidBody);
 
-            VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
+            VisualGameObject *v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
             go->AddComponent(v);
             gameObjects->push_back(go);
         }
@@ -653,71 +663,69 @@ void ImGuiEngine::TestIteration3() {
 
         if (ImGui::TreeNode("Springs"))
         {
-           
+
             static int springConstant = 8;
             ImGui::InputInt("Constant factor (N/m)", &springConstant);
             static int springRestLength = 6;
             ImGui::InputInt("Rest length (m)", &springRestLength);
 
-            static float rotationBlock1[3] = { 0.0f,0.0f,0.0f};
+            static float rotationBlock1[3] = {0.0f, 0.0f, 0.0f};
             ImGui::InputFloat3("rotation block 1", rotationBlock1);
-            static float rotationBlock2[3] = { 0.0f,0.0f,0.0f};
+            static float rotationBlock2[3] = {0.0f, 0.0f, 0.0f};
             ImGui::InputFloat3("rotation block 2", rotationBlock2);
 
-            static float connectionPointBlock1[3] = { 0.0f,0.0f,0.0f};
+            static float connectionPointBlock1[3] = {0.0f, 0.0f, 0.0f};
             ImGui::InputFloat3("connection point block 1", connectionPointBlock1);
-            static float connectionPointBlock2[3] = { 0.0f,0.0f,0.0f};
+            static float connectionPointBlock2[3] = {0.0f, 0.0f, 0.0f};
             ImGui::InputFloat3("connection point block 2", connectionPointBlock2);
-            
-            if (ImGui::Button("Test spring between two objects")) {
 
-                for (int i = 0; i < gameObjects->size(); i++) gameObjects->at(i)->shouldDelete = true;
+            if (ImGui::Button("Test spring between two objects"))
+            {
 
-                GameObject* go = new GameObject("spring block 1");
-                MathPhysicsEngine* math = MathPhysicsEngine::GetInstance();
+                for (int i = 0; i < gameObjects->size(); i++)
+                    gameObjects->at(i)->shouldDelete = true;
 
-                RigidBody* rbSpring1 = new RigidBody(
+                GameObject *go = new GameObject("spring block 1");
+                MathPhysicsEngine *math = MathPhysicsEngine::GetInstance();
+
+                RigidBody *rbSpring1 = new RigidBody(
                     modeleInertiaTensor,
                     Vector3D(0, 5, 20),
                     Vector3D(0, 0, 0),
                     Vector3D(0, 0, 0),
                     Vector3D(rotationBlock1[0], rotationBlock1[1], rotationBlock1[2]),
-                    { 1,0,0,0 }
-                    );
-                
+                    {1, 0, 0, 0});
+
                 go->AddComponent(rbSpring1);
-                VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
+                VisualGameObject *v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
                 go->AddComponent(v);
                 gameObjects->push_back(go);
 
                 go = new GameObject("spring block 2");
 
-                RigidBody* rbSpring2 = new RigidBody(
+                RigidBody *rbSpring2 = new RigidBody(
                     modeleInertiaTensor,
                     Vector3D(0, -5, 20),
                     Vector3D(0, 0, 0),
                     Vector3D(0, 0, 0),
                     Vector3D(rotationBlock2[0], rotationBlock2[1], rotationBlock2[2]),
-                    { 1,0,0,0 }
-                   );
+                    {1, 0, 0, 0});
                 go->AddComponent(rbSpring2);
 
-                RigidBodySpring* rbSpringForce1 = new RigidBodySpring(rbSpring1,
-                    {connectionPointBlock1[0],connectionPointBlock1[1],connectionPointBlock1[2]},
-                    {connectionPointBlock2[0],connectionPointBlock2[1],connectionPointBlock2[2]},
-                    springConstant,
-                    springRestLength
-                    );
-                
+                RigidBodySpring *rbSpringForce1 = new RigidBodySpring(rbSpring1,
+                                                                      {connectionPointBlock1[0], connectionPointBlock1[1], connectionPointBlock1[2]},
+                                                                      {connectionPointBlock2[0], connectionPointBlock2[1], connectionPointBlock2[2]},
+                                                                      springConstant,
+                                                                      springRestLength);
+
                 math->GetRigidBodyForceRegistry()->AddForce(rbSpring2, rbSpringForce1);
-                
-                RigidBodySpring* rbSpringForce2 = new RigidBodySpring(rbSpring2,
-                    {connectionPointBlock2[0],connectionPointBlock2[1],connectionPointBlock2[2]},
-                    {connectionPointBlock1[0],connectionPointBlock1[1],connectionPointBlock1[2]},
-                    springConstant,
-                    springRestLength
-                    );
-                
+
+                RigidBodySpring *rbSpringForce2 = new RigidBodySpring(rbSpring2,
+                                                                      {connectionPointBlock2[0], connectionPointBlock2[1], connectionPointBlock2[2]},
+                                                                      {connectionPointBlock1[0], connectionPointBlock1[1], connectionPointBlock1[2]},
+                                                                      springConstant,
+                                                                      springRestLength);
+
                 math->GetRigidBodyForceRegistry()->AddForce(rbSpring1, rbSpringForce2);
 
                 v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
@@ -730,88 +738,82 @@ void ImGuiEngine::TestIteration3() {
             static int anchoredSpringRestLength = 6;
             ImGui::InputInt("Rest length anchored (m)", &anchoredSpringRestLength);
 
-            static float anchoredRotationBlock[3] = { 0.0f,0.0f,0.0f};
+            static float anchoredRotationBlock[3] = {0.0f, 0.0f, 0.0f};
             ImGui::InputFloat3("rotation anchored block", anchoredRotationBlock);
-            static float springRotationBlock[3] = { 0.0f,0.0f,0.0f};
+            static float springRotationBlock[3] = {0.0f, 0.0f, 0.0f};
             ImGui::InputFloat3("rotation spring block", springRotationBlock);
 
-            static float anchoredconnectionPointBlock[3] = { 0.0f,0.0f,0.0f};
+            static float anchoredconnectionPointBlock[3] = {0.0f, 0.0f, 0.0f};
             ImGui::InputFloat3("anchored point", anchoredconnectionPointBlock);
-            static float springconnectionPointBlock[3] = { 0.0f,0.0f,0.0f};
+            static float springconnectionPointBlock[3] = {0.0f, 0.0f, 0.0f};
             ImGui::InputFloat3("spring point", springconnectionPointBlock);
 
-            //static float springconnectionPointBlock[3] = { 0.0f,0.0f,0.0f};
-            //ImGui::InputFloat3("spring point", springconnectionPointBlock);
-            
+            // static float springconnectionPointBlock[3] = { 0.0f,0.0f,0.0f};
+            // ImGui::InputFloat3("spring point", springconnectionPointBlock);
+
             static float anchoredAngularDampling = 0.7f;
             ImGui::InputFloat("Angular Dampling", &anchoredAngularDampling);
 
             static float anchoredLinearDampling = 0.9f;
             ImGui::InputFloat("linear Dampling", &anchoredLinearDampling);
-            
-            
+
             static float anchoredGravityScale = 0.0f;
             ImGui::InputFloat("Gravity scale", &anchoredGravityScale);
-            
-            if (ImGui::Button("Test anchored")) {
 
-                for (int i = 0; i < gameObjects->size(); i++) gameObjects->at(i)->shouldDelete = true;
+            if (ImGui::Button("Test anchored"))
+            {
 
-                GameObject* go = new GameObject("anchored");
-                MathPhysicsEngine* math = MathPhysicsEngine::GetInstance();
+                for (int i = 0; i < gameObjects->size(); i++)
+                    gameObjects->at(i)->shouldDelete = true;
 
-                RigidBody* rbSpringAnchored1 = new RigidBody(
+                GameObject *go = new GameObject("anchored");
+                MathPhysicsEngine *math = MathPhysicsEngine::GetInstance();
+
+                RigidBody *rbSpringAnchored1 = new RigidBody(
                     modeleInertiaTensor,
                     Vector3D(0, 5, 20),
                     Vector3D(0, 0, 0),
                     Vector3D(0, 0, 0),
                     Vector3D(anchoredRotationBlock[0], anchoredRotationBlock[1], anchoredRotationBlock[2]),
-                    { 1,0,0,0 }
-                    );
+                    {1, 0, 0, 0});
 
-                //rbSpringAnchored1->SetAngularDamping(anchoredAngularDampling);
+                // rbSpringAnchored1->SetAngularDamping(anchoredAngularDampling);
 
                 go->AddComponent(rbSpringAnchored1);
-                VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
+                VisualGameObject *v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
                 go->AddComponent(v);
                 gameObjects->push_back(go);
 
                 go = new GameObject("spring anchored block");
 
-                RigidBody* rbSpringAnchored2 = new RigidBody(
+                RigidBody *rbSpringAnchored2 = new RigidBody(
                     modeleInertiaTensor,
                     Vector3D(0, -5, 20),
                     Vector3D(0, 0, 0),
                     Vector3D(0, 0, 0),
                     Vector3D(springRotationBlock[0], springRotationBlock[1], springRotationBlock[2]),
-                    { 1,0,0,0 }
-                   );
+                    {1, 0, 0, 0});
 
                 rbSpringAnchored2->SetGravityScale(anchoredGravityScale);
                 rbSpringAnchored2->SetAngularDamping(anchoredAngularDampling);
                 rbSpringAnchored2->SetLinearDamping(anchoredLinearDampling);
                 go->AddComponent(rbSpringAnchored2);
 
-                
-
                 v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
                 go->AddComponent(v);
                 gameObjects->push_back(go);
 
-                RigidBodySpring* rbAnchoredForce = new RigidBodySpring(rbSpringAnchored1,
-                    {springconnectionPointBlock[0],springconnectionPointBlock[1],springconnectionPointBlock[2]},
-                    {anchoredconnectionPointBlock[0],anchoredconnectionPointBlock[1],anchoredconnectionPointBlock[2]},
-                    anchoredSpringConstant,
-                    anchoredSpringRestLength
-                    );
+                RigidBodySpring *rbAnchoredForce = new RigidBodySpring(rbSpringAnchored1,
+                                                                       {springconnectionPointBlock[0], springconnectionPointBlock[1], springconnectionPointBlock[2]},
+                                                                       {anchoredconnectionPointBlock[0], anchoredconnectionPointBlock[1], anchoredconnectionPointBlock[2]},
+                                                                       anchoredSpringConstant,
+                                                                       anchoredSpringRestLength);
                 math->GetRigidBodyForceRegistry()->AddForce(rbSpringAnchored2, rbAnchoredForce);
-                
-                RigidBodyGravity* rigidBodyGravity2 = new RigidBodyGravity({ 0.0f,-10.0f,0.0f });
-                MathPhysicsEngine::GetInstance()->GetRigidBodyForceRegistry()->AddForce(rbSpringAnchored2, rigidBodyGravity2);
 
+                RigidBodyGravity *rigidBodyGravity2 = new RigidBodyGravity({0.0f, -10.0f, 0.0f});
+                MathPhysicsEngine::GetInstance()->GetRigidBodyForceRegistry()->AddForce(rbSpringAnchored2, rigidBodyGravity2);
             }
 
-            
             ImGui::TreePop();
         }
     }
@@ -819,7 +821,8 @@ void ImGuiEngine::TestIteration3() {
     ImGui::End();
 }
 
-void ImGuiEngine::TestIteration2() {
+void ImGuiEngine::TestIteration2()
+{
 
     ImGui::Begin("Phase 2 Test PARTICULES panel");
 
@@ -827,55 +830,53 @@ void ImGuiEngine::TestIteration2() {
 
     if (ImGui::TreeNode("Forces"))
     {
-        if (ImGui::Button("Test Gravity")) {
+        if (ImGui::Button("Test Gravity"))
+        {
 
-            for (int i = 0; i < gameObjects->size(); i++) gameObjects->at(i)->shouldDelete = true;
-            //gameObjects->clear();
+            for (int i = 0; i < gameObjects->size(); i++)
+                gameObjects->at(i)->shouldDelete = true;
+            // gameObjects->clear();
 
-            MathPhysicsEngine* math = MathPhysicsEngine::GetInstance();
-            GameObject* go = new GameObject("Left particle");
-            Particle* particle = new Particle
-            (
+            MathPhysicsEngine *math = MathPhysicsEngine::GetInstance();
+            GameObject *go = new GameObject("Left particle");
+            Particle *particle = new Particle(
                 Vector3D(-10, 0, 20),
                 Vector3D(10, 10, 0),
                 Vector3D(0.0f, 0.0f, 0.0f),
                 1.0f,
                 0.999f,
-                1.0f
-            );
-            ParticleGravity* particleGravity = new ParticleGravity({ 0.0f,-10.0f,0.0f });
+                1.0f);
+            ParticleGravity *particleGravity = new ParticleGravity({0.0f, -10.0f, 0.0f});
             math->GetParticleForceRegistry()->AddForce(particle, particleGravity);
             go->AddComponent(particle);
 
-            VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
+            VisualGameObject *v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
             go->AddComponent(v);
             gameObjects->push_back(go);
-
         }
 
-        if (ImGui::Button("Test Friction")) {
+        if (ImGui::Button("Test Friction"))
+        {
 
-            for (int i = 0; i < gameObjects->size(); i++) gameObjects->at(i)->shouldDelete = true;
+            for (int i = 0; i < gameObjects->size(); i++)
+                gameObjects->at(i)->shouldDelete = true;
 
-            MathPhysicsEngine* math = MathPhysicsEngine::GetInstance();
-            GameObject* go = new GameObject("Friction particle");
-            Particle* particle = new Particle
-            (
+            MathPhysicsEngine *math = MathPhysicsEngine::GetInstance();
+            GameObject *go = new GameObject("Friction particle");
+            Particle *particle = new Particle(
                 Vector3D(-10, 0, 20),
                 Vector3D(100, 0, 0),
                 Vector3D(0.0f, 0.0f, 0.0f),
                 1.0f,
                 0.95f,
-                1.0f
-            );
+                1.0f);
 
             go->AddComponent(particle);
 
-            VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
+            VisualGameObject *v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
             go->AddComponent(v);
             gameObjects->push_back(go);
         }
-
 
         ImGui::SetNextItemOpen(true, ImGuiCond_Once);
 
@@ -885,58 +886,61 @@ void ImGuiEngine::TestIteration2() {
             ImGui::InputInt("Constant factor (N/m)", &anchoredSpringConstant);
             static int anchoredSpringRestLength = 6;
             ImGui::InputInt("Rest length (m)", &anchoredSpringRestLength);
-            
-            if (ImGui::Button("Test anchored spring")) {
 
-                for (int i = 0; i < gameObjects->size(); i++) gameObjects->at(i)->shouldDelete = true;
+            if (ImGui::Button("Test anchored spring"))
+            {
 
-                GameObject* go = new GameObject("anchord block");
-                MathPhysicsEngine* math = MathPhysicsEngine::GetInstance();
+                for (int i = 0; i < gameObjects->size(); i++)
+                    gameObjects->at(i)->shouldDelete = true;
 
-                Particle* particleAnchord = new Particle(Vector3D(0, 5, 20), Vector3D(0, 0, 0), Vector3D(0, 0, 0), 0.00000001f, 1, 1.0f);
+                GameObject *go = new GameObject("anchord block");
+                MathPhysicsEngine *math = MathPhysicsEngine::GetInstance();
+
+                Particle *particleAnchord = new Particle(Vector3D(0, 5, 20), Vector3D(0, 0, 0), Vector3D(0, 0, 0), 0.00000001f, 1, 1.0f);
                 go->AddComponent(particleAnchord);
-                VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
+                VisualGameObject *v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
                 go->AddComponent(v);
                 gameObjects->push_back(go);
 
                 go = new GameObject("spring block");
 
-                Particle* particleSpring = new Particle(Vector3D(0, -5, 20), Vector3D(0, 0, 0), Vector3D(0, 0, 0), 1, 0.99f, 1.0f);
+                Particle *particleSpring = new Particle(Vector3D(0, -5, 20), Vector3D(0, 0, 0), Vector3D(0, 0, 0), 1, 0.99f, 1.0f);
                 go->AddComponent(particleSpring);
 
                 math->GetParticleForceRegistry()->AddForce(particleSpring, math->particleGravity);
-                ParticleAnchoredSpring* particleAnchoredSpring = new ParticleAnchoredSpring(particleAnchord->position,(float) anchoredSpringConstant, (float)anchoredSpringRestLength);
+                ParticleAnchoredSpring *particleAnchoredSpring = new ParticleAnchoredSpring(particleAnchord->position, (float)anchoredSpringConstant, (float)anchoredSpringRestLength);
 
                 math->GetParticleForceRegistry()->AddForce(particleSpring, particleAnchoredSpring);
 
                 v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
                 go->AddComponent(v);
                 gameObjects->push_back(go);
-
             }
 
-            if (ImGui::Button("Test spring between two objects")) {
+            if (ImGui::Button("Test spring between two objects"))
+            {
 
-                for (int i = 0; i < gameObjects->size(); i++) gameObjects->at(i)->shouldDelete = true;
+                for (int i = 0; i < gameObjects->size(); i++)
+                    gameObjects->at(i)->shouldDelete = true;
 
-                GameObject* go = new GameObject("spring block 1");
-                MathPhysicsEngine* math = MathPhysicsEngine::GetInstance();
+                GameObject *go = new GameObject("spring block 1");
+                MathPhysicsEngine *math = MathPhysicsEngine::GetInstance();
 
-                Particle* particleSpring1 = new Particle(Vector3D(0, 5, 20), Vector3D(0, 0, 0), Vector3D(0, 0, 0), 1, 0.99f, 1.0f);
+                Particle *particleSpring1 = new Particle(Vector3D(0, 5, 20), Vector3D(0, 0, 0), Vector3D(0, 0, 0), 1, 0.99f, 1.0f);
                 go->AddComponent(particleSpring1);
-                VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
+                VisualGameObject *v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
                 go->AddComponent(v);
                 gameObjects->push_back(go);
 
                 go = new GameObject("spring block 2");
 
-                Particle* particleSpring2 = new Particle(Vector3D(0, -5, 20), Vector3D(0, 0, 0), Vector3D(0, 0, 0), 1, 0.99f, 1.0f);
+                Particle *particleSpring2 = new Particle(Vector3D(0, -5, 20), Vector3D(0, 0, 0), Vector3D(0, 0, 0), 1, 0.99f, 1.0f);
                 go->AddComponent(particleSpring2);
 
-                ParticleSpring* particleSpringForce = new ParticleSpring(particleSpring1, 8, 6);
+                ParticleSpring *particleSpringForce = new ParticleSpring(particleSpring1, 8, 6);
                 math->GetParticleForceRegistry()->AddForce(particleSpring2, particleSpringForce);
 
-                ParticleSpring* particleSpringForce2 = new ParticleSpring(particleSpring2, 8, 6);
+                ParticleSpring *particleSpringForce2 = new ParticleSpring(particleSpring2, 8, 6);
                 math->GetParticleForceRegistry()->AddForce(particleSpring1, particleSpringForce2);
 
                 v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
@@ -944,62 +948,64 @@ void ImGuiEngine::TestIteration2() {
                 gameObjects->push_back(go);
             }
 
-            if (ImGui::Button("Test elastic bungee between two objects")) {
+            if (ImGui::Button("Test elastic bungee between two objects"))
+            {
 
-                for (int i = 0; i < gameObjects->size(); i++) gameObjects->at(i)->shouldDelete = true;
+                for (int i = 0; i < gameObjects->size(); i++)
+                    gameObjects->at(i)->shouldDelete = true;
 
-                GameObject* go = new GameObject("elastic bungee block 1");
-                MathPhysicsEngine* math = MathPhysicsEngine::GetInstance();
+                GameObject *go = new GameObject("elastic bungee block 1");
+                MathPhysicsEngine *math = MathPhysicsEngine::GetInstance();
 
-                Particle* particleSpring1 = new Particle(Vector3D(0, 5, 20), Vector3D(0, 0, 0), Vector3D(0, 0, 0), 1, 0.8f, 1.0f);
+                Particle *particleSpring1 = new Particle(Vector3D(0, 5, 20), Vector3D(0, 0, 0), Vector3D(0, 0, 0), 1, 0.8f, 1.0f);
                 go->AddComponent(particleSpring1);
-                VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
+                VisualGameObject *v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
                 go->AddComponent(v);
                 gameObjects->push_back(go);
                 go = new GameObject("elastic bungee block 2");
 
-                Particle* particleSpring2 = new Particle(Vector3D(0, -5, 20), Vector3D(0, 0, 0), Vector3D(0, 0, 0), 1, 0.6f, 1.0f);
+                Particle *particleSpring2 = new Particle(Vector3D(0, -5, 20), Vector3D(0, 0, 0), Vector3D(0, 0, 0), 1, 0.6f, 1.0f);
                 go->AddComponent(particleSpring2);
 
-                ParticleElasticBungee* particleElasticBungeeForce1 = new ParticleElasticBungee(particleSpring1, 7, 8);
+                ParticleElasticBungee *particleElasticBungeeForce1 = new ParticleElasticBungee(particleSpring1, 7, 8);
                 math->GetParticleForceRegistry()->AddForce(particleSpring2, particleElasticBungeeForce1);
 
-                ParticleElasticBungee* particleElasticBungeeForce2 = new ParticleElasticBungee(particleSpring2, 7, 8);
+                ParticleElasticBungee *particleElasticBungeeForce2 = new ParticleElasticBungee(particleSpring2, 7, 8);
                 math->GetParticleForceRegistry()->AddForce(particleSpring1, particleElasticBungeeForce2);
-
 
                 v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
                 go->AddComponent(v);
                 gameObjects->push_back(go);
-
             }
 
             static int distance = 7;
             ImGui::InputInt("Distance with Main Blob (m)", &distance);
-            if (ImGui::Button("Test blob")) {
+            if (ImGui::Button("Test blob"))
+            {
 
-                for (int i = 0; i < gameObjects->size(); i++) gameObjects->at(i)->shouldDelete = true;
+                for (int i = 0; i < gameObjects->size(); i++)
+                    gameObjects->at(i)->shouldDelete = true;
 
-                GameObject* go = new GameObject("main block");
-                MathPhysicsEngine* math = MathPhysicsEngine::GetInstance();
+                GameObject *go = new GameObject("main block");
+                MathPhysicsEngine *math = MathPhysicsEngine::GetInstance();
 
                 Vector3D mainPosition = Vector3D(0, 0, 20);
 
-                Particle* particleAnchord = new Particle(mainPosition, Vector3D(0, 0, 0), Vector3D(0, 0, 0), 0.9f, 1, 1.0f);
+                Particle *particleAnchord = new Particle(mainPosition, Vector3D(0, 0, 0), Vector3D(0, 0, 0), 0.9f, 1, 1.0f);
                 go->AddComponent(particleAnchord);
                 inputForce = &particleAnchord->inputValues;
-                InputForce* newInputForce = new InputForce();
+                InputForce *newInputForce = new InputForce();
 
                 MathPhysicsEngine::GetInstance()->GetParticleForceRegistry()->AddForce(particleAnchord, newInputForce);
-                VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
+                VisualGameObject *v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
                 go->AddComponent(v);
                 gameObjects->push_back(go);
 
                 const int maxBlob = 8;
 
-                std::vector<Particle*> blobs;
+                std::vector<Particle *> blobs;
 
-                std::vector<Vector3D> positions = { { -1,1,0 }, { 0,1,0 },{ 1,1,0 },{ 1,0,0 }, { 1,-1,0 },{ 0,-1,0 },{ -1,-1,0 },{ -1,0,0 } };
+                std::vector<Vector3D> positions = {{-1, 1, 0}, {0, 1, 0}, {1, 1, 0}, {1, 0, 0}, {1, -1, 0}, {0, -1, 0}, {-1, -1, 0}, {-1, 0, 0}};
                 Vector3D standardVec = Vector3D(distance, distance, 0);
                 for (int i = 1; i <= maxBlob; i++)
                 {
@@ -1007,17 +1013,18 @@ void ImGuiEngine::TestIteration2() {
                     positions[i - 1].y *= standardVec.y;
 
                     go = new GameObject("Blob block " + std::to_string(i));
-                    Particle* particleSpring = new Particle(mainPosition + positions[i - 1], Vector3D(0, 0, 0), Vector3D(0, 0, 0), 1, 0.99f, 1.0f);
+                    Particle *particleSpring = new Particle(mainPosition + positions[i - 1], Vector3D(0, 0, 0), Vector3D(0, 0, 0), 1, 0.99f, 1.0f);
                     go->AddComponent(particleSpring);
 
                     v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
                     go->AddComponent(v);
                     gameObjects->push_back(go);
 
-                    ParticleSpring* particleAnchoredSpring = new ParticleSpring(particleAnchord, (float)anchoredSpringConstant, (float)anchoredSpringRestLength);
+                    ParticleSpring *particleAnchoredSpring = new ParticleSpring(particleAnchord, (float)anchoredSpringConstant, (float)anchoredSpringRestLength);
                     math->GetParticleForceRegistry()->AddForce(particleSpring, particleAnchoredSpring);
 
-                    if (i != 1) {
+                    if (i != 1)
+                    {
                         particleAnchoredSpring = new ParticleSpring(blobs.back(), (float)anchoredSpringConstant, (float)anchoredSpringRestLength);
                         math->GetParticleForceRegistry()->AddForce(particleSpring, particleAnchoredSpring);
 
@@ -1025,7 +1032,8 @@ void ImGuiEngine::TestIteration2() {
                         math->GetParticleForceRegistry()->AddForce(blobs.back(), particleAnchoredSpring);
                     }
 
-                    if (i == maxBlob) {
+                    if (i == maxBlob)
+                    {
 
                         particleAnchoredSpring = new ParticleSpring(blobs.front(), (float)anchoredSpringConstant, (float)anchoredSpringRestLength);
                         math->GetParticleForceRegistry()->AddForce(particleSpring, particleAnchoredSpring);
@@ -1036,7 +1044,6 @@ void ImGuiEngine::TestIteration2() {
 
                     blobs.push_back(particleSpring);
                 }
-
             }
 
             ImGui::TreePop();
@@ -1049,41 +1056,39 @@ void ImGuiEngine::TestIteration2() {
 
     if (ImGui::TreeNode("Collisions"))
     {
-        if (ImGui::Button("Test collision")) {
+        if (ImGui::Button("Test collision"))
+        {
 
-            for (int i = 0; i < gameObjects->size(); i++) gameObjects->at(i)->shouldDelete = true;
+            for (int i = 0; i < gameObjects->size(); i++)
+                gameObjects->at(i)->shouldDelete = true;
 
-            MathPhysicsEngine* math = MathPhysicsEngine::GetInstance();
-            GameObject* go = new GameObject("Left particle");
-            Particle* particle = new Particle
-            (
+            MathPhysicsEngine *math = MathPhysicsEngine::GetInstance();
+            GameObject *go = new GameObject("Left particle");
+            Particle *particle = new Particle(
                 Vector3D(-10, 0, 20),
                 Vector3D(10, 5, 0),
                 Vector3D(0.0f, 0.0f, 0.0f),
                 1.0f,
                 0.999f,
-                1.0f
-            );
-            ParticleGravity* particleGravity = new ParticleGravity({ 0.0f,-10.0f,0.0f });
+                1.0f);
+            ParticleGravity *particleGravity = new ParticleGravity({0.0f, -10.0f, 0.0f});
             math->GetParticleForceRegistry()->AddForce(particle, particleGravity);
             go->AddComponent(particle);
 
-            VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
+            VisualGameObject *v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
             go->AddComponent(v);
             gameObjects->push_back(go);
 
-            GameObject* go2 = new GameObject("Right particle");
-            Particle* particle2 = new Particle
-            (
+            GameObject *go2 = new GameObject("Right particle");
+            Particle *particle2 = new Particle(
                 Vector3D(10, 0, 20),
                 Vector3D(-10, 5, 0),
                 Vector3D(0.0f, 0.0f, 0.0f),
                 1.0f,
                 0.999f,
-                1.0f
-            );
+                1.0f);
 
-            ParticleGravity* particleGravity2 = new ParticleGravity({ 0.0f,-10.0f,0.0f });
+            ParticleGravity *particleGravity2 = new ParticleGravity({0.0f, -10.0f, 0.0f});
             math->GetParticleForceRegistry()->AddForce(particle2, particleGravity2);
             go2->AddComponent(particle2);
 
@@ -1092,16 +1097,18 @@ void ImGuiEngine::TestIteration2() {
             gameObjects->push_back(go2);
         }
 
-        if (ImGui::Button("Test penetration and resting contact")) {
+        if (ImGui::Button("Test penetration and resting contact"))
+        {
 
-            for (int i = 0; i < gameObjects->size(); i++) gameObjects->at(i)->shouldDelete = true;
+            for (int i = 0; i < gameObjects->size(); i++)
+                gameObjects->at(i)->shouldDelete = true;
 
-            GameObject* go = new GameObject("Heavy non gravity block");
-            MathPhysicsEngine* math = MathPhysicsEngine::GetInstance();
+            GameObject *go = new GameObject("Heavy non gravity block");
+            MathPhysicsEngine *math = MathPhysicsEngine::GetInstance();
 
-            Particle* particle = new Particle(Vector3D(0, 0, 20), Vector3D(0, 0, 0), Vector3D(0, 0, 0), 0.00000001f, 1, 1.0f);
+            Particle *particle = new Particle(Vector3D(0, 0, 20), Vector3D(0, 0, 0), Vector3D(0, 0, 0), 0.00000001f, 1, 1.0f);
             go->AddComponent(particle);
-            VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
+            VisualGameObject *v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
             go->AddComponent(v);
             gameObjects->push_back(go);
 
@@ -1122,34 +1129,34 @@ void ImGuiEngine::TestIteration2() {
             v = VisualGameObject::CreatePtrVisualGameObject("Models/colored_cube.obj");
             go->AddComponent(v);
             gameObjects->push_back(go);*/
-
         }
 
         static int rod = 2;
         ImGui::InputInt("rod Numbers", &rod);
-        if (ImGui::Button("Test ROD")) {
+        if (ImGui::Button("Test ROD"))
+        {
 
+            for (int i = 0; i < gameObjects->size(); i++)
+                gameObjects->at(i)->shouldDelete = true;
 
-            for (int i = 0; i < gameObjects->size(); i++) gameObjects->at(i)->shouldDelete = true;
+            GameObject *go = new GameObject("Heavy non gravity block");
+            MathPhysicsEngine *math = MathPhysicsEngine::GetInstance();
 
-            GameObject* go = new GameObject("Heavy non gravity block");
-            MathPhysicsEngine* math = MathPhysicsEngine::GetInstance();
-
-            Particle* particle = new Particle(Vector3D(0, 0, 20), Vector3D(0, 0, 0), Vector3D(0, 0, 0), 0.00000001f, 1, 1.0f);
+            Particle *particle = new Particle(Vector3D(0, 0, 20), Vector3D(0, 0, 0), Vector3D(0, 0, 0), 0.00000001f, 1, 1.0f);
             go->AddComponent(particle);
-            VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
+            VisualGameObject *v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
             go->AddComponent(v);
             gameObjects->push_back(go);
 
-            for (int i = 0; i < rod; i++) {
+            for (int i = 0; i < rod; i++)
+            {
 
-                GameObject* go2 = new GameObject("Rod Extremity " + std::to_string(i));
+                GameObject *go2 = new GameObject("Rod Extremity " + std::to_string(i));
 
-
-                Particle* p2 = new Particle(Vector3D(0.1, 5 * (i + 1), 20), Vector3D(0, 0, 0), Vector3D(0, 0, 0), 1, 0.999f, 1);
+                Particle *p2 = new Particle(Vector3D(0.1, 5 * (i + 1), 20), Vector3D(0, 0, 0), Vector3D(0, 0, 0), 1, 0.999f, 1);
                 go2->AddComponent(p2);
                 math->GetParticleForceRegistry()->AddForce(p2, math->particleGravity);
-                VisualGameObject* v2 = VisualGameObject::CreatePtrVisualGameObject(modelePath);
+                VisualGameObject *v2 = VisualGameObject::CreatePtrVisualGameObject(modelePath);
                 go2->AddComponent(v2);
 
                 gameObjects->push_back(go2);
@@ -1158,17 +1165,18 @@ void ImGuiEngine::TestIteration2() {
 
                 particle = p2;
             }
-
         }
 
         static int cable = 2;
         ImGui::InputInt("Cable Numbers", &cable);
-        if (ImGui::Button("Test Cable")) {
-            for (int i = 0; i < gameObjects->size(); i++) gameObjects->at(i)->shouldDelete = true;
-            GameObject* go;
-            Particle* particle;
-            VisualGameObject* v;
-            MathPhysicsEngine* math = MathPhysicsEngine::GetInstance();
+        if (ImGui::Button("Test Cable"))
+        {
+            for (int i = 0; i < gameObjects->size(); i++)
+                gameObjects->at(i)->shouldDelete = true;
+            GameObject *go;
+            Particle *particle;
+            VisualGameObject *v;
+            MathPhysicsEngine *math = MathPhysicsEngine::GetInstance();
 
             go = new GameObject("Heavy non gravity block");
 
@@ -1178,55 +1186,50 @@ void ImGuiEngine::TestIteration2() {
             go->AddComponent(v);
             gameObjects->push_back(go);
 
-
-
             std::random_device rd;
             std::mt19937 gen(rd());
             std::uniform_real_distribution<float> dis(-5.0f, 5.0f);
 
-            for (int i = 0; i < cable; i++) {
+            for (int i = 0; i < cable; i++)
+            {
 
-                GameObject* go2 = new GameObject("Cable extremity " + std::to_string(i));
+                GameObject *go2 = new GameObject("Cable extremity " + std::to_string(i));
 
                 float posx = dis(gen);
                 float posy = dis(gen);
 
-                Particle* p2 = new Particle(Vector3D(posx, posy, 20), Vector3D(0, 0, 0), Vector3D(0, 0, 0), 1, 1, 1);
+                Particle *p2 = new Particle(Vector3D(posx, posy, 20), Vector3D(0, 0, 0), Vector3D(0, 0, 0), 1, 1, 1);
                 go2->AddComponent(p2);
                 math->GetParticleForceRegistry()->AddForce(p2, math->particleGravity);
-                VisualGameObject* v2 = VisualGameObject::CreatePtrVisualGameObject(modelePath);
+                VisualGameObject *v2 = VisualGameObject::CreatePtrVisualGameObject(modelePath);
                 go2->AddComponent(v2);
 
                 gameObjects->push_back(go2);
 
                 math->TestCableCollisionSetup(p2, particle, 10);
             }
-
         }
-
-        
     }
     ImGui::TreePop();
 
-
     ImGui::End();
-
 }
 
 void ImGuiEngine::SetVisible(bool _visible)
 {
-    if (visible == _visible) {
+    if (visible == _visible)
+    {
         return;
     }
 
     visible = _visible;
 
-    if (visible) {
+    if (visible)
+    {
         ImGui_ImplGlfw_InstallCallbacks(window);
     }
-    else {
+    else
+    {
         ImGui_ImplGlfw_RestoreCallbacks(window);
-
     }
-
 }

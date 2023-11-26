@@ -153,6 +153,7 @@
     <ClCompile Include="GraphicEngine\Camera.cpp" />
     <ClCompile Include="GraphicEngine\lve_buffer.cpp" />
     <ClCompile Include="GraphicEngine\lve_descriptors.cpp" />
+    <ClCompile Include="GraphicEngine\PointLightSystem.cpp" />
     <ClCompile Include="GraphicEngine\VisualGameObject.cpp" />
     <ClCompile Include="GraphicEngine\GraphicDevice.cpp" />
     <ClCompile Include="GraphicEngine\GraphicsMotor.cpp" />
@@ -945,6 +946,7 @@
     <ClInclude Include="GraphicEngine\lve_buffer.h" />
     <ClInclude Include="GraphicEngine\lve_descriptors.h" />
     <ClInclude Include="GraphicEngine\lve_frame_info.h" />
+    <ClInclude Include="GraphicEngine\PointLightSystem.h" />
     <ClInclude Include="GraphicEngine\VisualGameObject.h" />
     <ClInclude Include="GraphicEngine\GraphicDevice.h" />
     <ClInclude Include="GraphicEngine\GraphicsMotor.h" />

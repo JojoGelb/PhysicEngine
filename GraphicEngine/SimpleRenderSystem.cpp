@@ -69,7 +69,7 @@ void SimpleRenderSystem::CreatePipeline(VkRenderPass renderPass)
 		pipelineConfig);
 }
 
-void SimpleRenderSystem::RenderGameObjects(FrameInfo& frameInfo, std::vector<VisualGameObject>& gameObjects)
+void SimpleRenderSystem::RenderGameObjects(FrameInfo& frameInfo)
 {
 	vKPipeline->Bind(frameInfo.commandBuffer);
 
@@ -83,10 +83,12 @@ void SimpleRenderSystem::RenderGameObjects(FrameInfo& frameInfo, std::vector<Vis
       0,
       nullptr);
 
-	for (auto& obj : gameObjects) {
+	for (auto& keyValue : frameInfo.gameObjects) {
+		auto& obj = keyValue.second;
+		if (obj->model == nullptr) continue;
 		SimplePushConstantData push{};
-		push.modelMatrix = obj.transform.Mat4();
-		push.normalMatrix = obj.transform.NormalMatrix();
+		push.modelMatrix = obj->transform.Mat4();
+		push.normalMatrix = obj->transform.NormalMatrix();
 
 		vkCmdPushConstants(
 			frameInfo.commandBuffer,
@@ -95,13 +97,13 @@ void SimpleRenderSystem::RenderGameObjects(FrameInfo& frameInfo, std::vector<Vis
 			0,
 			sizeof(SimplePushConstantData),
 			&push);
-		obj.model->Bind(frameInfo.commandBuffer);
-    	obj.model->Draw(frameInfo.commandBuffer);
+		obj->model->Bind(frameInfo.commandBuffer);
+    	obj->model->Draw(frameInfo.commandBuffer);
 
 	}
 }
 
-void SimpleRenderSystem::RenderGameObjectsV2(FrameInfo &frameInfo, std::vector<VisualGameObject*> &gameObjects)
+void SimpleRenderSystem::RenderGameObjectsV2(FrameInfo &frameInfo)
 {
 	vKPipeline->Bind(frameInfo.commandBuffer);
 
@@ -115,7 +117,9 @@ void SimpleRenderSystem::RenderGameObjectsV2(FrameInfo &frameInfo, std::vector<V
       0,
       nullptr);
 
-	for (auto& obj : gameObjects) {
+	for (auto& keyValue : frameInfo.gameObjects) {
+		auto& obj = keyValue.second;
+		if (obj->model == nullptr) continue;
 		SimplePushConstantData push{};
 		push.modelMatrix = obj->transform.Mat4();
 		push.normalMatrix = obj->transform.NormalMatrix();

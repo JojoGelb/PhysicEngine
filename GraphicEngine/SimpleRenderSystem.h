@@ -18,8 +18,8 @@ public:
 	SimpleRenderSystem(GraphicDevice & device, VkRenderPass renderPass, VkDescriptorSetLayout globalSetLayout);
 	~SimpleRenderSystem();
 
-	void RenderGameObjects(FrameInfo &frameInfo, std::vector<VisualGameObject> &gameObjects);
-	void RenderGameObjectsV2(FrameInfo &frameInfo, std::vector<VisualGameObject*> &gameObjects);
+	void RenderGameObjects(FrameInfo &frameInfo);
+	void RenderGameObjectsV2(FrameInfo &frameInfo);
 	void RenderImGui(VkCommandBuffer commandBuffer);
 private:
 	void CreatePipelineLayout(VkDescriptorSetLayout globalSetLayout);

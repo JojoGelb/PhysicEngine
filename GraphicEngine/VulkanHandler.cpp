@@ -15,8 +15,11 @@
 
 struct GlobalUbo
 {
-    glm::mat4 projectionView{1.f};
-    glm::vec3 lightDirection = glm::normalize(glm::vec3{1.f, -3.f, -1.f});
+    glm::mat4 projection{1.f};
+    glm::mat4 view{1.f};
+    glm::vec4 ambientLightColor{1.f, 1.f, 1.f, .02f};  // w is intensity
+    glm::vec3 lightPosition{-1.f};
+    alignas(16) glm::vec4 lightColor{1.f};  // w is light intensity
 };
 
 VulkanHandler::VulkanHandler(Window &_window) : graphicDevice(_window),
@@ -46,7 +49,7 @@ VulkanHandler::VulkanHandler(Window &_window) : graphicDevice(_window),
 
     auto globalSetLayout =
         LveDescriptorSetLayout::Builder(graphicDevice)
-            .addBinding(0, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, VK_SHADER_STAGE_VERTEX_BIT)
+            .addBinding(0, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, VK_SHADER_STAGE_ALL_GRAPHICS)
             .build();
 
     for (int i = 0; i < globalDescriptorSets.size(); i++)
@@ -62,11 +65,18 @@ VulkanHandler::VulkanHandler(Window &_window) : graphicDevice(_window),
         renderer.GetSwapChainRenderPass(),
         globalSetLayout->getDescriptorSetLayout()
     };
+
+    pointLightRenderSystem = new PointLightSystem{
+        graphicDevice,
+        renderer.GetSwapChainRenderPass(),
+        globalSetLayout->getDescriptorSetLayout()
+    };
 }
 
 VulkanHandler::~VulkanHandler()
 {
     delete renderSystem;
+    delete pointLightRenderSystem;
 }
 
 void VulkanHandler::Update(float frameTime)
@@ -90,16 +100,18 @@ void VulkanHandler::Render(float frameTime)
           frameTime,
           commandBuffer,
           camera,
-          globalDescriptorSets[frameIndex]};
+          globalDescriptorSets[frameIndex],
+          objects2};
 
         GlobalUbo ubo{};
-        ubo.projectionView = camera.GetProjection() * camera.GetView();
+        ubo.projection = camera.GetProjection();
+        ubo.view = camera.GetView();
         uboBuffers[frameIndex]->writeToBuffer(&ubo);
         uboBuffers[frameIndex]->flush();
 
         renderer.BeginSwapChainRenderPass(commandBuffer);
-        renderSystem->RenderGameObjectsV2(frameInfo, objects2);
-
+        renderSystem->RenderGameObjectsV2(frameInfo);
+        pointLightRenderSystem->render(frameInfo);
         renderSystem->RenderImGui(commandBuffer);
 
         renderer.EndSwapChainRenderPass(commandBuffer);

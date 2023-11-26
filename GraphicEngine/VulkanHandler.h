@@ -12,6 +12,7 @@
 
 #include "Camera.h"
 #include <SimpleRenderSystem.h>
+#include "PointLightSystem.h"
 #include <KeyboardInput.h>
 
 class Window;
@@ -28,9 +29,10 @@ public:
 
 	void Shutdown();
 
-	void AddGameObject2(VisualGameObject* obj) { objects2.push_back(obj); }
+	void AddGameObject2(VisualGameObject* obj) { /*objects2.push_back(obj);*/ objects2.emplace(obj->GetId(),obj);}
 	void RemoveGameObject2(VisualGameObject* obj) {
-		objects2.erase(std::remove(objects2.begin(), objects2.end(), obj), objects2.end());
+		objects2.erase(obj->GetId());
+		//objects2.erase(std::remove(objects2.begin(), objects2.end(), obj), objects2.end());
 	}
 
 	GraphicDevice & GetGraphicDevice();
@@ -46,12 +48,14 @@ private:
 	// note: order of declarations matters
   	std::unique_ptr<LveDescriptorPool> globalPool{};
 
-	std::vector<VisualGameObject*> objects2;
+	//std::vector<VisualGameObject*> objects2;
+	VisualGameObject::Map objects2;
 
 
 	Window & window;
 
 	SimpleRenderSystem * renderSystem;
+	PointLightSystem * pointLightRenderSystem;
 	Camera camera;
 	KeyboardInput cameraController;
 	VisualGameObject * viewerObject;

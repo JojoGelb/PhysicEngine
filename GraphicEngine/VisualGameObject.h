@@ -6,6 +6,7 @@
 #include "Component.h"
 // std
 #include <memory>
+#include <unordered_map>
 
 struct TransformComponent {
 	glm::vec3 translation{};  // (position offset)
@@ -25,6 +26,7 @@ struct TransformComponent {
 class VisualGameObject : public Component{
 public:
 	using id_t = unsigned int;
+	using Map = std::unordered_map<id_t, VisualGameObject*>;
 
 	static VisualGameObject* CreatePtrVisualGameObject(std::string modelePath);
 
@@ -40,7 +42,7 @@ public:
 	VisualGameObject(VisualGameObject&&) = default;
 	VisualGameObject& operator=(VisualGameObject&&) = default;
 
-	// Hérité via Component
+	// Hï¿½ritï¿½ via Component
 	void Start() override;
 	void Update() override;
 	void Shutdown() override;
