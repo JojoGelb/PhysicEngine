@@ -101,6 +101,7 @@ void VulkanHandler::Render(float frameTime)
         GlobalUbo ubo{};
         ubo.projection = camera.GetProjection();
         ubo.view = camera.GetView();
+        ubo.inverseView = camera.getInverseView();
 
         pointLightRenderSystem->update(frameInfo, ubo);
 
