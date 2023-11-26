@@ -11,6 +11,7 @@ int main() {
 
     std::vector<GameObject*> gameObjects;
 
+    
     GraphicsMotor* graphicsMotor = GraphicsMotor::GetInstance();
 
     MathPhysicsEngine * mathPhysics = MathPhysicsEngine::GetInstance();
@@ -21,7 +22,6 @@ int main() {
 
     auto currentTime = std::chrono::high_resolution_clock::now();
     double accumulator = 0.0;
-
     while (!graphicsMotor->ExitCondition()) {
 
         auto newTime = std::chrono::high_resolution_clock::now();
@@ -53,7 +53,6 @@ int main() {
 
         mathPhysics->SetFinalStates(alpha);
         //std::cout << "time: " << t + frameTime << "\n";
-
         graphicsMotor->Update(frameTime);
 
         for (int i = gameObjects.size()-1; i >= 0; i--) {
@@ -62,7 +61,6 @@ int main() {
         }
 
         //Delete objects here
-
         graphicsMotor->Render(frameTime);
 
         t += frameTime;

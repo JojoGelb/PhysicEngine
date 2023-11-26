@@ -468,6 +468,29 @@ void ImGuiEngine::TesGraphicMotor()
         v->transform.translation = {.5f, .5f, 0.f};
         go->AddComponent(v);
         gameObjects->push_back(go);
+
+        std::vector<glm::vec3> lightColors{
+            {1.f, .1f, .1f},
+            {.1f, .1f, 1.f},
+            {.1f, 1.f, .1f},
+            {1.f, 1.f, .1f},
+            {.1f, 1.f, 1.f},
+            {1.f, 1.f, 1.f} //
+        };
+
+        for (int i = 0; i < lightColors.size(); i++)
+        {
+            GameObject* go2 = new GameObject("Light");
+            VisualGameObject* v2 = VisualGameObject::makePointLight(0.2f);
+            v2->color = lightColors[i];
+            auto rotateLight = glm::rotate(
+                glm::mat4(1.f),
+                (i * glm::two_pi<float>()) / lightColors.size(),
+                {0.f, -1.f, 0.f});
+            v2->transform.translation = glm::vec3(rotateLight * glm::vec4(-1.f, -1.f, -1.f, 1.f));
+            go2->AddComponent(v2);
+            gameObjects->push_back(go2);
+        }
     }
 
     ImGui::End();

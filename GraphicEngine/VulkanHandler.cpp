@@ -13,14 +13,7 @@
 #include <imgui_impl_vulkan.h>
 #include <iostream>
 
-struct GlobalUbo
-{
-    glm::mat4 projection{1.f};
-    glm::mat4 view{1.f};
-    glm::vec4 ambientLightColor{1.f, 1.f, 1.f, .02f};  // w is intensity
-    glm::vec3 lightPosition{-1.f};
-    alignas(16) glm::vec4 lightColor{1.f};  // w is light intensity
-};
+
 
 VulkanHandler::VulkanHandler(Window &_window) : graphicDevice(_window),
                                                 renderer(_window, graphicDevice),
@@ -45,7 +38,9 @@ VulkanHandler::VulkanHandler(Window &_window) : graphicDevice(_window),
         uboBuffers[i]->map();
     }
 
-    globalPool = LveDescriptorPool::Builder(graphicDevice).setMaxSets(SwapChain::MAX_FRAMES_IN_FLIGHT).addPoolSize(VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, SwapChain::MAX_FRAMES_IN_FLIGHT).build();
+    globalPool = LveDescriptorPool::Builder(graphicDevice)
+        .setMaxSets(SwapChain::MAX_FRAMES_IN_FLIGHT)
+        .addPoolSize(VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, SwapChain::MAX_FRAMES_IN_FLIGHT).build();
 
     auto globalSetLayout =
         LveDescriptorSetLayout::Builder(graphicDevice)
@@ -106,13 +101,16 @@ void VulkanHandler::Render(float frameTime)
         GlobalUbo ubo{};
         ubo.projection = camera.GetProjection();
         ubo.view = camera.GetView();
+
+        pointLightRenderSystem->update(frameInfo, ubo);
+
         uboBuffers[frameIndex]->writeToBuffer(&ubo);
         uboBuffers[frameIndex]->flush();
 
         renderer.BeginSwapChainRenderPass(commandBuffer);
         renderSystem->RenderGameObjectsV2(frameInfo);
-        pointLightRenderSystem->render(frameInfo);
         renderSystem->RenderImGui(commandBuffer);
+        pointLightRenderSystem->render(frameInfo);
 
         renderer.EndSwapChainRenderPass(commandBuffer);
         renderer.EndFrame();
