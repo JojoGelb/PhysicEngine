@@ -59,6 +59,9 @@ void SimpleRenderSystem::CreatePipeline(VkRenderPass renderPass)
 
 	PipelineConfigInfo pipelineConfig{};
 	VKPipeline::DefaultPipelineConfigInfo(pipelineConfig);
+	VKPipeline::enableAlphaBlending(pipelineConfig);
+	/*pipelineConfig.attributeDescriptions.clear();
+  	pipelineConfig.bindingDescriptions.clear();*/
 	pipelineConfig.renderPass = renderPass;
 
 	pipelineConfig.pipelineLayout = pipelineLayout;

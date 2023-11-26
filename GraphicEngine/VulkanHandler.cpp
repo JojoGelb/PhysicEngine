@@ -109,8 +109,8 @@ void VulkanHandler::Render(float frameTime)
         uboBuffers[frameIndex]->flush();
 
         renderer.BeginSwapChainRenderPass(commandBuffer);
-        renderSystem->RenderGameObjectsV2(frameInfo);
         renderSystem->RenderImGui(commandBuffer);
+        renderSystem->RenderGameObjectsV2(frameInfo);
         pointLightRenderSystem->render(frameInfo);
 
         renderer.EndSwapChainRenderPass(commandBuffer);
