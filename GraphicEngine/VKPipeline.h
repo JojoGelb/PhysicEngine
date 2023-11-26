@@ -7,6 +7,7 @@
 #include <vector>
 
 struct PipelineConfigInfo {
+	PipelineConfigInfo() = default;
 	PipelineConfigInfo(const PipelineConfigInfo&) = delete;
 	PipelineConfigInfo& operator=(const PipelineConfigInfo&) = delete;
 
@@ -43,6 +44,8 @@ public:
 
 	static void DefaultPipelineConfigInfo(PipelineConfigInfo& configInfo);
 
+	static void enableAlphaBlending(PipelineConfigInfo& configInfo);
+	
 	VkPipeline& GetVkPipeline() { return graphicsPipeline; }
 
 private:
