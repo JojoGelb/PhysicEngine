@@ -14,8 +14,7 @@ struct GlobalUbo;
 
 class PointLightSystem {
  public:
-  PointLightSystem(
-      GraphicDevice &device, VkRenderPass renderPass, VkDescriptorSetLayout globalSetLayout);
+  PointLightSystem(GraphicDevice &device, VkRenderPass renderPass, VkDescriptorSetLayout globalSetLayout);
   ~PointLightSystem();
 
   PointLightSystem(const PointLightSystem &) = delete;

@@ -13,9 +13,6 @@
 
 #include "Forces/ParticuleForces/ParticleGravity.h"
 
-#include "RigidBodyContacts/BHVNode.h"
-#include "RigidBodyContacts/BoundingSphere.h"
-
 class MathPhysicsEngine {
 
 protected:
@@ -80,9 +77,6 @@ private:
 
 	//RigidBody forces
 	RigidBodyForceRegistry* rigidBodyForceRegistry;
-
-	BVHNode<BoundingSphere>* bvhRoot = nullptr;
-
 
 public:
 

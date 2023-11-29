@@ -15,6 +15,7 @@
 struct SimplePushConstantData {
 	glm::mat4 modelMatrix{1.f};
 	glm::mat4 normalMatrix{ 1.f };
+	float alpha = 1.f;
 };
 
 SimpleRenderSystem::SimpleRenderSystem(GraphicDevice& device, VkRenderPass renderPass,VkDescriptorSetLayout globalSetLayout): graphicDevice(device)
@@ -92,6 +93,7 @@ void SimpleRenderSystem::RenderGameObjects(FrameInfo& frameInfo)
 		SimplePushConstantData push{};
 		push.modelMatrix = obj->transform.Mat4();
 		push.normalMatrix = obj->transform.NormalMatrix();
+		push.alpha = obj->alpha;
 
 		vkCmdPushConstants(
 			frameInfo.commandBuffer,
@@ -126,6 +128,7 @@ void SimpleRenderSystem::RenderGameObjectsV2(FrameInfo &frameInfo)
 		SimplePushConstantData push{};
 		push.modelMatrix = obj->transform.Mat4();
 		push.normalMatrix = obj->transform.NormalMatrix();
+		push.alpha = obj->alpha;
 
 		vkCmdPushConstants(
 			frameInfo.commandBuffer,
