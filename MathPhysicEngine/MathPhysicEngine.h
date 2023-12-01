@@ -12,6 +12,7 @@
 #include "Forces/RigidBodyForceRegistry.h"
 
 #include "Forces/ParticuleForces/ParticleGravity.h"
+#include "BroadPhase/Grid.h"
 
 class MathPhysicsEngine {
 
@@ -77,6 +78,8 @@ private:
 
 	//RigidBody forces
 	RigidBodyForceRegistry* rigidBodyForceRegistry;
+
+	Grid grid;
 
 public:
 

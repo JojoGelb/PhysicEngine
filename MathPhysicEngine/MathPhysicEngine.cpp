@@ -3,7 +3,7 @@
 #include "Collisions/NaiveParticleContactGenerator.h"
 
 
-MathPhysicsEngine::MathPhysicsEngine()
+MathPhysicsEngine::MathPhysicsEngine() : grid(2.9f)
 {
 }
 
@@ -123,9 +123,7 @@ void MathPhysicsEngine::UpdateRigidBodies(double frameTime, double t)
 	}
 
 	//Calculate contacts
-
-	//Broad phase
-	
+	std::vector<PotentialCollision> potentialCollision = grid.GetPotentialCollisions(rigidBodies);
 	
 }
 
