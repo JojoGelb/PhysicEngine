@@ -923,8 +923,6 @@
       <AdditionalIncludeDirectories>C:\git\PhysicEngine\External Librairies\Vulkan\Include;C:\git\PhysicEngine\External Librairies\glm;C:\git\PhysicEngine\External Librairies\GLFW\include;C:\git\PhysicEngine\Headers;C:\git\PhysicEngine\External Librairies\IMGUI;C:\git\PhysicEngine\GraphicEngine;C:\git\PhysicEngine\External Librairies\TinyObjectLoader;</AdditionalIncludeDirectories>
       <LinkCompiled>true</LinkCompiled>
     </ClCompile>
-    <ClCompile Include="MathPhysicEngine\RigidBodyContacts\BoundingSphere.cpp" />
-    <ClCompile Include="MathPhysicEngine\RigidBodyContacts\BVHNode.cpp" />
     <ClCompile Include="MathPhysicEngine\NarrowPhase\NarrowCollisionDetector.cpp" />
     <ClCompile Include="MathPhysicEngine\NarrowPhase\Primitives\Box.cpp" />
     <ClCompile Include="MathPhysicEngine\NarrowPhase\Primitives\CollisionPrimitive.cpp" />
@@ -992,8 +990,6 @@
     <ClInclude Include="MathPhysicEngine\NarrowPhase\Primitives\CollisionPrimitive.h" />
     <ClInclude Include="MathPhysicEngine\NarrowPhase\Primitives\Plane.h" />
     <ClInclude Include="MathPhysicEngine\NarrowPhase\Primitives\Sphere.h" />
-    <ClInclude Include="MathPhysicEngine\RigidBodyContacts\BHVNode.h" />
-    <ClInclude Include="MathPhysicEngine\RigidBodyContacts\BoundingSphere.h" />
     <ClInclude Include="MathPhysicEngine\Rigidbody\Matrix33.h" />
     <ClInclude Include="MathPhysicEngine\Rigidbody\Matrix34.h" />
     <ClInclude Include="MathPhysicEngine\Rigidbody\Quaternion.h" />
