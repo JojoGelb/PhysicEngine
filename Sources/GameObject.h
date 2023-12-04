@@ -7,7 +7,7 @@ class GameObject {
 
 public:
 
-	GameObject(std::string name = "No name");
+	GameObject(std::string name = "No name", Transform transform = Transform());
 	~GameObject();
 	
 	void Update();
@@ -27,6 +27,8 @@ public:
 	const std::string & GetName() const { return name; }
 
 	bool shouldDelete = false;
+
+	Transform transform;
 
 private:
 	std::string name;

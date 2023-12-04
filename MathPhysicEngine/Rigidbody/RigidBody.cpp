@@ -1,5 +1,6 @@
 #include "RigidBody.h"
 #include "../MathPhysicEngine.h"
+#include "../BroadPhase/BoundingSphere.h"
 
 RigidBodyState::RigidBodyState()
 {
@@ -21,8 +22,8 @@ RigidBodyState RigidBodyState::operator+(const RigidBodyState& other) const
 	return {this->transformMatrix + other.transformMatrix};
 }
 
-RigidBody::RigidBody(const std::string _inertiaTensorSelection, const Vector3D& _position, const Vector3D& _velocity, const Vector3D& _linearAcceleration, const Vector3D& _rotation, const Quaternion& _orientation, const Matrix33& _inverseInertiaTensor, float _linearDamping, float _gravity, float _inversedMass, float _angularDamping, BoundingSphere _boundingSphere)
-	: inertiaTensorSelection(_inertiaTensorSelection), position(_position), velocity(_velocity), linearAcceleration(_linearAcceleration), rotation(_rotation), orientation(_orientation), inverseInertiaTensor(_inverseInertiaTensor), linearDamping(_linearDamping), gravity(_gravity), inversedMass(_inversedMass), angularDamping(_angularDamping), boundingSphere(_boundingSphere)
+RigidBody::RigidBody(const std::string _inertiaTensorSelection, const Vector3D& _velocity, const Vector3D& _linearAcceleration, const Quaternion& _orientation, const Matrix33& _inverseInertiaTensor, float _linearDamping, float _gravity, float _inversedMass, float _angularDamping, Bounding* _boundingVolume)
+	: inertiaTensorSelection(_inertiaTensorSelection), velocity(_velocity), linearAcceleration(_linearAcceleration), orientation(_orientation), inverseInertiaTensor(_inverseInertiaTensor), linearDamping(_linearDamping), gravity(_gravity), inversedMass(_inversedMass), angularDamping(_angularDamping), boundingVolume(_boundingVolume)
 {
 	previousState = { 0.0f };
 	currentState = { 0.0f };
@@ -32,7 +33,6 @@ RigidBody::RigidBody(const std::string _inertiaTensorSelection, const Vector3D& 
 	torqueAccum = { 0,0,0 };
 	
 	transformMatrix = { 0.0f };
-	CalculateTransformMatrix(transformMatrix, position, orientation);
 	angularAcceleration = { 0,0,0 };
 
 	if(inertiaTensorSelection == "sphere")
@@ -43,16 +43,25 @@ RigidBody::RigidBody(const std::string _inertiaTensorSelection, const Vector3D& 
 	{
 		SetInversedTensorAsACube(GetMass(), 1.0f, 1.0f, 1.0f);
 	}
+
+	if(boundingVolume == nullptr)
+	{
+		boundingVolume = new BoundingSphere(1.0f);
+	}
+
 }
 
 RigidBody::~RigidBody()
 {
+	delete boundingVolume;
 	MathPhysicsEngine::GetInstance()->RemoveRigidBody(this);
 }
 
 
 void RigidBody::Start()
 {
+	CalculateTransformMatrix(transformMatrix, transform->position, orientation);
+
 	MathPhysicsEngine::GetInstance()->AddRigidBody(this);
 }
 
@@ -94,29 +103,29 @@ void RigidBody::Integrate(double time, double deltaTime)
 
 	previousState = { transformMatrix };
 	
-	// 1 Mettre à jour la position
-	position = position + (velocity * deltaTime);
+	// 1 Mettre ï¿½ jour la position
+	transform->position = transform->position + (velocity * deltaTime);
 
-	// 2 Mettre à jour l’orientation
-	orientation.UpdateByAngularVelocity(rotation, deltaTime);
+	// 2 Mettre ï¿½ jour lï¿½orientation
+	orientation.UpdateByAngularVelocity(transform->rotation, deltaTime);
 	orientation.Normalized();
 	
-	// 3 Calculer les valeurs dérivées
+	// 3 Calculer les valeurs dï¿½rivï¿½es
 	CalculateDerivedData();
 
-	// 4 Calculer l’accélération linéaire
+	// 4 Calculer lï¿½accï¿½lï¿½ration linï¿½aire
 	linearAcceleration = forceAccum * inversedMass;
 
-	// 5 Calculer l’accélération angulaire
+	// 5 Calculer lï¿½accï¿½lï¿½ration angulaire
 	angularAcceleration = inverseInertiaTensorWorld * torqueAccum;
 
-	// 6 Mettre à jour la vélocité linéaire
+	// 6 Mettre ï¿½ jour la vï¿½locitï¿½ linï¿½aire
 	velocity = velocity * linearDamping + (linearAcceleration * deltaTime);
 
-	// 7 Mettre à jour la vélocité angulaire
-	rotation = rotation * angularDamping + (angularAcceleration * deltaTime);
+	// 7 Mettre ï¿½ jour la vï¿½locitï¿½ angulaire
+	transform->rotation = transform->rotation * angularDamping + (angularAcceleration * deltaTime);
 
-	// 8 Remettre à zéro les accumulateurs
+	// 8 Remettre ï¿½ zï¿½ro les accumulateurs
 	ClearAccumulator();
 
 	currentState = { transformMatrix };
@@ -126,7 +135,7 @@ void RigidBody::CalculateDerivedData()
 {
 	// Calculate the transform matrix for the body.
 	
-	CalculateTransformMatrix(this->transformMatrix, this->position, this->orientation);
+	CalculateTransformMatrix(this->transformMatrix, transform->position, this->orientation);
 	TransformInertiaTensorInWorld(this->orientation);
 }
 
@@ -153,7 +162,7 @@ void RigidBody::AddForce(const Vector3D force)
 void RigidBody::AddForceAtPoint(const Vector3D force, const Vector3D worldPoint)
 {
 	//set point where force is applied
-	Vector3D point = worldPoint - position;
+	Vector3D point = worldPoint - transform->position;
 	forceAccum += force;
 	torqueAccum += point.CrossProduct(force);
 }

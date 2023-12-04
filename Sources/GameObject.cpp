@@ -5,7 +5,7 @@
 #include <glm/gtc/quaternion.hpp>
 
 
-GameObject::GameObject(std::string _name): name(_name)
+GameObject::GameObject(std::string _name, Transform _transform): name(_name), transform(_transform)
 {
 }
 
@@ -101,6 +101,8 @@ void GameObject::Update()
 
 void GameObject::AddComponent(Component* component)
 {
+	component->gameObject = this;
+	component->transform = &transform;
 	components.push_back(component);
 	component->Start();
 }

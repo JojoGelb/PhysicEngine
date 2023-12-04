@@ -5,9 +5,7 @@
 #include "Matrix33.h"
 #include "Quaternion.h"
 
-struct BoundingSphere {
-	float size = 1.41f;
-};
+#include "../BroadPhase/Bounding.h"
 
 struct RigidBodyState
 {
@@ -53,7 +51,7 @@ private:
 
 public:
 
-	Vector3D position;
+	//Vector3D position;
 	Vector3D velocity;
 
 	//States
@@ -61,13 +59,13 @@ public:
 	RigidBodyState currentState;
 	RigidBodyState finalState;
 	
-	Vector3D rotation;
+	//Vector3D rotation;
 
 	Matrix34 transformMatrix;
 
-	BoundingSphere boundingSphere;
+	Bounding* boundingVolume;
 
-	RigidBody(const std::string _inertiaTensorSelection = "cuboid" ,const Vector3D& _position = { 0.0f }, const Vector3D& _velocity = { 0.0f }, const Vector3D& _linearAcceleration = { 0.0f }, const Vector3D& _rotation = { 0.0f }, const Quaternion& _orientation = { 1.0f,0.0f,0.0f,0.0f }, const Matrix33& _inverseInertiaTensor = { 0.0f }, float _linearDamping = 0.999f, float _gravity = 1.0f, float _inversedMass = 1.0f, float _angularDamping = 0.999f, BoundingSphere _boundingSphere = BoundingSphere());
+	RigidBody(const std::string _inertiaTensorSelection = "cuboid", const Vector3D& _velocity = { 0.0f }, const Vector3D& _linearAcceleration = { 0.0f }, const Quaternion& _orientation = { 1.0f,0.0f,0.0f,0.0f }, const Matrix33& _inverseInertiaTensor = { 0.0f }, float _linearDamping = 0.999f, float _gravity = 1.0f, float _inversedMass = 1.0f, float _angularDamping = 0.999f, Bounding* _boundingVolume = nullptr);
 	~RigidBody();
 
 	//Inherited from component
@@ -82,9 +80,9 @@ public:
 
 	void SetLinearDamping(float linearDamping) { this->linearDamping = linearDamping; };
 	void SetAngularDamping(float angularDamping) { this->angularDamping = angularDamping; };
-	void SetPosition(Vector3D position) { this->position = position; };
+	//void SetPosition(Vector3D position) { this->position = position; };
 	
-	Vector3D GetPosition() { return position; };
+	//Vector3D GetPosition() { return position; };
 	Vector3D GetVelocity() { return velocity; };
 	Vector3D GetLinearAcceleration() { return linearAcceleration; };
 	float GetLinearDamping() { return linearDamping; };
@@ -92,7 +90,7 @@ public:
 	float GetGravity() { return gravity; };
 	float GetInversedMass() { return inversedMass; };
 	Quaternion GetOrientation() { return orientation; };
-	Vector3D GetRotation() { return rotation; };
+	//Vector3D GetRotation() { return rotation; };
 	Vector3D GetAngularAcceleration() { return angularAcceleration; };
 	Matrix33 GetInverseInertiaTensor() { return inverseInertiaTensor; };
 	Matrix33 GetInverseInertiaTensorWorld() { return inverseInertiaTensorWorld; };
