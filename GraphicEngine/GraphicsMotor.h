@@ -21,7 +21,7 @@ public:
 
 
 	void Update(float frameTime);
-	void Render();
+	void Render(float frameTime);
 
 	void Shutdown();
 

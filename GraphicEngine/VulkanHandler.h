@@ -3,6 +3,7 @@
 #include <vulkan/vulkan_core.h>
 #include <GraphicDevice.h>
 #include "Renderer.h"
+#include "lve_descriptors.h"
 
 #include "VisualGameObject.h" 
 
@@ -11,6 +12,7 @@
 
 #include "Camera.h"
 #include <SimpleRenderSystem.h>
+#include "PointLightSystem.h"
 #include <KeyboardInput.h>
 
 class Window;
@@ -23,13 +25,15 @@ public:
 	~VulkanHandler();
 
 	void Update(float frameTime = 0);
-	void Render();
+	void Render(float frameTime);
 
 	void Shutdown();
 
-	void AddGameObject2(VisualGameObject* obj) { objects2.push_back(obj); }
+	void AddGameObject2(VisualGameObject* obj) {
+		objects2.emplace(obj->GetId(),obj);
+		}
 	void RemoveGameObject2(VisualGameObject* obj) {
-		objects2.erase(std::remove(objects2.begin(), objects2.end(), obj), objects2.end());
+		objects2.erase(obj->GetId());
 	}
 
 	GraphicDevice & GetGraphicDevice();
@@ -42,13 +46,22 @@ private:
 	GraphicDevice graphicDevice;
 	Renderer renderer;
 
-	std::vector<VisualGameObject*> objects2;
+	// note: order of declarations matters
+  	std::unique_ptr<LveDescriptorPool> globalPool{};
+
+	//std::vector<VisualGameObject*> objects2;
+	VisualGameObject::Map objects2;
 
 
 	Window & window;
 
-	SimpleRenderSystem renderSystem;
+	SimpleRenderSystem * renderSystem;
+	PointLightSystem * pointLightRenderSystem;
 	Camera camera;
 	KeyboardInput cameraController;
 	VisualGameObject * viewerObject;
+
+	std::vector<std::unique_ptr<LveBuffer>> uboBuffers;
+	std::vector<VkDescriptorSet> globalDescriptorSets;
+	//LveBuffer globalUboBuffer;
 };

@@ -33,6 +33,8 @@ public:
 	double GetNorm() const;
 	double GetSquareNorm() const;
 
+	double GetSquareNorm() const; 
+
 	Vector3D Normalize();
 
 	double DistanceTo(const Vector3D& other);

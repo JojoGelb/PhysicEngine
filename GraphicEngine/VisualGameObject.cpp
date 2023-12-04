@@ -2,6 +2,8 @@
 #include "GraphicsMotor.h"
 #include <iostream>
 
+unsigned int VisualGameObject::currentId = 0;
+
 glm::mat4 TransformComponent::Mat4() {
     if (!localCalculation) return ExternalMat4;
     const float c3 = glm::cos(rotation.z);
@@ -63,8 +65,6 @@ glm::mat3 TransformComponent::NormalMatrix() {
 
 VisualGameObject* VisualGameObject::CreatePtrVisualGameObject(std::string modelePath)
 {
-    static id_t currentId = 0;
-
     VisualGameObject* visual = new VisualGameObject(currentId++);
 
     Model* lveModel = Model::CreateModelFromFile(GraphicsMotor::GetInstance()->GetVulkanHandler().GetGraphicDevice(), modelePath);
@@ -93,4 +93,14 @@ void VisualGameObject::Shutdown()
 {
     GraphicsMotor::GetInstance()->GetVulkanHandler().RemoveGameObject2(this);
     delete model;
+    delete pointLight;
+}
+
+VisualGameObject* VisualGameObject::makePointLight(float intensity, float radius, glm::vec3 color) {
+  VisualGameObject* gameObj = VisualGameObject::CreatePtrEmptyVisualGameObject();
+  gameObj->color = color;
+  gameObj->transform.scale.x = radius;
+  gameObj->pointLight = new PointLightComponent();
+  gameObj->pointLight->lightIntensity = intensity;
+  return gameObj;
 }

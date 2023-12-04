@@ -47,13 +47,11 @@
     <ClCompile Include="MathPhysicEngine\Forces\RigidBodyForces\RigidBodySpring.cpp" />
     <ClCompile Include="MathPhysicEngine\Forces\RigidBodyForces\RigidBodyGravity.cpp" />
     <ClCompile Include="MathPhysicEngine\Rigidbody\RigidBody.cpp" />
-    <ClCompile Include="MathPhysicEngine\RigidbodyTest\RigidbodyContactGenerator.cpp" />
-    <ClCompile Include="MathPhysicEngine\RigidbodyTest\RigidBodyContactTest.cpp" />
-    <ClCompile Include="MathPhysicEngine\RigidbodyTest\RigidBodyContactResolver.cpp" />
-    <ClCompile Include="MathPhysicEngine\RigidbodyTest\RigidBodyLink.cpp" />
-    <ClCompile Include="MathPhysicEngine\RigidbodyTest\RigidBodyRod.cpp" />
-    <ClCompile Include="MathPhysicEngine\RigidbodyTest\NaiveRigidBodyContactGenerator.cpp" />
-    <ClCompile Include="MathPhysicEngine\RigidbodyTest\RigidBodyCable.cpp" />
+    <ClCompile Include="MathPhysicEngine\RigidBodyContacts\BoundingSphere.cpp" />
+    <ClCompile Include="MathPhysicEngine\RigidBodyContacts\BVHNode.cpp" />
+    <ClCompile Include="GraphicEngine\lve_buffer.cpp" />
+    <ClCompile Include="GraphicEngine\lve_descriptors.cpp" />
+    <ClCompile Include="GraphicEngine\PointLightSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="External Librairies\IMGUI\imconfig.h" />
@@ -105,13 +103,12 @@
     <ClInclude Include="MathPhysicEngine\Forces\RigidBodyForces\RigidBodyForceGenerator.h" />
     <ClInclude Include="MathPhysicEngine\Forces\RigidBodyForces\RigidBodyGravity.h" />
     <ClInclude Include="MathPhysicEngine\Rigidbody\RigidBody.h" />
-    <ClInclude Include="MathPhysicEngine\RigidbodyTest\RigidbodyContactGenerator.h" />
-    <ClInclude Include="MathPhysicEngine\RigidbodyTest\RigidBodyContactTest.h" />
-    <ClInclude Include="MathPhysicEngine\RigidbodyTest\RigidBodyContactResolver.h" />
-    <ClInclude Include="MathPhysicEngine\RigidbodyTest\RigidBodyLink.h" />
-    <ClInclude Include="MathPhysicEngine\RigidbodyTest\RigidBodyRod.h" />
-    <ClInclude Include="MathPhysicEngine\RigidbodyTest\NaiveRigidBodyContactGenerator.h" />
-    <ClInclude Include="MathPhysicEngine\RigidbodyTest\RigidBodyCable.h" />
+    <ClInclude Include="MathPhysicEngine\RigidBodyContacts\BHVNode.h" />
+    <ClInclude Include="MathPhysicEngine\RigidBodyContacts\BoundingSphere.h" />
+    <ClInclude Include="GraphicEngine\lve_buffer.h" />
+    <ClInclude Include="GraphicEngine\lve_frame_info.h" />
+    <ClInclude Include="GraphicEngine\lve_descriptors.h" />
+    <ClInclude Include="GraphicEngine\PointLightSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Readme.txt" />
