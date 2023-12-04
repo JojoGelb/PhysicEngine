@@ -48,6 +48,7 @@ public:
 
 	
 	unsigned GenerateParticleContacts();
+	unsigned GenerateRigidBodyContacts();
 
 
 	ParticleForceRegistry* GetParticleForceRegistry();

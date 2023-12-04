@@ -82,7 +82,7 @@ unsigned MathPhysicsEngine::GenerateParticleContacts()
 unsigned MathPhysicsEngine::GenerateRigidBodyContacts()
 {
 	//TODO OPTIMIZE
-	for (RigidBodyContactTest* p : rigidbodyContact) delete p;
+	for (RigidBodyContact* p : rigidbodyContact) delete p;
 	rigidbodyContact.clear();
 	/*
 	for (RigidbodyContactGeneratorTest* g : rigidbodyContactGenerator) {
