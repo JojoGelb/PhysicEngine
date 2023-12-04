@@ -13,8 +13,7 @@
 
 #include "Forces/ParticuleForces/ParticleGravity.h"
 #include "RigidbodyTest/RigidBodyContact.h"
-#include "RigidBodyContacts/BHVNode.h"
-#include "RigidBodyContacts/BoundingSphere.h"
+#include "BroadPhase/Grid.h"
 
 class MathPhysicsEngine {
 
@@ -84,8 +83,7 @@ private:
 	//RigidBody forces
 	RigidBodyForceRegistry* rigidBodyForceRegistry;
 
-	BVHNode<BoundingSphere>* bvhRoot = nullptr;
-
+	Grid grid;
 
 public:
 

@@ -60,6 +60,7 @@ public:
 	Model* model = nullptr;
 	glm::vec3 color{};
     TransformComponent transform{};
+	float alpha = 1.0f;
 
 	// Optional pointer components
   //std::shared_ptr<Model> model{};

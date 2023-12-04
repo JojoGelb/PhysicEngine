@@ -21,6 +21,11 @@ public:
 
 	bool operator==(const Vector3D& other) const;
 
+	//Hash function
+	size_t operator()(const Vector3D& v) const {
+		return std::hash<float>()(v.x) ^ std::hash<float>()(v.y) ^ std::hash<float>()(v.z);
+	}
+
 	void Display();
 
 	bool Equal(const Vector3D& other, double epsilon = 1e-3) const;

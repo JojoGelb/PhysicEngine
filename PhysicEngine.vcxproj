@@ -165,6 +165,7 @@
     <ClCompile Include="GraphicEngine\VKPipeline.cpp" />
     <ClCompile Include="GraphicEngine\VulkanHandler.cpp" />
     <ClCompile Include="GraphicEngine\Window.cpp" />
+    <ClCompile Include="MathPhysicEngine\BroadPhase\Grid.cpp" />
     <ClCompile Include="MathPhysicEngine\Collisions\NaiveParticleContactGenerator.cpp" />
     <ClCompile Include="MathPhysicEngine\Collisions\ParticleCable.cpp" />
     <ClCompile Include="MathPhysicEngine\Collisions\ParticleContact.cpp" />
@@ -965,6 +966,7 @@
     <ClInclude Include="GraphicEngine\VKPipeline.h" />
     <ClInclude Include="GraphicEngine\VulkanHandler.h" />
     <ClInclude Include="GraphicEngine\Window.h" />
+    <ClInclude Include="MathPhysicEngine\BroadPhase\Grid.h" />
     <ClInclude Include="MathPhysicEngine\Collisions\NaiveParticleContactGenerator.h" />
     <ClInclude Include="MathPhysicEngine\Collisions\ParticleCable.h" />
     <ClInclude Include="MathPhysicEngine\Collisions\ParticleContact.h" />

@@ -21,8 +21,8 @@ RigidBodyState RigidBodyState::operator+(const RigidBodyState& other) const
 	return {this->transformMatrix + other.transformMatrix};
 }
 
-RigidBody::RigidBody(const std::string _inertiaTensorSelection, const Vector3D& _position, const Vector3D& _velocity, const Vector3D& _linearAcceleration, const Vector3D& _rotation, const Quaternion& _orientation, const Matrix33& _inverseInertiaTensor, float _linearDamping, float _gravity, float _inversedMass, float _angularDamping)
-	: inertiaTensorSelection(_inertiaTensorSelection), position(_position), velocity(_velocity), linearAcceleration(_linearAcceleration), rotation(_rotation), orientation(_orientation), inverseInertiaTensor(_inverseInertiaTensor), linearDamping(_linearDamping), gravity(_gravity), inversedMass(_inversedMass), angularDamping(_angularDamping)
+RigidBody::RigidBody(const std::string _inertiaTensorSelection, const Vector3D& _position, const Vector3D& _velocity, const Vector3D& _linearAcceleration, const Vector3D& _rotation, const Quaternion& _orientation, const Matrix33& _inverseInertiaTensor, float _linearDamping, float _gravity, float _inversedMass, float _angularDamping, BoundingSphere _boundingSphere)
+	: inertiaTensorSelection(_inertiaTensorSelection), position(_position), velocity(_velocity), linearAcceleration(_linearAcceleration), rotation(_rotation), orientation(_orientation), inverseInertiaTensor(_inverseInertiaTensor), linearDamping(_linearDamping), gravity(_gravity), inversedMass(_inversedMass), angularDamping(_angularDamping), boundingSphere(_boundingSphere)
 {
 	previousState = { 0.0f };
 	currentState = { 0.0f };
