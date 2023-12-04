@@ -80,7 +80,8 @@ bool Vector3D::Equal(const Vector3D& other, double epsilon) const {
 	return std::abs(x - other.x) < epsilon && std::abs(y - other.y) < epsilon && std::abs(z - other.z) < epsilon;
 }
 
-double Vector3D::DotProduct(const Vector3D& other) {
+double Vector3D::DotProduct(const Vector3D& other) const
+{
 	return x* other.x + other.y * y + other.z * z;
 }
 
@@ -94,6 +95,11 @@ Vector3D Vector3D::CrossProduct(const Vector3D& other){
 double Vector3D::GetNorm() const
 {
 	return std::sqrt(x * x + y * y + z * z);
+}
+
+double Vector3D::GetSquareNorm() const
+{
+	return x * x + y * y + z * z;
 }
 
 Vector3D Vector3D::Normalize()

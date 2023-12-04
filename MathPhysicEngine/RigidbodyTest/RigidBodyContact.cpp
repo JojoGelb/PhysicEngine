@@ -1,13 +1,13 @@
-#include "RigidBodyContactTest.h"
+#include "RigidBodyContact.h"
 #include <iostream>
-void RigidBodyContactTest::Resolve(float duration)
+void RigidBodyContact::Resolve(float duration)
 {
 	ResolveVelocity(duration);
 
 	ResolveInterpenetration();
 }
 
-float RigidBodyContactTest::CalculateSeparatingVelocity()
+float RigidBodyContact::CalculateSeparatingVelocity()
 {
 	Vector3D relativeVelocity = rigidbody[0]->velocity;
 	if (rigidbody[1]) {
@@ -18,7 +18,7 @@ float RigidBodyContactTest::CalculateSeparatingVelocity()
 }
 
 //Give proper impulse to solve contact
-void RigidBodyContactTest::ResolveVelocity(float duration)
+void RigidBodyContact::ResolveVelocity(float duration)
 {
 	//Velocity in direction of contact
 	float seperatingVelocity = CalculateSeparatingVelocity();
@@ -69,7 +69,7 @@ void RigidBodyContactTest::ResolveVelocity(float duration)
 	}
 }
 
-void RigidBodyContactTest::ResolveInterpenetration()
+void RigidBodyContact::ResolveInterpenetration()
 {
 
 	if (penetration <= 0) return;

@@ -170,7 +170,7 @@ void Matrix34::SetOrientationAndPosition(const Quaternion& q, const Vector3D& p)
 	values[11] = p.z;*/
 }
 
-Vector3D Matrix34::TransformPosition(const Vector3D& vector)
+Vector3D Matrix34::TransformPosition(const Vector3D& vector) const
 {
 	return Vector3D(
 		vector.x * values[0] +
@@ -186,6 +186,31 @@ Vector3D Matrix34::TransformPosition(const Vector3D& vector)
 		vector.z * values[10]+
 		values[11]
 	);
+}
 
-	
+Vector3D Matrix34::transformInverse(const Vector3D &vector) const
+{
+	Vector3D tmp = vector;
+	tmp.x -= values[3];
+	tmp.y -= values[7];
+	tmp.z -= values[11];
+	return Vector3D(
+		tmp.x * values[0] +
+		tmp.y * values[4] +
+		tmp.z * values[8],
+
+		tmp.x * values[1] +
+		tmp.y * values[5] +
+		tmp.z * values[9],
+
+		tmp.x * values[2] +
+		tmp.y * values[6] +
+		tmp.z * values[10]
+	);
+}
+
+
+Vector3D Matrix34::GetPosition() const
+{
+	return Vector3D(values[3], values[7], values[11]);
 }

@@ -1,6 +1,6 @@
 #include "NaiveRigidBodyContactGenerator.h"
 
-unsigned int NaiveRigidBodyContactGenerator::AddContact(std::vector<RigidBodyContactTest*>& contacts, unsigned int limit) const
+unsigned int NaiveRigidBodyContactGenerator::AddContact(std::vector<RigidBodyContact*>& contacts, unsigned int limit) const
 {
 	int i, j;
 
@@ -19,7 +19,7 @@ unsigned int NaiveRigidBodyContactGenerator::AddContact(std::vector<RigidBodyCon
 
 			if (distance < 2 * radius) {
 
-				RigidBodyContactTest* contact = new RigidBodyContactTest(p, p2, 1);
+				RigidBodyContact* contact = new RigidBodyContact(p, p2, 1);
 
 				contact->contactNormal = (contact->rigidbody[0]->position - contact->rigidbody[1]->position).Normalize();
 

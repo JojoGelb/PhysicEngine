@@ -2,7 +2,7 @@
 
 #include <limits>
 #include <iostream>
-void RigidBodyContactResolver::ResolveContacts(std::vector<RigidBodyContactTest*>& contactArray, float frameTime)
+void RigidBodyContactResolver::ResolveContacts(std::vector<RigidBodyContact*>& contactArray, float frameTime)
 {
 	unsigned int iterationUsed = 0;
 	while (iterationUsed < iteration) {

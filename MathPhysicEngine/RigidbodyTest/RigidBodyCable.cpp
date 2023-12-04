@@ -1,12 +1,12 @@
 #include "RigidBodyCable.h"
 
-unsigned int RigidBodyCable::AddContact(std::vector<RigidBodyContactTest*>& contacts, unsigned int limit) const
+unsigned int RigidBodyCable::AddContact(std::vector<RigidBodyContact*>& contacts, unsigned int limit) const
 {
     float length = CurrentLength();
 
     if (length < maxLength) return 0;
 
-    RigidBodyContactTest* contact = new RigidBodyContactTest();
+    RigidBodyContact* contact = new RigidBodyContact();
 
     contact->rigidbody[0] = rigidBody[0];
     contact->rigidbody[1] = rigidBody[1];

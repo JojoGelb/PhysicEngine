@@ -12,7 +12,7 @@
 #include "Forces/RigidBodyForceRegistry.h"
 
 #include "Forces/ParticuleForces/ParticleGravity.h"
-#include "RigidbodyTest/RigidBodyContactTest.h"
+#include "RigidbodyTest/RigidBodyContact.h"
 #include "RigidbodyTest/RigidbodyContactGenerator.h"
 #include "RigidbodyTest/RigidBodyContactResolver.h"
 #include "RigidbodyTest/RigidBodyRod.h"
@@ -83,7 +83,7 @@ private:
 
 	std::vector<ParticleContact*> particlesContact; 
 
-	std::vector<RigidBodyContactTest*> rigidbodyContact;
+	std::vector<RigidBodyContact*> rigidbodyContact;
 	std::vector<RigidbodyContactGeneratorTest*> rigidbodyContactGenerator;
 
 	//RigidBody forces

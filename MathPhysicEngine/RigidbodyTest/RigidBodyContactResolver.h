@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-#include "RigidBodyContactTest.h"
+#include "RigidBodyContact.h"
 class RigidBodyContactResolver
 {
 protected:
@@ -11,6 +11,6 @@ protected:
 
 public:
 	void SetIterationNumber(unsigned int iterationNumber) { iteration = iterationNumber; }
-	void ResolveContacts(std::vector<RigidBodyContactTest*>& contactArray, float frameTime);
+	void ResolveContacts(std::vector<RigidBodyContact*>& contactArray, float frameTime);
 };
 

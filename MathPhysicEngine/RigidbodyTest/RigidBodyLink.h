@@ -1,5 +1,5 @@
 #include "RigidbodyContactGenerator.h"
-#include "RigidBodyContactTest.h"
+#include "RigidBodyContact.h"
 
 #pragma once
 class RigidBodyLink : public RigidbodyContactGeneratorTest
@@ -10,7 +10,7 @@ public:
 	//length of the link
 	float CurrentLength() const;
 
-	unsigned int AddContact(std::vector<RigidBodyContactTest*>& contacts, unsigned int limit) const = 0;
+	unsigned int AddContact(std::vector<RigidBodyContact*>& contacts, unsigned int limit) const = 0;
 
 	RigidBodyLink(RigidBody* rbA, RigidBody* rbB)
 		: rigidBody{ rbA,rbB } {};

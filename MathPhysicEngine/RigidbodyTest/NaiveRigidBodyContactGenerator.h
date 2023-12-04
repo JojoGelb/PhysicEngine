@@ -13,8 +13,8 @@ public:
 
 
 
-	// Hérité via ParticleContactGenerator
-	unsigned int AddContact(std::vector<RigidBodyContactTest*>& contacts, unsigned int limit) const override;
+	// HÃ©ritÃ© via ParticleContactGenerator
+	unsigned int AddContact(std::vector<RigidBodyContact*>& contacts, unsigned int limit) const override;
 
 	NaiveRigidBodyContactGenerator(float radius, std::vector<RigidBody*>* rb)
 		: radius(radius), rigidbodies(rb) {};

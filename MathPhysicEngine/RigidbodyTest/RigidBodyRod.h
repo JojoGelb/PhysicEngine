@@ -8,8 +8,8 @@ public:
 
 	float length;
 
-	// Hérité via ParticleLink
-	unsigned int AddContact(std::vector<RigidBodyContactTest*>& contacts, unsigned int limit) const override;
+	// HÃ©ritÃ© via ParticleLink
+	unsigned int AddContact(std::vector<RigidBodyContact*>& contacts, unsigned int limit) const override;
 	RigidBodyRod(RigidBody* rigidBodyA, RigidBody* rigidBodyB, float length)
 		:RigidBodyLink(rigidBodyA, rigidBodyB), length(length) {};
 };

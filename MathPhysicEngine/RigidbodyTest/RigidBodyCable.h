@@ -9,7 +9,7 @@ public:
 	// bounciness of the cable
 	float restitution;
 
-	unsigned int AddContact(std::vector<RigidBodyContactTest*>& contacts, unsigned int limit) const override;
+	unsigned int AddContact(std::vector<RigidBodyContact*>& contacts, unsigned int limit) const override;
 
 	RigidBodyCable(RigidBody* rigidbodyA, RigidBody* rigidbodyB, float length, float restitution)
 		:RigidBodyLink(rigidbodyA, rigidbodyB), maxLength(length), restitution(restitution) {};

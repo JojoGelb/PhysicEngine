@@ -139,6 +139,7 @@ void RigidBody::TransformInertiaTensorInWorld(const Quaternion& orientation)
 {
 	Matrix33 rotationMatrix;
 	rotationMatrix.SetOrientation(orientation);
+	
 	inverseInertiaTensorWorld = rotationMatrix * inverseInertiaTensor * rotationMatrix.Inverse();
 
 	

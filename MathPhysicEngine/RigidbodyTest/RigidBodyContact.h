@@ -2,7 +2,7 @@
 
 #include "../Rigidbody/RigidBody.h"
 
-class RigidBodyContactTest
+class RigidBodyContact
 {
 	public:
 		// 1 could be nullptr
@@ -19,6 +19,8 @@ class RigidBodyContactTest
 
 		Vector3D contactNormal;
 
+		Vector3D contactPoint;
+
 		//Solve Velocity and interpenetration
 		void Resolve(float duration);
 
@@ -33,7 +35,7 @@ class RigidBodyContactTest
 
 	public:
 
-		RigidBodyContactTest(RigidBody* rigidBodyA = nullptr, RigidBody* rigidBodyB = nullptr, float restitution = 0, float penetration = 0, Vector3D contactNormal = Vector3D())
+		RigidBodyContact(RigidBody* rigidBodyA = nullptr, RigidBody* rigidBodyB = nullptr, float restitution = 0, float penetration = 0, Vector3D contactNormal = Vector3D())
 			: rigidbody{ rigidBodyA, rigidBodyB }, restitution(restitution), penetration(penetration), contactNormal(contactNormal)
 		{
 		}

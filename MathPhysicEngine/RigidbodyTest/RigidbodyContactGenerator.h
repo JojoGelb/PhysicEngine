@@ -1,11 +1,11 @@
 #pragma once
 #include <vector>
-#include "RigidBodyContactTest.h"
+#include "RigidBodyContact.h"
 
 class RigidbodyContactGeneratorTest
 {
 public:
-	virtual unsigned int AddContact(std::vector<RigidBodyContactTest*>& contacts, unsigned int limit) const = 0;
+	virtual unsigned int AddContact(std::vector<RigidBodyContact*>& contacts, unsigned int limit) const = 0;
 
 };
 

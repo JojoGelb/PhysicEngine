@@ -919,12 +919,17 @@
       <AdditionalIncludeDirectories>C:\git\PhysicEngine\External Librairies\Vulkan\Include;C:\git\PhysicEngine\External Librairies\glm;C:\git\PhysicEngine\External Librairies\GLFW\include;C:\git\PhysicEngine\Headers;C:\git\PhysicEngine\External Librairies\IMGUI;C:\git\PhysicEngine\GraphicEngine;C:\git\PhysicEngine\External Librairies\TinyObjectLoader;</AdditionalIncludeDirectories>
       <LinkCompiled>true</LinkCompiled>
     </ClCompile>
+    <ClCompile Include="MathPhysicEngine\NarrowPhase\NarrowCollisionDetector.cpp" />
+    <ClCompile Include="MathPhysicEngine\NarrowPhase\Primitives\Box.cpp" />
+    <ClCompile Include="MathPhysicEngine\NarrowPhase\Primitives\CollisionPrimitive.cpp" />
+    <ClCompile Include="MathPhysicEngine\NarrowPhase\Primitives\Plane.cpp" />
+    <ClCompile Include="MathPhysicEngine\NarrowPhase\Primitives\Sphere.cpp" />
     <ClCompile Include="MathPhysicEngine\Rigidbody\Matrix33.cpp" />
     <ClCompile Include="MathPhysicEngine\Rigidbody\Matrix34.cpp" />
     <ClCompile Include="MathPhysicEngine\Rigidbody\Quaternion.cpp" />
     <ClCompile Include="MathPhysicEngine\Rigidbody\RigidBody.cpp" />
     <ClCompile Include="MathPhysicEngine\RigidbodyTest\RigidbodyContactGenerator.cpp" />
-    <ClCompile Include="MathPhysicEngine\RigidbodyTest\RigidBodyContactTest.cpp" />
+    <ClCompile Include="MathPhysicEngine\RigidbodyTest\RigidBodyContact.cpp" />
     <ClCompile Include="MathPhysicEngine\RigidbodyTest\RigidBodyContactResolver.cpp" />
     <ClCompile Include="MathPhysicEngine\RigidbodyTest\RigidBodyLink.cpp" />
     <ClCompile Include="MathPhysicEngine\RigidbodyTest\RigidBodyRod.cpp" />
@@ -976,6 +981,12 @@
     <ClInclude Include="MathPhysicEngine\Forces\RigidBodyForces\RigidBodySpring.h" />
     <ClInclude Include="MathPhysicEngine\Forces\RigidBodyForces\RigidBodyForceGenerator.h" />
     <ClInclude Include="MathPhysicEngine\Forces\RigidBodyForces\RigidBodyGravity.h" />
+    <ClInclude Include="MathPhysicEngine\NarrowPhase\CollisionData.h" />
+    <ClInclude Include="MathPhysicEngine\NarrowPhase\NarrowCollisionDetector.h" />
+    <ClInclude Include="MathPhysicEngine\NarrowPhase\Primitives\Box.h" />
+    <ClInclude Include="MathPhysicEngine\NarrowPhase\Primitives\CollisionPrimitive.h" />
+    <ClInclude Include="MathPhysicEngine\NarrowPhase\Primitives\Plane.h" />
+    <ClInclude Include="MathPhysicEngine\NarrowPhase\Primitives\Sphere.h" />
     <ClInclude Include="MathPhysicEngine\Rigidbody\Matrix33.h" />
     <ClInclude Include="MathPhysicEngine\Rigidbody\Matrix34.h" />
     <ClInclude Include="MathPhysicEngine\Rigidbody\Quaternion.h" />
@@ -984,7 +995,7 @@
     <ClInclude Include="MathPhysicEngine\Forces\ParticleForceRegistry.h" />
     <ClInclude Include="Headers\Component.h" />
     <ClInclude Include="MathPhysicEngine\RigidbodyTest\RigidbodyContactGenerator.h" />
-    <ClInclude Include="MathPhysicEngine\RigidbodyTest\RigidBodyContactTest.h" />
+    <ClInclude Include="MathPhysicEngine\RigidbodyTest\RigidBodyContact.h" />
     <ClInclude Include="MathPhysicEngine\RigidbodyTest\RigidBodyContactResolver.h" />
     <ClInclude Include="MathPhysicEngine\RigidbodyTest\RigidBodyLink.h" />
     <ClInclude Include="MathPhysicEngine\RigidbodyTest\RigidBodyRod.h" />

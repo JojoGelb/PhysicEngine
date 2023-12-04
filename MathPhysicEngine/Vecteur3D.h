@@ -25,12 +25,13 @@ public:
 
 	bool Equal(const Vector3D& other, double epsilon = 1e-3) const;
 
-	double DotProduct(const Vector3D& other);
+	double DotProduct(const Vector3D& other) const;
 
 	Vector3D CrossProduct(const Vector3D& other);
 
 	//return magnitude/length of a vector
-	double GetNorm() const; 
+	double GetNorm() const;
+	double GetSquareNorm() const;
 
 	Vector3D Normalize();
 

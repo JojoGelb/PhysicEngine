@@ -28,9 +28,12 @@ public:
 
 	void SetOrientationAndPosition(const Quaternion& q, const Vector3D& p);
 
-	Vector3D TransformPosition(const Vector3D& vector);
+	Vector3D TransformPosition(const Vector3D& vector) const;
+	Vector3D transformInverse(const Vector3D& vector) const;
 
 	Vector3D TransformDirection(const Vector3D& vector);
 
+	
+	Vector3D GetPosition() const;
 
 };
