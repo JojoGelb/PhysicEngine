@@ -111,3 +111,13 @@ const Vector3D &axis
     // Check for overlap.
     return (distance < oneProject + twoProject);
 }
+
+void NarrowCollisionDetector::DetectCollisions(const std::vector<PotentialCollision>& potentialCollisions,
+    CollisionData* collisionData) const
+{
+    //if sphere && sphere
+    //do sphere && box detection
+    
+    //if sphere && box
+    //do sphere && box detection
+}

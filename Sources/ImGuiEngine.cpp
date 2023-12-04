@@ -436,6 +436,19 @@ void ImGuiEngine::ShowEngineImGui()
 
                     ImGui::TreePop();
                 }
+
+                if(ImGui::TreeNode("Transform Matrix"))
+                {
+                    ImGui::Spacing();
+                    ImGui::Text("transform Matrix: ");
+                    ImGui::Text("%.2f, %.2f, %.2f, %.2f", rigidBody->transformMatrix.values[0], rigidBody->transformMatrix.values[1], rigidBody->transformMatrix.values[2], rigidBody->transformMatrix.values[3]);
+                    ImGui::Text("%.2f, %.2f, %.2f, %.2f", rigidBody->transformMatrix.values[4], rigidBody->transformMatrix.values[5], rigidBody->transformMatrix.values[6], rigidBody->transformMatrix.values[7]);
+                    ImGui::Text("%.2f, %.2f, %.2f, %.2f", rigidBody->transformMatrix.values[8], rigidBody->transformMatrix.values[9], rigidBody->transformMatrix.values[10], rigidBody->transformMatrix.values[11]);
+
+
+                    ImGui::TreePop();
+
+                }
             }
 
             ImGui::TreePop();

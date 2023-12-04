@@ -5,6 +5,7 @@
 
 MathPhysicsEngine::MathPhysicsEngine() : grid(2.9f)
 {
+	narrowCollisionDetector = NarrowCollisionDetector();
 }
 
 MathPhysicsEngine::~MathPhysicsEngine()
@@ -141,8 +142,12 @@ void MathPhysicsEngine::UpdateRigidBodies(double frameTime, double t)
 		r->Integrate(t, frameTime);
 	}
 
-	//Calculate contacts
+	//Calculate potential collisions
 	std::vector<PotentialCollision> potentialCollision = grid.GetPotentialCollisions(rigidBodies);
+
+	//Verify collisions and create contacts lists
+	CollisionData* collisionData = new CollisionData();
+	narrowCollisionDetector.DetectCollisions(potentialCollision,collisionData);
 	
 }
 

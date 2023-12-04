@@ -14,6 +14,7 @@
 #include "Forces/ParticuleForces/ParticleGravity.h"
 #include "RigidbodyTest/RigidBodyContact.h"
 #include "BroadPhase/Grid.h"
+#include "NarrowPhase/NarrowCollisionDetector.h"
 
 class MathPhysicsEngine {
 
@@ -84,6 +85,8 @@ private:
 	RigidBodyForceRegistry* rigidBodyForceRegistry;
 
 	Grid grid;
+
+	NarrowCollisionDetector narrowCollisionDetector;
 
 public:
 

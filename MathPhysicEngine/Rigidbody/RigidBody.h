@@ -35,9 +35,7 @@ private:
 	Quaternion orientation;
 	Matrix33 inverseInertiaTensor;
 	Matrix33 inverseInertiaTensorWorld;
-
-	//Matrix34 transformMatrix;
-
+	
 	float linearDamping;
 	float gravity;
 	
