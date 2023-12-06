@@ -444,10 +444,10 @@ void ImGuiEngine::ShowEngineImGui()
     }
     ImGui::End();
 
-    TestIteration2();
-    // TestIteration3();
+    //TestIteration2();
+    TestIteration3();
     //TestIteration4();
-    TesGraphicMotor();
+    //TesGraphicMotor();
 }
 
 void ImGuiEngine::TesGraphicMotor()
@@ -459,13 +459,13 @@ void ImGuiEngine::TesGraphicMotor()
     {
         GameObject *go = new GameObject("floor");
         VisualGameObject *v = VisualGameObject::CreatePtrVisualGameObject("Models/quad model.obj");
-        v->transform.translation = {0.f, .5f, 0.f};
+        v->transformVisual.translation = {0.f, .5f, 0.f};
         go->AddComponent(v);
         gameObjects->push_back(go);
 
         go = new GameObject("Vase");
         v = VisualGameObject::CreatePtrVisualGameObject("Models/smooth_vase.obj");
-        v->transform.translation = {.5f, .5f, 0.f};
+        v->transformVisual.translation = {.5f, .5f, 0.f};
         go->AddComponent(v);
         gameObjects->push_back(go);
 
@@ -487,7 +487,7 @@ void ImGuiEngine::TesGraphicMotor()
                 glm::mat4(1.f),
                 (i * glm::two_pi<float>()) / lightColors.size(),
                 {0.f, -1.f, 0.f});
-            v2->transform.translation = glm::vec3(rotateLight * glm::vec4(-1.f, -1.f, -1.f, 1.f));
+            v2->transformVisual.translation = glm::vec3(rotateLight * glm::vec4(-1.f, -1.f, -1.f, 1.f));
             go2->AddComponent(v2);
             gameObjects->push_back(go2);
         }
@@ -503,6 +503,44 @@ void ImGuiEngine::TestIteration4()
 
     if (ImGui::Button("Test Gravity"))
     {
+
+        for (int i = 0; i < gameObjects->size(); i++)
+            gameObjects->at(i)->shouldDelete = true;
+        // gameObjects->clear();
+
+        MathPhysicsEngine* math = MathPhysicsEngine::GetInstance();
+        GameObject* go = new GameObject("rigidBody");
+        go->transform.position = Vector3D(-10, 0, 20);
+        go->transform.rotation = Vector3D(0.0f, 0.0f, 2.0f);
+
+        RigidBody* rigidbody = new RigidBody(
+            modeleInertiaTensor,
+            Vector3D(10, 10, 0),
+            Vector3D(0.0f, 0.0f, 0.0f),
+            { 1, 0, 0, 0 });
+        RigidBodyGravity* rigidBodyGravity = new RigidBodyGravity({ 0.0f, -10.0f, 0.0f });
+        math->GetRigidBodyForceRegistry()->AddForce(rigidbody, rigidBodyGravity);
+        go->AddComponent(rigidbody);
+
+        VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
+        go->AddComponent(v);
+        gameObjects->push_back(go);
+
+        go = new GameObject("rigidBody 2");
+        go->transform.position = Vector3D(10, 0, 20);
+        go->transform.rotation = Vector3D(0.0f, 0.0f, -2.0f);
+
+        rigidbody = new RigidBody(
+            modeleInertiaTensor,
+            Vector3D(-10, 10, 0),
+            Vector3D(0.0f, 0.0f, 0.0f),
+            { 1, 0, 0, 0 });
+        math->GetRigidBodyForceRegistry()->AddForce(rigidbody, rigidBodyGravity);
+        go->AddComponent(rigidbody);
+
+        v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
+        go->AddComponent(v);
+        gameObjects->push_back(go);
     }
 
     ImGui::End();
@@ -549,7 +587,7 @@ void ImGuiEngine::TestIteration3()
             go->AddComponent(v);
             gameObjects->push_back(go);
         }
-
+        
         if (ImGui::Button("Test angular damping"))
         {
 
@@ -680,10 +718,10 @@ void ImGuiEngine::TestIteration3()
                 math->TestRigidbodyCableCollisionSetup(r2, rb, 10);
             }
 
-        }
+        }*/
 
 
-        ImGui::TreePop();*/
+        //ImGui::TreePop();
 
         if (ImGui::TreeNode("Springs"))
         {
@@ -842,8 +880,10 @@ void ImGuiEngine::TestIteration3()
 
             ImGui::TreePop();
         }
+        
     }
-
+    
+    ImGui::TreePop();
     ImGui::End();
 }
 

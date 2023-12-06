@@ -4,8 +4,10 @@
 
 unsigned int VisualGameObject::currentId = 0;
 
-glm::mat4 TransformComponent::Mat4() {
-    if (!localCalculation) return ExternalMat4;
+glm::mat4 TransformComponent::Mat4()
+{
+    if (!localCalculation)
+        return ExternalMat4;
     const float c3 = glm::cos(rotation.z);
     const float s3 = glm::sin(rotation.z);
     const float c2 = glm::cos(rotation.x);
@@ -31,11 +33,13 @@ glm::mat4 TransformComponent::Mat4() {
             scale.z * (c1 * c2),
             0.0f,
         },
-        {translation.x, translation.y, translation.z, 1.0f} };
+        {translation.x, translation.y, translation.z, 1.0f}};
 }
 
-glm::mat3 TransformComponent::NormalMatrix() {
-    if (!localCalculation) return ExternalNormalMatrix;
+glm::mat3 TransformComponent::NormalMatrix()
+{
+    if (!localCalculation)
+        return ExternalNormalMatrix;
     const float c3 = glm::cos(rotation.z);
     const float s3 = glm::sin(rotation.z);
     const float c2 = glm::cos(rotation.x);
@@ -63,15 +67,15 @@ glm::mat3 TransformComponent::NormalMatrix() {
     };
 }
 
-VisualGameObject* VisualGameObject::CreatePtrVisualGameObject(std::string modelePath)
+VisualGameObject *VisualGameObject::CreatePtrVisualGameObject(std::string modelePath)
 {
-    VisualGameObject* visual = new VisualGameObject(currentId++);
+    VisualGameObject *visual = new VisualGameObject(currentId++);
 
-    Model* lveModel = Model::CreateModelFromFile(GraphicsMotor::GetInstance()->GetVulkanHandler().GetGraphicDevice(), modelePath);
+    Model *lveModel = Model::CreateModelFromFile(GraphicsMotor::GetInstance()->GetVulkanHandler().GetGraphicDevice(), modelePath);
     visual->model = lveModel;
-    visual->transform.translation = { 0.0f, .0f, 0.0f };
-    visual->transform.scale = { 1.f, 1.f, 1.f };
-    visual->transform.rotation = { 0.0f, .0f, 0.0f };
+    visual->transformVisual.translation = {0.0f, .0f, 0.0f};
+    visual->transformVisual.scale = {1.f, 1.f, 1.f};
+    visual->transformVisual.rotation = {0.0f, .0f, 0.0f};
     return visual;
 }
 
@@ -87,6 +91,68 @@ void VisualGameObject::Start()
 
 void VisualGameObject::Update()
 {
+    if (transform != nullptr)
+    {
+        if (!transformVisual.localCalculation)
+        {
+            // transformVisual.localCalculation = false;
+            transformVisual.ExternalMat4 = glm::mat4{
+                {
+                    transformVisual.scale.x * transform->transformMatrix.values[0],
+                    transformVisual.scale.x * transform->transformMatrix.values[1],
+                    transformVisual.scale.x * transform->transformMatrix.values[2],
+                    0.0f,
+                },
+                {
+                    transformVisual.scale.y * transform->transformMatrix.values[4],
+                    transformVisual.scale.y * transform->transformMatrix.values[5],
+                    transformVisual.scale.y * transform->transformMatrix.values[6],
+                    0.0f,
+
+                },
+                {
+                    transformVisual.scale.z * transform->transformMatrix.values[8],
+                    transformVisual.scale.z * transform->transformMatrix.values[9],
+                    transformVisual.scale.z * transform->transformMatrix.values[10],
+                    0.0f,
+
+                },
+
+                {
+                    transform->transformMatrix.values[3],
+                    -transform->transformMatrix.values[7],
+                    transform->transformMatrix.values[11],
+                    1.0f,
+                }
+
+            };
+            const glm::vec3 invScale = 1.0f / transformVisual.scale;
+            transformVisual.ExternalNormalMatrix = glm::mat3{
+                {
+                    invScale.x * transform->transformMatrix.values[0],
+                    invScale.x * transform->transformMatrix.values[1],
+                    invScale.x * transform->transformMatrix.values[2],
+
+                },
+                {
+                    invScale.y * transform->transformMatrix.values[4],
+                    invScale.y * transform->transformMatrix.values[5],
+                    invScale.y * transform->transformMatrix.values[6],
+
+                },
+                {
+                    invScale.z * transform->transformMatrix.values[8],
+                    invScale.z * transform->transformMatrix.values[9],
+                    invScale.z * transform->transformMatrix.values[10],
+                }};
+        }
+        else
+        {
+            transformVisual.translation = {transform->position.x, -transform->position.y, transform->position.z};
+            transformVisual.rotation = {transform->rotation.x, transform->rotation.y, transform->rotation.z};
+            // transformVisual.scale = { transform->scale.x, transform->scale.y, transform->scale.z };
+        }
+    }
 }
 
 void VisualGameObject::Shutdown()
@@ -96,11 +162,12 @@ void VisualGameObject::Shutdown()
     delete pointLight;
 }
 
-VisualGameObject* VisualGameObject::makePointLight(float intensity, float radius, glm::vec3 color) {
-  VisualGameObject* gameObj = VisualGameObject::CreatePtrEmptyVisualGameObject();
-  gameObj->color = color;
-  gameObj->transform.scale.x = radius;
-  gameObj->pointLight = new PointLightComponent();
-  gameObj->pointLight->lightIntensity = intensity;
-  return gameObj;
+VisualGameObject *VisualGameObject::makePointLight(float intensity, float radius, glm::vec3 color)
+{
+    VisualGameObject *gameObj = VisualGameObject::CreatePtrEmptyVisualGameObject();
+    gameObj->color = color;
+    gameObj->transformVisual.scale.x = radius;
+    gameObj->pointLight = new PointLightComponent();
+    gameObj->pointLight->lightIntensity = intensity;
+    return gameObj;
 }

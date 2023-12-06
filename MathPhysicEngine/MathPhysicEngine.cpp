@@ -124,6 +124,11 @@ void MathPhysicsEngine::UpdateRigidBodies(double frameTime, double t)
 
 	//Calculate contacts
 	std::vector<PotentialCollision> potentialCollision = grid.GetPotentialCollisions(rigidBodies);
+
+	if(potentialCollision.size() > 0)
+	{
+		std::cout << "Potential Collisions: " << potentialCollision.size() << std::endl;
+	}
 	
 }
 
@@ -139,10 +144,12 @@ void MathPhysicsEngine::SetFinalStates(const double alpha)
 {
 	for (Particle* p : particles) {
 		p->finalState = p->currentState * alpha + p->previousState * (1.0 - alpha);
+		p->transform->position = p->finalState.position;
 	}
 
 	for (RigidBody* r : rigidBodies) {
 		r->finalState = r->currentState * alpha + r->previousState * (1.0 - alpha);
+		r->transform->transformMatrix = r->finalState.transformMatrix;
 	}
 }
 

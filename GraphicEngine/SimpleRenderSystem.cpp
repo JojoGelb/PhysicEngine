@@ -91,8 +91,8 @@ void SimpleRenderSystem::RenderGameObjects(FrameInfo& frameInfo)
 		auto& obj = keyValue.second;
 		if (obj->model == nullptr) continue;
 		SimplePushConstantData push{};
-		push.modelMatrix = obj->transform.Mat4();
-		push.normalMatrix = obj->transform.NormalMatrix();
+		push.modelMatrix = obj->transformVisual.Mat4();
+		push.normalMatrix = obj->transformVisual.NormalMatrix();
 		push.alpha = obj->alpha;
 
 		vkCmdPushConstants(
@@ -126,8 +126,8 @@ void SimpleRenderSystem::RenderGameObjectsV2(FrameInfo &frameInfo)
 		auto& obj = keyValue.second;
 		if (obj->model == nullptr) continue;
 		SimplePushConstantData push{};
-		push.modelMatrix = obj->transform.Mat4();
-		push.normalMatrix = obj->transform.NormalMatrix();
+		push.modelMatrix = obj->transformVisual.Mat4();
+		push.normalMatrix = obj->transformVisual.NormalMatrix();
 		push.alpha = obj->alpha;
 
 		vkCmdPushConstants(
