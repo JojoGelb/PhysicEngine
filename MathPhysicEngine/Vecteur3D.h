@@ -23,7 +23,7 @@ public:
 
 	//Hash function
 	size_t operator()(const Vector3D& v) const {
-		return std::hash<float>()(v.x) ^ std::hash<float>()(v.y) ^ std::hash<float>()(v.z);
+		return std::hash<double>()(v.x) ^ std::hash<double>()(v.y) ^ std::hash<double>()(v.z);
 	}
 
 	void Display();

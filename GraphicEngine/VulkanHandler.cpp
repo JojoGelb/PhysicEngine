@@ -24,7 +24,7 @@ VulkanHandler::VulkanHandler(Window &_window) : graphicDevice(_window),
                                                 uboBuffers(SwapChain::MAX_FRAMES_IN_FLIGHT),
                                                 globalDescriptorSets(SwapChain::MAX_FRAMES_IN_FLIGHT)
 {
-    viewerObject->transform.translation.z = -5.0f;
+    viewerObject->transformVisual.translation.z = -5.0f;
     InitImGui();
 
     for (int i = 0; i < uboBuffers.size(); i++)
@@ -77,7 +77,7 @@ VulkanHandler::~VulkanHandler()
 void VulkanHandler::Update(float frameTime)
 {
     cameraController.MoveInPlaneXZ(window.GetWindow(), frameTime, *viewerObject);
-    camera.SetViewYXZ(viewerObject->transform.translation, viewerObject->transform.rotation);
+    camera.SetViewYXZ(viewerObject->transformVisual.translation, viewerObject->transformVisual.rotation);
 
     float aspect = renderer.GetAspectRatio();
     // camera.setOrthographicProjection(-aspect, aspect, -1, 1, -1, 1);

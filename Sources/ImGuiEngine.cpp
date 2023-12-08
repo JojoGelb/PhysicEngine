@@ -188,10 +188,8 @@ void ImGuiEngine::ShowEngineImGui()
     {
         RigidBody *rigidBody = new RigidBody(
             modeleInertiaTensor,
-            Vector3D(positionX, positionY, positionZ),               // position
             Vector3D(velocityX, velocityY, velocityZ),               // velocity
             Vector3D(0.0f, 0.0f, 0.0f),                              // Acceleration
-            Vector3D(rotationX, rotationY, rotationZ),               // Rotation
             {orientationW, orientationI, orientationJ, orientationK} // Orientation
             // inversedMass,//
             // damping,
@@ -199,6 +197,8 @@ void ImGuiEngine::ShowEngineImGui()
         );
         rigidBody->SetGravityScale(gravity);
         GameObject *go = new GameObject(name);
+        go->transform.position = Vector3D(positionX, positionY, positionZ);
+        go->transform.rotation = Vector3D(rotationX, rotationY, rotationZ);
 
         go->AddComponent(rigidBody);
 
@@ -372,7 +372,7 @@ void ImGuiEngine::ShowEngineImGui()
                     ImGui::Text("LINEAR DATA");
                     ImGui::Spacing();
 
-                    ImGui::Text(" position: %.2f, %.2f, %.2f (m)", rigidBody->GetPosition().x, rigidBody->GetPosition().y, rigidBody->GetPosition().z);
+                    ImGui::Text(" position: %.2f, %.2f, %.2f (m)", rigidBody->transform->position.x, rigidBody->transform->position.y, rigidBody->transform->position.z);
                     ImGui::Text(" velocity: %.2f, %.2f, %.2f (m/s)", rigidBody->GetVelocity().x, rigidBody->GetVelocity().y, rigidBody->GetVelocity().z);
                     ImGui::Text(" linear acceleration: %.2f, %.2f, %.2f (m/s^2) ", rigidBody->GetLinearAcceleration().x, rigidBody->GetLinearAcceleration().y, rigidBody->GetLinearAcceleration().z);
                     ImGui::Text(" linear damping: %.2f ", rigidBody->GetLinearDamping());
@@ -383,7 +383,7 @@ void ImGuiEngine::ShowEngineImGui()
                     ImGui::Spacing();
 
                     ImGui::Text(" angular damping: %.2f ", rigidBody->GetAngularDamping());
-                    ImGui::Text("rotation: %.2f, %.2f, %.2f (m)", rigidBody->GetRotation().x, rigidBody->GetRotation().y, rigidBody->GetRotation().z);
+                    ImGui::Text("rotation: %.2f, %.2f, %.2f (m)", rigidBody->transform->rotation.x, rigidBody->transform->rotation.y, rigidBody->transform->rotation.z);
                     ImGui::Text("orientation: w: %.2f,i: %.2f,j: %.2f,k: %.2f", rigidBody->GetOrientation().w(), rigidBody->GetOrientation().i(),
                                 rigidBody->GetOrientation().j(), rigidBody->GetOrientation().k());
                     ImGui::Text("angular acceleration: %.2f, %.2f, %.2f (m/s^2) ", rigidBody->GetAngularAcceleration().x, rigidBody->GetAngularAcceleration().y, rigidBody->GetAngularAcceleration().z);
@@ -457,10 +457,10 @@ void ImGuiEngine::ShowEngineImGui()
     }
     ImGui::End();
 
-    // TestIteration2();
-    // TestIteration3();
-    TestIteration4();
-    TesGraphicMotor();
+    //TestIteration2();
+    TestIteration3();
+    //TestIteration4();
+    //TesGraphicMotor();
 }
 
 void ImGuiEngine::TesGraphicMotor()
@@ -472,13 +472,13 @@ void ImGuiEngine::TesGraphicMotor()
     {
         GameObject *go = new GameObject("floor");
         VisualGameObject *v = VisualGameObject::CreatePtrVisualGameObject("Models/quad model.obj");
-        v->transform.translation = {0.f, .5f, 0.f};
+        v->transformVisual.translation = {0.f, .5f, 0.f};
         go->AddComponent(v);
         gameObjects->push_back(go);
 
         go = new GameObject("Vase");
         v = VisualGameObject::CreatePtrVisualGameObject("Models/smooth_vase.obj");
-        v->transform.translation = {.5f, .5f, 0.f};
+        v->transformVisual.translation = {.5f, .5f, 0.f};
         go->AddComponent(v);
         gameObjects->push_back(go);
 
@@ -500,7 +500,7 @@ void ImGuiEngine::TesGraphicMotor()
                 glm::mat4(1.f),
                 (i * glm::two_pi<float>()) / lightColors.size(),
                 {0.f, -1.f, 0.f});
-            v2->transform.translation = glm::vec3(rotateLight * glm::vec4(-1.f, -1.f, -1.f, 1.f));
+            v2->transformVisual.translation = glm::vec3(rotateLight * glm::vec4(-1.f, -1.f, -1.f, 1.f));
             go2->AddComponent(v2);
             gameObjects->push_back(go2);
         }
@@ -516,6 +516,44 @@ void ImGuiEngine::TestIteration4()
 
     if (ImGui::Button("Test Gravity"))
     {
+
+        for (int i = 0; i < gameObjects->size(); i++)
+            gameObjects->at(i)->shouldDelete = true;
+        // gameObjects->clear();
+
+        MathPhysicsEngine* math = MathPhysicsEngine::GetInstance();
+        GameObject* go = new GameObject("rigidBody");
+        go->transform.position = Vector3D(-10, 0, 20);
+        go->transform.rotation = Vector3D(0.0f, 0.0f, 2.0f);
+
+        RigidBody* rigidbody = new RigidBody(
+            modeleInertiaTensor,
+            Vector3D(10, 10, 0),
+            Vector3D(0.0f, 0.0f, 0.0f),
+            { 1, 0, 0, 0 });
+        RigidBodyGravity* rigidBodyGravity = new RigidBodyGravity({ 0.0f, -10.0f, 0.0f });
+        math->GetRigidBodyForceRegistry()->AddForce(rigidbody, rigidBodyGravity);
+        go->AddComponent(rigidbody);
+
+        VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
+        go->AddComponent(v);
+        gameObjects->push_back(go);
+
+        go = new GameObject("rigidBody 2");
+        go->transform.position = Vector3D(10, 0, 20);
+        go->transform.rotation = Vector3D(0.0f, 0.0f, -2.0f);
+
+        rigidbody = new RigidBody(
+            modeleInertiaTensor,
+            Vector3D(-10, 10, 0),
+            Vector3D(0.0f, 0.0f, 0.0f),
+            { 1, 0, 0, 0 });
+        math->GetRigidBodyForceRegistry()->AddForce(rigidbody, rigidBodyGravity);
+        go->AddComponent(rigidbody);
+
+        v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
+        go->AddComponent(v);
+        gameObjects->push_back(go);
     }
 
     ImGui::End();
@@ -546,12 +584,13 @@ void ImGuiEngine::TestIteration3()
 
             MathPhysicsEngine *math = MathPhysicsEngine::GetInstance();
             GameObject *go = new GameObject("rigidBody");
+            go->transform.position = Vector3D(-10, 0, 20);
+            go->transform.rotation = Vector3D(0.0f, 0.0f, 2.0f);
+
             RigidBody *rigidbody = new RigidBody(
                 modeleInertiaTensor,
-                Vector3D(-10, 0, 20),
                 Vector3D(10, 10, 0),
                 Vector3D(0.0f, 0.0f, 0.0f),
-                Vector3D(0.0f, 0.0f, 2.0f),
                 {1, 0, 0, 0});
             RigidBodyGravity *rigidBodyGravity = new RigidBodyGravity({0.0f, -10.0f, 0.0f});
             math->GetRigidBodyForceRegistry()->AddForce(rigidbody, rigidBodyGravity);
@@ -561,7 +600,7 @@ void ImGuiEngine::TestIteration3()
             go->AddComponent(v);
             gameObjects->push_back(go);
         }
-
+        
         if (ImGui::Button("Test angular damping"))
         {
 
@@ -570,12 +609,12 @@ void ImGuiEngine::TestIteration3()
 
             MathPhysicsEngine *math = MathPhysicsEngine::GetInstance();
             GameObject *go = new GameObject("damping rigidBody");
+            go->transform.position = Vector3D(0, 0, 5);
+            go->transform.rotation = Vector3D(0, 0, 20);
             RigidBody *rigidBody = new RigidBody(
                 modeleInertiaTensor,
-                Vector3D(0, 0, 5),
                 Vector3D(0, 0, 0),
                 Vector3D(0.0f, 0.0f, 0.0f),
-                Vector3D(0, 0, 20),
                 {1, 0, 0, 0},
                 1.0f,
                 0.95f,
@@ -692,10 +731,10 @@ void ImGuiEngine::TestIteration3()
                 math->TestRigidbodyCableCollisionSetup(r2, rb, 10);
             }
 
-        }
+        }*/
 
 
-        ImGui::TreePop();*/
+        //ImGui::TreePop();
 
         if (ImGui::TreeNode("Springs"))
         {
@@ -723,13 +762,13 @@ void ImGuiEngine::TestIteration3()
 
                 GameObject *go = new GameObject("spring block 1");
                 MathPhysicsEngine *math = MathPhysicsEngine::GetInstance();
+                go->transform.position = Vector3D(0, 5, 20);
+                go->transform.rotation = Vector3D(rotationBlock1[0], rotationBlock1[1], rotationBlock1[2]);
 
                 RigidBody *rbSpring1 = new RigidBody(
                     modeleInertiaTensor,
-                    Vector3D(0, 5, 20),
                     Vector3D(0, 0, 0),
                     Vector3D(0, 0, 0),
-                    Vector3D(rotationBlock1[0], rotationBlock1[1], rotationBlock1[2]),
                     {1, 0, 0, 0});
 
                 go->AddComponent(rbSpring1);
@@ -738,13 +777,13 @@ void ImGuiEngine::TestIteration3()
                 gameObjects->push_back(go);
 
                 go = new GameObject("spring block 2");
+                go->transform.position = Vector3D(0, -5, 20);
+                go->transform.rotation = Vector3D(rotationBlock2[0], rotationBlock2[1], rotationBlock2[2]);
 
                 RigidBody *rbSpring2 = new RigidBody(
                     modeleInertiaTensor,
-                    Vector3D(0, -5, 20),
                     Vector3D(0, 0, 0),
                     Vector3D(0, 0, 0),
-                    Vector3D(rotationBlock2[0], rotationBlock2[1], rotationBlock2[2]),
                     {1, 0, 0, 0});
                 go->AddComponent(rbSpring2);
 
@@ -805,12 +844,13 @@ void ImGuiEngine::TestIteration3()
                 GameObject *go = new GameObject("anchored");
                 MathPhysicsEngine *math = MathPhysicsEngine::GetInstance();
 
+                go->transform.position = Vector3D(0, 5, 20);
+                go->transform.rotation = Vector3D(anchoredRotationBlock[0], anchoredRotationBlock[1], anchoredRotationBlock[2]);
+
                 RigidBody *rbSpringAnchored1 = new RigidBody(
                     modeleInertiaTensor,
-                    Vector3D(0, 5, 20),
                     Vector3D(0, 0, 0),
                     Vector3D(0, 0, 0),
-                    Vector3D(anchoredRotationBlock[0], anchoredRotationBlock[1], anchoredRotationBlock[2]),
                     {1, 0, 0, 0});
 
                 // rbSpringAnchored1->SetAngularDamping(anchoredAngularDampling);
@@ -822,12 +862,13 @@ void ImGuiEngine::TestIteration3()
 
                 go = new GameObject("spring anchored block");
 
+                go->transform.position = Vector3D(0, -5, 20);
+                go->transform.rotation = Vector3D(springRotationBlock[0], springRotationBlock[1], springRotationBlock[2]);
+
                 RigidBody *rbSpringAnchored2 = new RigidBody(
                     modeleInertiaTensor,
-                    Vector3D(0, -5, 20),
                     Vector3D(0, 0, 0),
                     Vector3D(0, 0, 0),
-                    Vector3D(springRotationBlock[0], springRotationBlock[1], springRotationBlock[2]),
                     {1, 0, 0, 0});
 
                 rbSpringAnchored2->SetGravityScale(anchoredGravityScale);
@@ -852,8 +893,10 @@ void ImGuiEngine::TestIteration3()
 
             ImGui::TreePop();
         }
+        
     }
-
+    
+    ImGui::TreePop();
     ImGui::End();
 }
 

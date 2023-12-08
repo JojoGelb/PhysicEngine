@@ -107,6 +107,10 @@
     <ClInclude Include="GraphicEngine\lve_descriptors.h" />
     <ClInclude Include="GraphicEngine\PointLightSystem.h" />
     <ClInclude Include="MathPhysicEngine\BroadPhase\Grid.h" />
+    <ClInclude Include="MathPhysicEngine\BroadPhase\BoundingSphere.h" />
+    <ClInclude Include="MathPhysicEngine\BroadPhase\Bounding.h" />
+    <ClInclude Include="MathPhysicEngine\BroadPhase\BoundingBox.h" />
+    <ClInclude Include="Sources\Transform.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Readme.txt" />

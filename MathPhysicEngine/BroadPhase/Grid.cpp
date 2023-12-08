@@ -1,4 +1,5 @@
 #include "Grid.h"
+#include "../Sources/Transform.h"
 #include <iostream>
 
 Grid::Grid(float cellSize) : _cellSize(cellSize)
@@ -14,20 +15,20 @@ std::vector<PotentialCollision> Grid::GetPotentialCollisions(std::vector<RigidBo
 
 	for (int i = 0; i < rigidbodies.size(); i++) {
 		
-		float x1 = rigidbodies[i]->position.x - rigidbodies[i]->boundingSphere.size;
-		float x2 = rigidbodies[i]->position.x + rigidbodies[i]->boundingSphere.size;
+		float x1 = rigidbodies[i]->transform->position.x - rigidbodies[i]->boundingVolume->GetXSize();
+		float x2 = rigidbodies[i]->transform->position.x + rigidbodies[i]->boundingVolume->GetXSize();
 
 		float gridX1 = floorf(x1 / _cellSize);
 		float gridX2 = floorf(x2 / _cellSize);
 
-		float y1 = rigidbodies[i]->position.y - rigidbodies[i]->boundingSphere.size;
-		float y2 = rigidbodies[i]->position.y + rigidbodies[i]->boundingSphere.size;
+		float y1 = rigidbodies[i]->transform->position.y - rigidbodies[i]->boundingVolume->GetYSize();
+		float y2 = rigidbodies[i]->transform->position.y + rigidbodies[i]->boundingVolume->GetYSize();
 
 		float gridY1 = floorf(y1 / _cellSize);
 		float gridY2 = floorf(y2 / _cellSize);
 
-		float z1 = rigidbodies[i]->position.z - rigidbodies[i]->boundingSphere.size;
-		float z2 = rigidbodies[i]->position.z + rigidbodies[i]->boundingSphere.size;
+		float z1 = rigidbodies[i]->transform->position.z - rigidbodies[i]->boundingVolume->GetZSize();
+		float z2 = rigidbodies[i]->transform->position.z + rigidbodies[i]->boundingVolume->GetZSize();
 
 		float gridZ1 = floorf(z1 / _cellSize);
 		float gridZ2 = floorf(z2 / _cellSize);

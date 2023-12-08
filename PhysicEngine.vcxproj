@@ -964,6 +964,9 @@
     <ClInclude Include="GraphicEngine\VKPipeline.h" />
     <ClInclude Include="GraphicEngine\VulkanHandler.h" />
     <ClInclude Include="GraphicEngine\Window.h" />
+    <ClInclude Include="MathPhysicEngine\BroadPhase\Bounding.h" />
+    <ClInclude Include="MathPhysicEngine\BroadPhase\BoundingBox.h" />
+    <ClInclude Include="MathPhysicEngine\BroadPhase\BoundingSphere.h" />
     <ClInclude Include="MathPhysicEngine\BroadPhase\Grid.h" />
     <ClInclude Include="MathPhysicEngine\Collisions\NaiveParticleContactGenerator.h" />
     <ClInclude Include="MathPhysicEngine\Collisions\ParticleCable.h" />
@@ -1002,6 +1005,7 @@
     <ClInclude Include="Sources\ImGuiEngine.h" />
     <ClInclude Include="MathPhysicEngine\MathPhysicEngine.h" />
     <ClInclude Include="MathPhysicEngine\Particle.h" />
+    <ClInclude Include="Sources\Transform.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Readme.txt" />
