@@ -92,10 +92,10 @@ void RigidBodyContact::ResolveInterpenetration()
 		particleBMovement = Vector3D();
 	}
 
-	rigidbody[0]->position += particleAMovement;
+	rigidbody[0]->transform->position += particleAMovement;
 
 	if (rigidbody[1]) {
-		rigidbody[1]->position += particleBMovement;
+		rigidbody[1]->transform->position += particleBMovement;
 	}
 
 	/*Same book, different edition

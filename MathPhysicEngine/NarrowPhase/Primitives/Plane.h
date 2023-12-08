@@ -5,6 +5,7 @@
 class Plane : public CollisionPrimitive
 {
 public:
+    Plane(const Vector3D& _normal);
+    
     Vector3D normal;
-    double offset;
 };

@@ -1,4 +1,11 @@
 ﻿#include "Box.h"
+
+Box::Box(const Vector3D& _halfSize):
+halfSize(_halfSize)
+{
+    shape = BOX;
+}
+
 double Box::TransformToAxis( const Vector3D &axis) const
 {
     return

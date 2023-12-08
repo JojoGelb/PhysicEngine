@@ -4,10 +4,14 @@
 #include "../../Rigidbody/RigidBody.h"
 #include "../../Rigidbody/Matrix34.h"
 
+enum CollisionShape { SPHERE,BOX,PLANE  };
+
 class CollisionPrimitive
 {
 public:
     RigidBody *rigidBody;
+
+    CollisionShape shape;
 
     //Offset of the primitive from the rigidbody's center of mass
     Matrix34 offset;
