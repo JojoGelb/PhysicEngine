@@ -14,10 +14,6 @@ MathPhysicsEngine::~MathPhysicsEngine()
 		delete p;
 	}
 
-	for (RigidBodyContact* p : rigidbodyContact) {
-		delete p;
-	}
-
 	delete particleForceRegistry;
 	delete rigidBodyForceRegistry;
 
@@ -80,21 +76,6 @@ unsigned MathPhysicsEngine::GenerateParticleContacts()
 	return static_cast<unsigned int>(particlesContact.size());
 }
 
-unsigned MathPhysicsEngine::GenerateRigidBodyContacts()
-{
-	//TODO OPTIMIZE
-	for (RigidBodyContact* p : rigidbodyContact) delete p;
-	rigidbodyContact.clear();
-	/*
-	for (RigidbodyContactGeneratorTest* g : rigidbodyContactGenerator) {
-		unsigned used = g->AddContact(rigidbodyContact, maxContactNumber);
-
-		if (rigidbodyContact.size() >= maxContactNumber) break;
-	}
-	*/
-	return static_cast<unsigned int>(rigidbodyContact.size());
-}
-
 void MathPhysicsEngine::Init()
 {
 	particleForceRegistry = new ParticleForceRegistry();
@@ -152,12 +133,18 @@ void MathPhysicsEngine::UpdateRigidBodies(double frameTime, double t)
 	std::cout << "Potential Collisions: " << potentialCollision.size() << std::endl;
 
 	//Calculate collisions : Narrow Phase
-	std::vector<CollisionData*> collisionsData;
+	//std::vector<CollisionData*> collisionsData;
 
 	CollisionData* newCollisionData = new CollisionData();
 	narrowCollisionDetector.DetectCollisions(potentialCollision, newCollisionData);
 
-	
+	//Collision Resolution
+	if(rigidbodyContact.size() > 0) {
+		rigidbodyContactResolver.SetIterationNumber(rigidbodyContact.size() * 2);
+		rigidbodyContactResolver.ResolveContacts(rigidbodyContact, frameTime);
+	}
+
+
 	//clean memory (delete every collisionData)
 
 	
