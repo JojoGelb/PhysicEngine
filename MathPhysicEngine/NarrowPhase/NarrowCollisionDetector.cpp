@@ -12,6 +12,7 @@ unsigned NarrowCollisionDetector::SphereAndSphere(const Sphere& sphere1, const S
     if(collisionData->contactsLeft <= 0)
         return 0;
 
+
     //Get the position of the spheres
     const Vector3D position1 = sphere1.GetPosition();
     const Vector3D position2 = sphere2.GetPosition();
@@ -127,12 +128,13 @@ void NarrowCollisionDetector::DetectCollisions(const std::vector<PotentialCollis
         {
 			//if sphere && sphere
             if (potentialCollision.rigidBodies[0]->collisionPrimitive->shape == CollisionShape::SPHERE &&
-                potentialCollision.rigidBodies[0]->collisionPrimitive->shape == CollisionShape::SPHERE)
+                potentialCollision.rigidBodies[1]->collisionPrimitive->shape == CollisionShape::SPHERE)
             {
                 std::cout << "Sphere and Sphere" << std::endl;
 				//do sphere && sphere detection
-				SphereAndSphere(*((Sphere*)potentialCollision.rigidBodies[0]->collisionPrimitive),
+				auto i = SphereAndSphere(*((Sphere*)potentialCollision.rigidBodies[0]->collisionPrimitive),
                     *((Sphere*)potentialCollision.rigidBodies[1]->collisionPrimitive), collisionData);
+                std::cout << i << std::endl;
 			}
 			//if sphere && box
             else if (potentialCollision.rigidBodies[0]->collisionPrimitive->shape == CollisionShape::SPHERE &&
@@ -140,18 +142,22 @@ void NarrowCollisionDetector::DetectCollisions(const std::vector<PotentialCollis
             {
                 std::cout << "Sphere and Box" << std::endl;
 				//do sphere && box detection
-                SphereAndBox(*((Sphere*)potentialCollision.rigidBodies[0]->collisionPrimitive),
+                auto i = SphereAndBox(*((Sphere*)potentialCollision.rigidBodies[0]->collisionPrimitive),
                     					*((Box*)potentialCollision.rigidBodies[1]->collisionPrimitive), collisionData);
-			}
+				std::cout << i << std::endl;
+            }
             //if box && sphere
             else if (potentialCollision.rigidBodies[0]->collisionPrimitive->shape == CollisionShape::BOX &&
                 potentialCollision.rigidBodies[1]->collisionPrimitive->shape == CollisionShape::SPHERE)
             {
                 std::cout << "Box and Sphere" << std::endl;
 				//do sphere && box detection
-				SphereAndBox(*((Sphere*)potentialCollision.rigidBodies[1]->collisionPrimitive),
+                auto i = SphereAndBox(*((Sphere*)potentialCollision.rigidBodies[1]->collisionPrimitive),
                     										*((Box*)potentialCollision.rigidBodies[0]->collisionPrimitive), collisionData);
-			}
+			
+                std::cout << i << std::endl;
+
+            }
 			
  
 		}

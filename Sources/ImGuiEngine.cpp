@@ -902,16 +902,21 @@ void ImGuiEngine::TestIteration3()
 
     if (ImGui::TreeNode("Collisions")) {
 
+        static float positionTestCollision1[3] = { 0.0f, 0.0f, 0.0f };
+        ImGui::InputFloat3("position 1", positionTestCollision1);
+
+        static float positionTestCollision2[3] = { 3.0f, 0.0f, 0.0f };
+        ImGui::InputFloat3("position 2", positionTestCollision2);
+
         if (ImGui::Button("Test collision"))
         {
-
             for (int i = 0; i < gameObjects->size(); i++)
                 gameObjects->at(i)->shouldDelete = true;
             // gameObjects->clear();
 
             MathPhysicsEngine* math = MathPhysicsEngine::GetInstance();
             GameObject* go = new GameObject("rigidBody1");
-            go->transform.position = Vector3D(0, 0, 0);
+            go->transform.position = Vector3D(positionTestCollision1[0], positionTestCollision1[1], positionTestCollision1[2]);
             go->transform.rotation = Vector3D(0.0f, 0.0f, 0.0f);
 
             RigidBody* rigidbody = new RigidBody(
@@ -941,7 +946,7 @@ void ImGuiEngine::TestIteration3()
             //SPHERE COLLISION SHAPE
 
             go = new GameObject("rigidBody2");
-            go->transform.position = Vector3D(3, 0, 0);
+            go->transform.position = Vector3D(positionTestCollision2[0], positionTestCollision2[1], positionTestCollision2[2]);
             go->transform.rotation = Vector3D(0.0f, 0.0f, 0.0f);
 
             rigidbody = new RigidBody(
