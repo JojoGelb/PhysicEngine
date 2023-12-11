@@ -911,7 +911,7 @@ void ImGuiEngine::TestIteration3()
 
             MathPhysicsEngine* math = MathPhysicsEngine::GetInstance();
             GameObject* go = new GameObject("rigidBody1");
-            go->transform.position = Vector3D(0, 0, 2);
+            go->transform.position = Vector3D(0, 0, 0);
             go->transform.rotation = Vector3D(0.0f, 0.0f, 0.0f);
 
             RigidBody* rigidbody = new RigidBody(
@@ -925,7 +925,7 @@ void ImGuiEngine::TestIteration3()
            // math->GetRigidBodyForceRegistry()->AddForce(rigidbody, rigidBodyGravity);
 
 
-            Box *box = new Box(0.5f);
+            Box *box = new Box(1.0f);
             box->rigidBody = rigidbody;
             box->UpdateTransformMatrix();
 
@@ -941,7 +941,7 @@ void ImGuiEngine::TestIteration3()
             //SPHERE COLLISION SHAPE
 
             go = new GameObject("rigidBody2");
-            go->transform.position = Vector3D(4, 0, 2);
+            go->transform.position = Vector3D(3, 0, 0);
             go->transform.rotation = Vector3D(0.0f, 0.0f, 0.0f);
 
             rigidbody = new RigidBody(
@@ -955,7 +955,7 @@ void ImGuiEngine::TestIteration3()
            // math->GetRigidBodyForceRegistry()->AddForce(rigidbody, rigidBodyGravity);
 
 
-            Sphere* sphere = new Sphere(0.5f);
+            Sphere* sphere = new Sphere(1.2f);
             sphere->rigidBody = rigidbody;
             sphere->UpdateTransformMatrix();
 

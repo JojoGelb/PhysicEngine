@@ -1,6 +1,7 @@
 ﻿#include "NarrowCollisionDetector.h"
 
 #include <complex>
+#include <iostream>
 
 class Box;
 
@@ -117,6 +118,44 @@ void NarrowCollisionDetector::DetectCollisions(const std::vector<PotentialCollis
 {
     //if sphere && sphere
     //do sphere && box detection
+
+    if (potentialCollisions.size() > 0)
+    {
+		//Verify collisions and create contacts lists
+		//CollisionData* collisionData = new CollisionData();
+        for (PotentialCollision potentialCollision : potentialCollisions)
+        {
+			//if sphere && sphere
+            if (potentialCollision.rigidBodies[0]->collisionPrimitive->shape == CollisionShape::SPHERE &&
+                potentialCollision.rigidBodies[0]->collisionPrimitive->shape == CollisionShape::SPHERE)
+            {
+                std::cout << "Sphere and Sphere" << std::endl;
+				//do sphere && sphere detection
+				SphereAndSphere(*((Sphere*)potentialCollision.rigidBodies[0]->collisionPrimitive),
+                    *((Sphere*)potentialCollision.rigidBodies[1]->collisionPrimitive), collisionData);
+			}
+			//if sphere && box
+            else if (potentialCollision.rigidBodies[0]->collisionPrimitive->shape == CollisionShape::SPHERE &&
+                potentialCollision.rigidBodies[1]->collisionPrimitive->shape == CollisionShape::BOX)
+            {
+                std::cout << "Sphere and Box" << std::endl;
+				//do sphere && box detection
+                SphereAndBox(*((Sphere*)potentialCollision.rigidBodies[0]->collisionPrimitive),
+                    					*((Box*)potentialCollision.rigidBodies[1]->collisionPrimitive), collisionData);
+			}
+            //if box && sphere
+            else if (potentialCollision.rigidBodies[0]->collisionPrimitive->shape == CollisionShape::BOX &&
+                potentialCollision.rigidBodies[1]->collisionPrimitive->shape == CollisionShape::SPHERE)
+            {
+                std::cout << "Box and Sphere" << std::endl;
+				//do sphere && box detection
+				SphereAndBox(*((Sphere*)potentialCollision.rigidBodies[1]->collisionPrimitive),
+                    										*((Box*)potentialCollision.rigidBodies[0]->collisionPrimitive), collisionData);
+			}
+			
+ 
+		}
+	}
     
     //if sphere && box
     //do sphere && box detection
