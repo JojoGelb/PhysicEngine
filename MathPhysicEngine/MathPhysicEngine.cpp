@@ -142,16 +142,23 @@ void MathPhysicsEngine::UpdateRigidBodies(double frameTime, double t)
 		r->Integrate(t, frameTime);
 	}
 
-	//Calculate potential collisions
+	//Calculate potential collisions : Broad Phase
 	std::vector<PotentialCollision> potentialCollision = grid.GetPotentialCollisions(rigidBodies);
 
-	if(potentialCollision.size() > 0)
-	{
-		std::cout << "Potential Collisions: " << potentialCollision.size() << std::endl;
-		//Verify collisions and create contacts lists
-		CollisionData* collisionData = new CollisionData();
-		narrowCollisionDetector.DetectCollisions(potentialCollision,collisionData);
+	if(potentialCollision.size() <= 0) {
+		return;
 	}
+
+	std::cout << "Potential Collisions: " << potentialCollision.size() << std::endl;
+
+	//Calculate collisions : Narrow Phase
+	std::vector<CollisionData*> collisionsData;
+
+	CollisionData* newCollisionData = new CollisionData();
+	narrowCollisionDetector.DetectCollisions(potentialCollision, newCollisionData);
+
+	
+	//clean memory (delete every collisionData)
 
 	
 }
