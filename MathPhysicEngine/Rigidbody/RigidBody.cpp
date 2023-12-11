@@ -107,7 +107,7 @@ void RigidBody::Integrate(double time, double deltaTime)
 	transform->position = transform->position + (velocity * deltaTime);
 
 	// 2 Mettre � jour l�orientation
-	orientation.UpdateByAngularVelocity(transform->rotation, deltaTime);
+	orientation.UpdateByAngularVelocity(angularVelocity, deltaTime);
 	orientation.Normalized();
 	
 	// 3 Calculer les valeurs d�riv�es
@@ -123,7 +123,7 @@ void RigidBody::Integrate(double time, double deltaTime)
 	velocity = velocity * linearDamping + (linearAcceleration * deltaTime);
 
 	// 7 Mettre � jour la v�locit� angulaire
-	transform->rotation = transform->rotation * angularDamping + (angularAcceleration * deltaTime);
+	angularVelocity = angularVelocity * angularDamping + (angularAcceleration * deltaTime);
 
 	// 8 Remettre � z�ro les accumulateurs
 	ClearAccumulator();

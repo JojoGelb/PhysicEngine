@@ -149,7 +149,7 @@ void VisualGameObject::Update()
         else
         {
             transformVisual.translation = {transform->position.x, -transform->position.y, transform->position.z};
-            transformVisual.rotation = {transform->rotation.x, transform->rotation.y, transform->rotation.z};
+            //transformVisual.rotation = {transform->rotation.x, transform->rotation.y, transform->rotation.z};
             // transformVisual.scale = { transform->scale.x, transform->scale.y, transform->scale.z };
         }
     }

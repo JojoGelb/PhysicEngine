@@ -17,9 +17,15 @@ float RigidBodyContact::CalculateSeparatingVelocity()
 	return relativeVelocity.DotProduct(contactNormal);
 }
 
+
+
 //Give proper impulse to solve contact
 void RigidBodyContact::ResolveVelocity(float duration)
 {
+
+
+	
+	/*
 	//Velocity in direction of contact
 	float seperatingVelocity = CalculateSeparatingVelocity();
 
@@ -67,6 +73,7 @@ void RigidBodyContact::ResolveVelocity(float duration)
 	if (rigidbody[1]) {
 		rigidbody[1]->velocity = rigidbody[1]->velocity + impulsePerIMass * -rigidbody[1]->GetInversedMass();
 	}
+	*/
 }
 
 void RigidBodyContact::ResolveInterpenetration()

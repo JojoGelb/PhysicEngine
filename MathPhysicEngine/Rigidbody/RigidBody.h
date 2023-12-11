@@ -63,7 +63,7 @@ public:
 	RigidBodyState currentState;
 	RigidBodyState finalState;
 	
-	//Vector3D rotation;
+	Vector3D angularVelocity;
 
 	Matrix34 transformMatrix;
 
