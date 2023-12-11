@@ -106,13 +106,6 @@ void Matrix33::SetDiagonal(double x, double y, double z)
 
 	Matrix33 tri = Matrix33(2,-1,0,0,3,1,-4,2,5);
 	tri = tri.Inverse();
-
-	for (auto val : tri.values)
-	{
-		std::cout << val << ", ";
-	}
-	
-	std::cout << std::endl;
 }
 
 void Matrix33::SetOrientation(const Quaternion& q)

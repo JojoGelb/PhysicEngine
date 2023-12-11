@@ -21,11 +21,16 @@ struct RigidBodyState
 
 
 };
+
+class CollisionPrimitive;
+
 class RigidBody : public Component {
 
 private:
+	
+	
 	//Same as Particle :
-
+	
 	std::string inertiaTensorSelection = "Cuboid";
 
 	Vector3D linearAcceleration;
@@ -48,6 +53,7 @@ private:
 	Vector3D torqueAccum;
 
 public:
+	CollisionPrimitive* collisionPrimitive;
 
 	//Vector3D position;
 	Vector3D velocity;

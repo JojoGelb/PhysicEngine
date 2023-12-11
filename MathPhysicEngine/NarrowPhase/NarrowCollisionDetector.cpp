@@ -46,7 +46,7 @@ unsigned NarrowCollisionDetector::SphereAndBox(const Sphere& sphere, const Box& 
 {
     // Transform the center of the sphere into box coordinates
     Vector3D center = sphere.GetPosition();
-    Vector3D relCenter = box.transform.transformInverse(center);
+    Vector3D relCenter = box.transform->transformInverse(center);
 
     // Early-out check to see if we can exclude the contact.
     if (std::abs(relCenter.x) - sphere.radius > box.halfSize.x ||
@@ -77,7 +77,7 @@ unsigned NarrowCollisionDetector::SphereAndBox(const Sphere& sphere, const Box& 
     dist = (closestPt - relCenter).GetSquareNorm();
     if (dist > sphere.radius * sphere.radius) return 0;
     // Compile the contact.
-    Vector3D closestPtWorld = box.transform.TransformPosition(closestPt);
+    Vector3D closestPtWorld = box.transform->TransformPosition(closestPt);
 
 
     RigidBodyContact* contact = collisionData->contacts;

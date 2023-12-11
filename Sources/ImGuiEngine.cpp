@@ -891,12 +891,91 @@ void ImGuiEngine::TestIteration3()
                 MathPhysicsEngine::GetInstance()->GetRigidBodyForceRegistry()->AddForce(rbSpringAnchored2, rigidBodyGravity2);
             }
 
-            ImGui::TreePop();
+          
         }
         
+        ImGui::TreePop();
+
     }
     
-    ImGui::TreePop();
+    //ImGui::TreePop();
+
+    if (ImGui::TreeNode("Collisions")) {
+
+        if (ImGui::Button("Test collision"))
+        {
+
+            for (int i = 0; i < gameObjects->size(); i++)
+                gameObjects->at(i)->shouldDelete = true;
+            // gameObjects->clear();
+
+            MathPhysicsEngine* math = MathPhysicsEngine::GetInstance();
+            GameObject* go = new GameObject("rigidBody1");
+            go->transform.position = Vector3D(0, 0, 2);
+            go->transform.rotation = Vector3D(0.0f, 0.0f, 0.0f);
+
+            RigidBody* rigidbody = new RigidBody(
+                modeleInertiaTensor,
+                Vector3D(0, 0, 0),
+                Vector3D(0.0f, 0.0f, 0.0f),
+                { 1, 0, 0, 0 });
+
+            rigidbody->SetGravityScale(0.0f);
+            //RigidBodyGravity* rigidBodyGravity = new RigidBodyGravity({ 0.0f, -10.0f, 0.0f });
+           // math->GetRigidBodyForceRegistry()->AddForce(rigidbody, rigidBodyGravity);
+
+
+            Box *box = new Box(0.5f);
+            box->rigidBody = rigidbody;
+            box->UpdateTransformMatrix();
+
+            rigidbody->collisionPrimitive = box;
+
+            go->AddComponent(rigidbody);
+
+            VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
+            go->AddComponent(v);
+            gameObjects->push_back(go);
+
+
+            //SPHERE COLLISION SHAPE
+
+            go = new GameObject("rigidBody2");
+            go->transform.position = Vector3D(4, 0, 2);
+            go->transform.rotation = Vector3D(0.0f, 0.0f, 0.0f);
+
+            rigidbody = new RigidBody(
+                modeleInertiaTensor,
+                Vector3D(0, 0, 0),
+                Vector3D(0.0f, 0.0f, 0.0f),
+                { 1, 0, 0, 0 });
+
+            rigidbody->SetGravityScale(0.0f);
+            //RigidBodyGravity* rigidBodyGravity = new RigidBodyGravity({ 0.0f, -10.0f, 0.0f });
+           // math->GetRigidBodyForceRegistry()->AddForce(rigidbody, rigidBodyGravity);
+
+
+            Sphere* sphere = new Sphere(0.5f);
+            sphere->rigidBody = rigidbody;
+            sphere->UpdateTransformMatrix();
+
+            rigidbody->collisionPrimitive = sphere;
+
+            go->AddComponent(rigidbody);
+
+            v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
+            go->AddComponent(v);
+            gameObjects->push_back(go);
+
+        }
+
+        ImGui::TreePop();
+    }
+
+   
+
+    //ImGui::TreePop();
+
     ImGui::End();
 }
 

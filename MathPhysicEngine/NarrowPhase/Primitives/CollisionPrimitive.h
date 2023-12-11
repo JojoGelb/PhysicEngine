@@ -21,7 +21,7 @@ public:
 
     //result of the combination of the rigidbody's transform
     //and the offset of the primitive
-    Matrix34 transform;
+    Matrix34* transform;
 
 
     

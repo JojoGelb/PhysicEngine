@@ -2,10 +2,10 @@
 
 Vector3D CollisionPrimitive::GetPosition() const
 {
-    return transform.GetPosition();
+    return transform->GetPosition();
 }
 
 void CollisionPrimitive::UpdateTransformMatrix()
 {
-    transform = this->rigidBody->transformMatrix * offset;
+    transform = &this->rigidBody->transformMatrix; //* offset
 }
