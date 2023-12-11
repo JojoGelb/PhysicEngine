@@ -14,6 +14,10 @@ MathPhysicsEngine::~MathPhysicsEngine()
 		delete p;
 	}
 
+	for (RigidBodyContact* p : rigidbodiesContact) {
+		delete p;
+	}
+
 	delete particleForceRegistry;
 	delete rigidBodyForceRegistry;
 
@@ -139,15 +143,13 @@ void MathPhysicsEngine::UpdateRigidBodies(double frameTime, double t)
 	narrowCollisionDetector.DetectCollisions(potentialCollision, newCollisionData);
 
 	//Collision Resolution
-	if(rigidbodyContact.size() > 0) {
-		rigidbodyContactResolver.SetIterationNumber(rigidbodyContact.size() * 2);
-		rigidbodyContactResolver.ResolveContacts(rigidbodyContact, frameTime);
+	if(rigidbodiesContact.size() > 0) {
+		rigidbodyContactResolver.SetIterationNumber(rigidbodiesContact.size() * 2);
+		rigidbodyContactResolver.ResolveContacts(rigidbodiesContact, frameTime);
 	}
 
 
 	//clean memory (delete every collisionData)
-
-	
 }
 
 void MathPhysicsEngine::Shutdown()

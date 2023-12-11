@@ -79,7 +79,7 @@ private:
 
 	//Rigidbody Contacts
 	RigidbodyContactResolver rigidbodyContactResolver;
-	std::vector<RigidBodyContact*> rigidbodyContact;
+	std::vector<RigidBodyContact*> rigidbodiesContact;
 
 	//RigidBody forces
 	RigidBodyForceRegistry* rigidBodyForceRegistry;
