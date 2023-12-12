@@ -141,13 +141,13 @@ void MathPhysicsEngine::UpdateRigidBodies(double frameTime, double t)
 
 	//TODO: Clean out precedent rbContacts array values before adding new ones
 
-	CollisionData* newCollisionData = new CollisionData();
-	narrowCollisionDetector.DetectCollisions(potentialCollision, newCollisionData);
+	//TODO: Clean out precedent rbContacts array values before adding new ones
+	narrowCollisionDetector.DetectCollisions(potentialCollision, rigidbodiesContact);
 
 	//Collision Resolution
 	if(rigidbodiesContact.size() > 0) {
 		rigidbodyContactResolver.SetIterationNumber(rigidbodiesContact.size() * 2);
-		rigidbodyContactResolver.ResolveContacts(rigidbodiesContact, frameTime);
+		//rigidbodyContactResolver.ResolveContacts(rigidbodiesContact, frameTime);
 	}
 
 	//clean memory (delete every collisionData)

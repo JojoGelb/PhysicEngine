@@ -568,16 +568,21 @@ void ImGuiEngine::TestIteration4()
         gameObjects->push_back(go);
     }
 
+    static float positionTestCollision1[3] = { 0.0f, 0.0f, 0.0f };
+    ImGui::InputFloat3("position 1", positionTestCollision1);
+
+    static float positionTestCollision2[3] = { 3.0f, 0.0f, 0.0f };
+    ImGui::InputFloat3("position 2", positionTestCollision2);
+
     if (ImGui::Button("Test collision"))
     {
 
         for (int i = 0; i < gameObjects->size(); i++)
             gameObjects->at(i)->shouldDelete = true;
-        // gameObjects->clear();
 
         MathPhysicsEngine* math = MathPhysicsEngine::GetInstance();
         GameObject* go = new GameObject("rigidBody1");
-        go->transform.position = Vector3D(0, 0, 0);
+        go->transform.position = Vector3D(positionTestCollision1[0], positionTestCollision1[1], positionTestCollision1[2]);
         go->transform.rotation = Vector3D(0.0f, 0.0f, 0.0f);
 
         RigidBody* rigidbody = new RigidBody(
@@ -591,7 +596,7 @@ void ImGuiEngine::TestIteration4()
        // math->GetRigidBodyForceRegistry()->AddForce(rigidbody, rigidBodyGravity);
 
 
-        Box* box = new Box(1.0f);
+        Sphere* box = new Sphere(1.0f);
         box->rigidBody = rigidbody;
         box->UpdateTransformMatrix();
 
@@ -599,7 +604,7 @@ void ImGuiEngine::TestIteration4()
 
         go->AddComponent(rigidbody);
 
-        VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
+        VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject("Models/sphere.obj");
         go->AddComponent(v);
         gameObjects->push_back(go);
 
@@ -607,7 +612,7 @@ void ImGuiEngine::TestIteration4()
         //SPHERE COLLISION SHAPE
 
         go = new GameObject("rigidBody2");
-        go->transform.position = Vector3D(3, 0, 0);
+        go->transform.position = Vector3D(positionTestCollision2[0], positionTestCollision2[1], positionTestCollision2[2]);
         go->transform.rotation = Vector3D(0.0f, 0.0f, 0.0f);
 
         rigidbody = new RigidBody(
@@ -620,8 +625,7 @@ void ImGuiEngine::TestIteration4()
         //RigidBodyGravity* rigidBodyGravity = new RigidBodyGravity({ 0.0f, -10.0f, 0.0f });
        // math->GetRigidBodyForceRegistry()->AddForce(rigidbody, rigidBodyGravity);
 
-
-        Sphere* sphere = new Sphere(1.2f);
+        Sphere* sphere = new Sphere(1.0f);
         sphere->rigidBody = rigidbody;
         sphere->UpdateTransformMatrix();
 
@@ -629,10 +633,9 @@ void ImGuiEngine::TestIteration4()
 
         go->AddComponent(rigidbody);
 
-        v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
+        v = VisualGameObject::CreatePtrVisualGameObject("Models/sphere.obj");
         go->AddComponent(v);
         gameObjects->push_back(go);
-
     }
 
     ImGui::End();
@@ -1217,6 +1220,7 @@ void ImGuiEngine::TestIteration2()
 
     if (ImGui::TreeNode("Collisions"))
     {
+
         if (ImGui::Button("Test collision"))
         {
 
