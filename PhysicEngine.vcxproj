@@ -928,6 +928,7 @@
     <ClCompile Include="MathPhysicEngine\NarrowPhase\Primitives\CollisionPrimitive.cpp" />
     <ClCompile Include="MathPhysicEngine\NarrowPhase\Primitives\Plane.cpp" />
     <ClCompile Include="MathPhysicEngine\NarrowPhase\Primitives\Sphere.cpp" />
+    <ClCompile Include="MathPhysicEngine\RigidbodyCollisionResolution\RigidbodyContactResolver.cpp" />
     <ClCompile Include="MathPhysicEngine\Rigidbody\Matrix33.cpp" />
     <ClCompile Include="MathPhysicEngine\Rigidbody\Matrix34.cpp" />
     <ClCompile Include="MathPhysicEngine\Rigidbody\Quaternion.cpp" />
@@ -993,6 +994,7 @@
     <ClInclude Include="MathPhysicEngine\NarrowPhase\Primitives\CollisionPrimitive.h" />
     <ClInclude Include="MathPhysicEngine\NarrowPhase\Primitives\Plane.h" />
     <ClInclude Include="MathPhysicEngine\NarrowPhase\Primitives\Sphere.h" />
+    <ClInclude Include="MathPhysicEngine\RigidbodyCollisionResolution\RigidbodyContactResolver.h" />
     <ClInclude Include="MathPhysicEngine\Rigidbody\Matrix33.h" />
     <ClInclude Include="MathPhysicEngine\Rigidbody\Matrix34.h" />
     <ClInclude Include="MathPhysicEngine\Rigidbody\Quaternion.h" />
