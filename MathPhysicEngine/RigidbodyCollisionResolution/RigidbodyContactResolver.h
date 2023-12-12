@@ -11,5 +11,5 @@ protected:
 
 public:
 	void SetIterationNumber(unsigned int iterationNumber) { iteration = iterationNumber; }
-	//void ResolveContacts(std::vector<RigidBodyContact*>& contactArray, float frameTime);
+	void ResolveContacts(std::vector<RigidBodyContact*>& contactArray, float frameTime);
 };

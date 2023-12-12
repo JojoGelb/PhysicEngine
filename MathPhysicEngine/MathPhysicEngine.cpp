@@ -134,7 +134,7 @@ void MathPhysicsEngine::UpdateRigidBodies(double frameTime, double t)
 		return;
 	}
 	
-	std::cout << "Potential Collisions: " << potentialCollision.size() << std::endl;
+	//std::cout << "Potential Collisions: " << potentialCollision.size() << std::endl;
 
 	//Calculate collisions : Narrow Phase
 	//std::vector<CollisionData*> collisionsData;
@@ -146,8 +146,9 @@ void MathPhysicsEngine::UpdateRigidBodies(double frameTime, double t)
 
 	//Collision Resolution
 	if(rigidbodiesContact.size() > 0) {
-		rigidbodyContactResolver.SetIterationNumber(rigidbodiesContact.size() * 2);
-		//rigidbodyContactResolver.ResolveContacts(rigidbodiesContact, frameTime);
+		std::cout << "Collisions: " << rigidbodiesContact.size() << std::endl;
+		rigidbodyContactResolver.SetIterationNumber(rigidbodiesContact.size()/**2*/);
+		rigidbodyContactResolver.ResolveContacts(rigidbodiesContact, frameTime);
 	}
 
 	//clean memory (delete every collisionData)

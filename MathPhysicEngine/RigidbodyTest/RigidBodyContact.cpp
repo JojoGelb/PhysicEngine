@@ -4,7 +4,7 @@ void RigidBodyContact::Resolve(float duration)
 {
 	ResolveVelocity(duration);
 
-	ResolveInterpenetration();
+	//ResolveInterpenetration();
 }
 
 float RigidBodyContact::CalculateSeparatingVelocity()
@@ -32,19 +32,22 @@ void RigidBodyContact::ResolveVelocity(float duration)
 	Vector3D urel = u1 - u2;
 
 	// Calculate impulse
-	Vector3D k = ((restitution + 1) * urel.DotProduct(contactNormal)) /
+	double k = ((restitution + 1) * urel.DotProduct(contactNormal)) /
 				 ((rigidbody[0]->GetInversedMass() + rigidbody[1]->GetInversedMass()) * contactNormal +
 				  (rigidbody[0]->GetInverseInertiaTensorWorld() * r1.CrossProduct(contactNormal)).CrossProduct(r1) +
 				  ((rigidbody[1]->GetInverseInertiaTensorWorld() * r2.CrossProduct(contactNormal)).CrossProduct(r2)))
 					 .DotProduct(contactNormal);
 
+
+	std::cout << "k: " << k << std::endl;
+
 	// Calculate new velocity
-	rigidbody[0]->velocity = rigidbody[0]->velocity - k.DotProduct(contactNormal) / rigidbody[0]->GetMass();
-	rigidbody[1]->velocity = rigidbody[1]->velocity + k.DotProduct(contactNormal) / rigidbody[1]->GetMass();
+	rigidbody[0]->velocity = rigidbody[0]->velocity - k *contactNormal / rigidbody[0]->GetMass();
+	rigidbody[1]->velocity = rigidbody[1]->velocity + k *contactNormal / rigidbody[1]->GetMass();
 
 	// Calculate new angularVelocity
-	rigidbody[0]->angularVelocity = rigidbody[0]->angularVelocity - (rigidbody[0]->GetInverseInertiaTensorWorld() * (r1.CrossProduct(k.CrossProduct(contactNormal))));
-	rigidbody[1]->angularVelocity = rigidbody[1]->angularVelocity + (rigidbody[1]->GetInverseInertiaTensorWorld() * (r2.CrossProduct(k.CrossProduct(contactNormal))));
+	rigidbody[0]->angularVelocity = rigidbody[0]->angularVelocity - (rigidbody[0]->GetInverseInertiaTensorWorld() * (r1.CrossProduct(k*contactNormal)));
+	rigidbody[1]->angularVelocity = rigidbody[1]->angularVelocity + (rigidbody[1]->GetInverseInertiaTensorWorld() * (r2.CrossProduct(k*contactNormal)));
 
 	/*
 	//Velocity in direction of contact

@@ -124,6 +124,16 @@ std::vector<PotentialCollision> Grid::GetPotentialCollisions(std::vector<RigidBo
 		}
 	}
 
+	//Fix to get only 1 time the contact
+	for (int i = collision.size()-1; i >-1; i--) {
+		for (int j = i-1; j > -1; j--) {
+			if (collision.at(i).rigidBodies[0] == collision.at(j).rigidBodies[0] && collision.at(i).rigidBodies[1] == collision.at(j).rigidBodies[1]) {
+				collision.erase(collision.begin() + i);
+				break;
+			}
+		}
+	}
+
 	/*std::cout << "Potential collision: \n";
 	for(int i = 0; i < collision.size(); i++) {
 		std::cout << collision.at(i).rigidBodies[0]->position << " " << collision.at(i).rigidBodies[1]->position << std::endl;

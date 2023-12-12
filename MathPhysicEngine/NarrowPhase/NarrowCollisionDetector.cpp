@@ -33,7 +33,7 @@ unsigned NarrowCollisionDetector::SphereAndSphere(const Sphere& sphere1, const S
     rigidbodyContact->penetration = sphere1.radius + sphere2.radius - distance;
     rigidbodyContact->rigidbody[0] = sphere1.rigidBody;
     rigidbodyContact->rigidbody[1] = sphere2.rigidBody;
-    rigidbodyContact->restitution = 0.0f; //TODO use true restitution
+    rigidbodyContact->restitution = 1.0f; //TODO use true restitution
     //TODO add friction
 
     return 1;
@@ -86,7 +86,7 @@ unsigned NarrowCollisionDetector::SphereAndBox(const Sphere& sphere, const Box& 
     // Write the appropriate data.
     rigidbodyContact->rigidbody[0] = box.rigidBody;
     rigidbodyContact->rigidbody[1] = sphere.rigidBody;
-    rigidbodyContact->restitution = 0.0f;//TODO use true restitution
+    rigidbodyContact->restitution = 1.0f;//TODO use true restitution
     //TODO add friction
 
     return 1;
@@ -157,6 +157,11 @@ void NarrowCollisionDetector::DetectCollisions(const std::vector<PotentialCollis
                     										*((Box*)potentialCollision.rigidBodies[0]->collisionPrimitive), rigidbodyContact);
 			
                // std::cout << i << std::endl;
+            }
+
+            if (rigidbodyContact->rigidbody[0] == nullptr) {
+                delete rigidbodyContact;
+                continue;
             }
 			
             rigidbodiesContact.push_back(rigidbodyContact);
