@@ -9,8 +9,8 @@
 class NarrowCollisionDetector
 {
 public:
-    unsigned SphereAndSphere(const Sphere& sphere1, const Sphere& sphere2, CollisionData *collisionData) const;
-    unsigned SphereAndBox(const Sphere& sphere, const Box& box, CollisionData* collisionData) const;
+    unsigned SphereAndSphere(const Sphere& sphere1, const Sphere& sphere2, RigidBodyContact* rigidbodyContact) const;
+    unsigned SphereAndBox(const Sphere& sphere, const Box& box, RigidBodyContact* rigidbodyContact) const;
     bool OverlapOnAxis(const Box& one, const Box& two, const Vector3D& axis);
-    void DetectCollisions(const std::vector<PotentialCollision>& potentialCollisions, CollisionData* collisionData) const;
+    void DetectCollisions(const std::vector<PotentialCollision>& potentialCollisions, std::vector<RigidBodyContact*>& rigidbodiesContact) const;
 };

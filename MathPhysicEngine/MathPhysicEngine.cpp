@@ -14,7 +14,7 @@ MathPhysicsEngine::~MathPhysicsEngine()
 		delete p;
 	}
 
-	for (RigidBodyContact* p : rigidbodyContact) {
+	for (RigidBodyContact* p : rigidbodiesContact) {
 		delete p;
 	}
 
@@ -80,21 +80,6 @@ unsigned MathPhysicsEngine::GenerateParticleContacts()
 	return static_cast<unsigned int>(particlesContact.size());
 }
 
-unsigned MathPhysicsEngine::GenerateRigidBodyContacts()
-{
-	//TODO OPTIMIZE
-	for (RigidBodyContact* p : rigidbodyContact) delete p;
-	rigidbodyContact.clear();
-	/*
-	for (RigidbodyContactGeneratorTest* g : rigidbodyContactGenerator) {
-		unsigned used = g->AddContact(rigidbodyContact, maxContactNumber);
-
-		if (rigidbodyContact.size() >= maxContactNumber) break;
-	}
-	*/
-	return static_cast<unsigned int>(rigidbodyContact.size());
-}
-
 void MathPhysicsEngine::Init()
 {
 	particleForceRegistry = new ParticleForceRegistry();
@@ -142,18 +127,28 @@ void MathPhysicsEngine::UpdateRigidBodies(double frameTime, double t)
 		r->Integrate(t, frameTime);
 	}
 
-	//Calculate potential collisions
+	//Calculate potential collisions : Broad Phase
 	std::vector<PotentialCollision> potentialCollision = grid.GetPotentialCollisions(rigidBodies);
 
-	if(potentialCollision.size() > 0)
-	{
-		std::cout << "Potential Collisions: " << potentialCollision.size() << std::endl;
-		//Verify collisions and create contacts lists
-		CollisionData* collisionData = new CollisionData();
-		narrowCollisionDetector.DetectCollisions(potentialCollision,collisionData);
+	if(potentialCollision.size() <= 0) {
+		return;
 	}
 
-	
+	std::cout << "Potential Collisions: " << potentialCollision.size() << std::endl;
+
+	//Calculate collisions : Narrow Phase
+	//std::vector<CollisionData*> collisionsData;
+
+	narrowCollisionDetector.DetectCollisions(potentialCollision, rigidbodiesContact);
+
+	//Collision Resolution
+	if(rigidbodiesContact.size() > 0) {
+		rigidbodyContactResolver.SetIterationNumber(rigidbodiesContact.size() * 2);
+		//rigidbodyContactResolver.ResolveContacts(rigidbodiesContact, frameTime);
+	}
+
+
+	//clean memory (delete every collisionData)
 }
 
 void MathPhysicsEngine::Shutdown()

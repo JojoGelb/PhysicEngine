@@ -13,7 +13,3 @@ struct CollisionData
     /** Holds the maximum number of contacts the array can take. */
     unsigned contactsLeft;
 };
-
-void detectContacts(const CollisionPrimitive &firstPrimitive,
-const CollisionPrimitive &secondPrimitive,
-CollisionData *data);

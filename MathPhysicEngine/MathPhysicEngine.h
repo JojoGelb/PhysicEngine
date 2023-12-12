@@ -15,6 +15,7 @@
 #include "RigidbodyTest/RigidBodyContact.h"
 #include "BroadPhase/Grid.h"
 #include "NarrowPhase/NarrowCollisionDetector.h"
+#include "RigidbodyCollisionResolution/RigidbodyContactResolver.h"
 
 class MathPhysicsEngine {
 
@@ -48,7 +49,6 @@ public:
 
 	
 	unsigned GenerateParticleContacts();
-	unsigned GenerateRigidBodyContacts();
 
 
 	ParticleForceRegistry* GetParticleForceRegistry();
@@ -74,12 +74,12 @@ private:
 
 	//Particle Contacts
 	ParticleContactResolver particleContactResolver;
-
 	std::vector<ParticleContactGenerator*> contactGenerators; 
-
 	std::vector<ParticleContact*> particlesContact; 
 
-	std::vector<RigidBodyContact*> rigidbodyContact;
+	//Rigidbody Contacts
+	RigidbodyContactResolver rigidbodyContactResolver;
+	std::vector<RigidBodyContact*> rigidbodiesContact;
 
 	//RigidBody forces
 	RigidBodyForceRegistry* rigidBodyForceRegistry;

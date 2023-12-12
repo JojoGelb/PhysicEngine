@@ -458,8 +458,8 @@ void ImGuiEngine::ShowEngineImGui()
     ImGui::End();
 
     //TestIteration2();
-    TestIteration3();
-    //TestIteration4();
+    //TestIteration3();
+    TestIteration4();
     //TesGraphicMotor();
 }
 
@@ -535,6 +535,12 @@ void ImGuiEngine::TestIteration4()
         math->GetRigidBodyForceRegistry()->AddForce(rigidbody, rigidBodyGravity);
         go->AddComponent(rigidbody);
 
+        Box* box = new Box(1.0f);
+        box->rigidBody = rigidbody;
+        box->UpdateTransformMatrix();
+
+        rigidbody->collisionPrimitive = box;
+
         VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
         go->AddComponent(v);
         gameObjects->push_back(go);
@@ -551,7 +557,83 @@ void ImGuiEngine::TestIteration4()
         math->GetRigidBodyForceRegistry()->AddForce(rigidbody, rigidBodyGravity);
         go->AddComponent(rigidbody);
 
+        Sphere *s = new Sphere(1.0f);
+        s->rigidBody = rigidbody;
+        s->UpdateTransformMatrix();
+
+        rigidbody->collisionPrimitive = s;
+
         v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
+        go->AddComponent(v);
+        gameObjects->push_back(go);
+    }
+
+    static float positionTestCollision1[3] = { 0.0f, 0.0f, 0.0f };
+    ImGui::InputFloat3("position 1", positionTestCollision1);
+
+    static float positionTestCollision2[3] = { 3.0f, 0.0f, 0.0f };
+    ImGui::InputFloat3("position 2", positionTestCollision2);
+
+    if (ImGui::Button("Test collision"))
+    {
+
+        for (int i = 0; i < gameObjects->size(); i++)
+            gameObjects->at(i)->shouldDelete = true;
+
+        MathPhysicsEngine* math = MathPhysicsEngine::GetInstance();
+        GameObject* go = new GameObject("rigidBody1");
+        go->transform.position = Vector3D(positionTestCollision1[0], positionTestCollision1[1], positionTestCollision1[2]);
+        go->transform.rotation = Vector3D(0.0f, 0.0f, 0.0f);
+
+        RigidBody* rigidbody = new RigidBody(
+            modeleInertiaTensor,
+            Vector3D(0, 0, 0),
+            Vector3D(0.0f, 0.0f, 0.0f),
+            { 1, 0, 0, 0 });
+
+        rigidbody->SetGravityScale(0.0f);
+        //RigidBodyGravity* rigidBodyGravity = new RigidBodyGravity({ 0.0f, -10.0f, 0.0f });
+       // math->GetRigidBodyForceRegistry()->AddForce(rigidbody, rigidBodyGravity);
+
+
+        Sphere* box = new Sphere(1.0f);
+        box->rigidBody = rigidbody;
+        box->UpdateTransformMatrix();
+
+        rigidbody->collisionPrimitive = box;
+
+        go->AddComponent(rigidbody);
+
+        VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject("Models/sphere.obj");
+        go->AddComponent(v);
+        gameObjects->push_back(go);
+
+
+        //SPHERE COLLISION SHAPE
+
+        go = new GameObject("rigidBody2");
+        go->transform.position = Vector3D(positionTestCollision2[0], positionTestCollision2[1], positionTestCollision2[2]);
+        go->transform.rotation = Vector3D(0.0f, 0.0f, 0.0f);
+
+        rigidbody = new RigidBody(
+            modeleInertiaTensor,
+            Vector3D(0, 0, 0),
+            Vector3D(0.0f, 0.0f, 0.0f),
+            { 1, 0, 0, 0 });
+
+        rigidbody->SetGravityScale(0.0f);
+        //RigidBodyGravity* rigidBodyGravity = new RigidBodyGravity({ 0.0f, -10.0f, 0.0f });
+       // math->GetRigidBodyForceRegistry()->AddForce(rigidbody, rigidBodyGravity);
+
+        Sphere* sphere = new Sphere(1.0f);
+        sphere->rigidBody = rigidbody;
+        sphere->UpdateTransformMatrix();
+
+        rigidbody->collisionPrimitive = sphere;
+
+        go->AddComponent(rigidbody);
+
+        v = VisualGameObject::CreatePtrVisualGameObject("Models/sphere.obj");
         go->AddComponent(v);
         gameObjects->push_back(go);
     }
@@ -898,88 +980,7 @@ void ImGuiEngine::TestIteration3()
 
     }
     
-    //ImGui::TreePop();
-
-    if (ImGui::TreeNode("Collisions")) {
-
-        static float positionTestCollision1[3] = { 0.0f, 0.0f, 0.0f };
-        ImGui::InputFloat3("position 1", positionTestCollision1);
-
-        static float positionTestCollision2[3] = { 3.0f, 0.0f, 0.0f };
-        ImGui::InputFloat3("position 2", positionTestCollision2);
-
-        if (ImGui::Button("Test collision"))
-        {
-            for (int i = 0; i < gameObjects->size(); i++)
-                gameObjects->at(i)->shouldDelete = true;
-            // gameObjects->clear();
-
-            MathPhysicsEngine* math = MathPhysicsEngine::GetInstance();
-            GameObject* go = new GameObject("rigidBody1");
-            go->transform.position = Vector3D(positionTestCollision1[0], positionTestCollision1[1], positionTestCollision1[2]);
-            go->transform.rotation = Vector3D(0.0f, 0.0f, 0.0f);
-
-            RigidBody* rigidbody = new RigidBody(
-                modeleInertiaTensor,
-                Vector3D(0, 0, 0),
-                Vector3D(0.0f, 0.0f, 0.0f),
-                { 1, 0, 0, 0 });
-
-            rigidbody->SetGravityScale(0.0f);
-            //RigidBodyGravity* rigidBodyGravity = new RigidBodyGravity({ 0.0f, -10.0f, 0.0f });
-           // math->GetRigidBodyForceRegistry()->AddForce(rigidbody, rigidBodyGravity);
-
-
-            Box *box = new Box(1.0f);
-            box->rigidBody = rigidbody;
-            box->UpdateTransformMatrix();
-
-            rigidbody->collisionPrimitive = box;
-
-            go->AddComponent(rigidbody);
-
-            VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
-            go->AddComponent(v);
-            gameObjects->push_back(go);
-
-
-            //SPHERE COLLISION SHAPE
-
-            go = new GameObject("rigidBody2");
-            go->transform.position = Vector3D(positionTestCollision2[0], positionTestCollision2[1], positionTestCollision2[2]);
-            go->transform.rotation = Vector3D(0.0f, 0.0f, 0.0f);
-
-            rigidbody = new RigidBody(
-                modeleInertiaTensor,
-                Vector3D(0, 0, 0),
-                Vector3D(0.0f, 0.0f, 0.0f),
-                { 1, 0, 0, 0 });
-
-            rigidbody->SetGravityScale(0.0f);
-            //RigidBodyGravity* rigidBodyGravity = new RigidBodyGravity({ 0.0f, -10.0f, 0.0f });
-           // math->GetRigidBodyForceRegistry()->AddForce(rigidbody, rigidBodyGravity);
-
-
-            Sphere* sphere = new Sphere(1.2f);
-            sphere->rigidBody = rigidbody;
-            sphere->UpdateTransformMatrix();
-
-            rigidbody->collisionPrimitive = sphere;
-
-            go->AddComponent(rigidbody);
-
-            v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
-            go->AddComponent(v);
-            gameObjects->push_back(go);
-
-        }
-
-        ImGui::TreePop();
-    }
-
-   
-
-    //ImGui::TreePop();
+    ImGui::TreePop();
 
     ImGui::End();
 }
@@ -1219,6 +1220,7 @@ void ImGuiEngine::TestIteration2()
 
     if (ImGui::TreeNode("Collisions"))
     {
+
         if (ImGui::Button("Test collision"))
         {
 

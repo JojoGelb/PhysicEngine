@@ -6,13 +6,9 @@
 class Box;
 
 unsigned NarrowCollisionDetector::SphereAndSphere(const Sphere& sphere1, const Sphere& sphere2,
-                                                  CollisionData* collisionData) const
+                                                  RigidBodyContact* rigidbodyContact) const
 {
-    //Verify if we have contacts
-    if(collisionData->contactsLeft <= 0)
-        return 0;
-
-
+    
     //Get the position of the spheres
     const Vector3D position1 = sphere1.GetPosition();
     const Vector3D position2 = sphere2.GetPosition();
@@ -31,20 +27,20 @@ unsigned NarrowCollisionDetector::SphereAndSphere(const Sphere& sphere1, const S
     const Vector3D normal = midline * (1.0f / distance);
 
     //Create the contact
-    RigidBodyContact* contact = collisionData->contacts;
-    contact->contactNormal = normal;
-    contact->contactPoint = position1 + midline * 0.5f;
-    contact->penetration = sphere1.radius + sphere2.radius - distance;
-    contact->rigidbody[0] = sphere1.rigidBody;
-    contact->rigidbody[1] = sphere2.rigidBody;
-    contact->restitution = 0.0f; //TODO use true restitution
+    //RigidBodyContact* contact = collisionData->contacts;
+    rigidbodyContact->contactNormal = normal;
+    rigidbodyContact->contactPoint = position1 + midline * 0.5f;
+    rigidbodyContact->penetration = sphere1.radius + sphere2.radius - distance;
+    rigidbodyContact->rigidbody[0] = sphere1.rigidBody;
+    rigidbodyContact->rigidbody[1] = sphere2.rigidBody;
+    rigidbodyContact->restitution = 0.0f; //TODO use true restitution
     //TODO add friction
 
     return 1;
 }
 
 unsigned NarrowCollisionDetector::SphereAndBox(const Sphere& sphere, const Box& box,
-    CollisionData* collisionData) const
+    RigidBodyContact* rigidbodyContact) const
 {
     // Transform the center of the sphere into box coordinates
     Vector3D center = sphere.GetPosition();
@@ -82,15 +78,15 @@ unsigned NarrowCollisionDetector::SphereAndBox(const Sphere& sphere, const Box& 
     Vector3D closestPtWorld = box.transform->TransformPosition(closestPt);
 
 
-    RigidBodyContact* contact = collisionData->contacts;
-    contact->contactNormal = (center - closestPtWorld);
-    contact->contactNormal.Normalize();
-    contact->contactPoint = closestPtWorld;
-    contact->penetration = sphere.radius - sqrt(dist);
+    //RigidBodyContact* contact = collisionData->contacts;
+    rigidbodyContact->contactNormal = (center - closestPtWorld);
+    rigidbodyContact->contactNormal.Normalize();
+    rigidbodyContact->contactPoint = closestPtWorld;
+    rigidbodyContact->penetration = sphere.radius - sqrt(dist);
     // Write the appropriate data.
-    contact->rigidbody[0] = box.rigidBody;
-    contact->rigidbody[1] = sphere.rigidBody;
-    contact->restitution = 0.0f;//TODO use true restitution
+    rigidbodyContact->rigidbody[0] = box.rigidBody;
+    rigidbodyContact->rigidbody[1] = sphere.rigidBody;
+    rigidbodyContact->restitution = 0.0f;//TODO use true restitution
     //TODO add friction
 
     return 1;
@@ -115,53 +111,61 @@ const Vector3D &axis
 }
 
 void NarrowCollisionDetector::DetectCollisions(const std::vector<PotentialCollision>& potentialCollisions,
-    CollisionData* collisionData) const
+    std::vector<RigidBodyContact*>& rigidbodiesContact) const
 {
     //if sphere && sphere
     //do sphere && box detection
 
+    rigidbodiesContact.clear();
+
     if (potentialCollisions.size() > 0)
     {
-		//Verify collisions and create contacts lists
-		//CollisionData* collisionData = new CollisionData();
+		
+
         for (PotentialCollision potentialCollision : potentialCollisions)
         {
+            //Verify collisions and create contacts lists
+            RigidBodyContact* rigidbodyContact =new RigidBodyContact();
+
 			//if sphere && sphere
             if (potentialCollision.rigidBodies[0]->collisionPrimitive->shape == CollisionShape::SPHERE &&
                 potentialCollision.rigidBodies[1]->collisionPrimitive->shape == CollisionShape::SPHERE)
             {
-                std::cout << "Sphere and Sphere" << std::endl;
+                //std::cout << "Sphere and Sphere" << std::endl;
 				//do sphere && sphere detection
 				auto i = SphereAndSphere(*((Sphere*)potentialCollision.rigidBodies[0]->collisionPrimitive),
-                    *((Sphere*)potentialCollision.rigidBodies[1]->collisionPrimitive), collisionData);
-                std::cout << i << std::endl;
+                    *((Sphere*)potentialCollision.rigidBodies[1]->collisionPrimitive), rigidbodyContact);
+                //std::cout << i << std::endl;
 			}
 			//if sphere && box
             else if (potentialCollision.rigidBodies[0]->collisionPrimitive->shape == CollisionShape::SPHERE &&
                 potentialCollision.rigidBodies[1]->collisionPrimitive->shape == CollisionShape::BOX)
             {
-                std::cout << "Sphere and Box" << std::endl;
+                //std::cout << "Sphere and Box" << std::endl;
 				//do sphere && box detection
                 auto i = SphereAndBox(*((Sphere*)potentialCollision.rigidBodies[0]->collisionPrimitive),
-                    					*((Box*)potentialCollision.rigidBodies[1]->collisionPrimitive), collisionData);
-				std::cout << i << std::endl;
+                    					*((Box*)potentialCollision.rigidBodies[1]->collisionPrimitive), rigidbodyContact);
+				//std::cout << i << std::endl;
             }
             //if box && sphere
             else if (potentialCollision.rigidBodies[0]->collisionPrimitive->shape == CollisionShape::BOX &&
                 potentialCollision.rigidBodies[1]->collisionPrimitive->shape == CollisionShape::SPHERE)
             {
-                std::cout << "Box and Sphere" << std::endl;
+                //std::cout << "Box and Sphere" << std::endl;
 				//do sphere && box detection
                 auto i = SphereAndBox(*((Sphere*)potentialCollision.rigidBodies[1]->collisionPrimitive),
-                    										*((Box*)potentialCollision.rigidBodies[0]->collisionPrimitive), collisionData);
+                    										*((Box*)potentialCollision.rigidBodies[0]->collisionPrimitive), rigidbodyContact);
 			
-                std::cout << i << std::endl;
-
+               // std::cout << i << std::endl;
             }
 			
+            rigidbodiesContact.push_back(rigidbodyContact);
  
 		}
+       
 	}
+
+   
     
     //if sphere && box
     //do sphere && box detection
