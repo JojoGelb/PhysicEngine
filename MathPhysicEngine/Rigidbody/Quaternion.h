@@ -23,6 +23,15 @@ public:
 	// Rotate the quaternion by a vector - multiply this by q = (0, dx, dy, dz)
 	void RotateByVector(const Vector3D& vector);
 
+	Quaternion Inverse(const Quaternion& q) {
+		Quaternion qInverse = q;
+		qInverse.value[1] *= -1;
+		qInverse.value[2] *= -1;
+		qInverse.value[3] *= -1;
+		return qInverse;
+	
+	}
+
 	// Apply the quaternion update by the angular velocity
 	void UpdateByAngularVelocity(const Vector3D& rotation, double duration);
 

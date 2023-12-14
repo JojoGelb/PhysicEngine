@@ -35,7 +35,7 @@ private:
 
 	Vector3D linearAcceleration;
 
-	Quaternion orientation;
+
 	Matrix33 inverseInertiaTensor;
 	Matrix33 inverseInertiaTensorWorld;
 	
@@ -64,6 +64,7 @@ public:
 	RigidBodyState finalState;
 	
 	Vector3D angularVelocity;
+	Quaternion orientation;
 
 	Matrix34 transformMatrix;
 

@@ -19,6 +19,8 @@ public:
 	Vector3D operator/=(double scalar);
 	Vector3D& operator=(const Vector3D& other);
 
+	Vector3D operator%(const Vector3D& other) const;
+
 	bool operator==(const Vector3D& other) const;
 
 	//Hash function

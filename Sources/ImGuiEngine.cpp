@@ -610,7 +610,7 @@ void ImGuiEngine::TestIteration4()
             Vector3D(0, 0, 0),
             Vector3D(0.0f, 0.0f, 0.0f),
             { 1, 0, 0, 0 });
-        rigidbody->angularVelocity = Vector3D(0, 0, 10.0f);
+        rigidbody->angularVelocity = Vector3D(0, 0, 1.0f);
         RigidBodyGravity* rigidBodyGravity = new RigidBodyGravity({ 0.0f, -10.0f, 0.0f });
         math->GetRigidBodyForceRegistry()->AddForce(rigidbody, rigidBodyGravity);
         go->AddComponent(rigidbody);

@@ -33,7 +33,7 @@ unsigned NarrowCollisionDetector::SphereAndSphere(const Sphere& sphere1, const S
     rigidbodyContact->penetration = sphere1.radius + sphere2.radius - distance;
     rigidbodyContact->rigidbody[0] = sphere1.rigidBody;
     rigidbodyContact->rigidbody[1] = sphere2.rigidBody;
-    rigidbodyContact->restitution = 1.0f; //TODO use true restitution
+    rigidbodyContact->restitution = 0.9f; //TODO use true restitution
     //TODO add friction
 
     return 1;

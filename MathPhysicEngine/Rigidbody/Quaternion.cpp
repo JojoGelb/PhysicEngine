@@ -68,8 +68,9 @@ void Quaternion::operator*=(const Quaternion& other) {
 
 void Quaternion::RotateByVector(const Vector3D& vector)
 {
-	Quaternion q(0, vector.x, vector.y,vector.z);
-	(*this) = *this * q;
+	Quaternion q(1, vector.x, vector.y,vector.z);
+	
+	(*this) *= q;
 
 }
 
