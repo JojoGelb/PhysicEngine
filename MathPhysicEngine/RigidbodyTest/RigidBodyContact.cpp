@@ -103,11 +103,11 @@ void RigidBodyContact::ResolveInterpenetration()
 			Vector3D rotationPerMove = impulsePerMove;
 			if (angularInertia[i] != 0) {
 				rotationPerMove = impulsePerMove * 1 / angularInertia[i];
-				std::cout << "rotationpermove done \n";
+				//std::cout << "rotationpermove done \n";
 			} 
 			Vector3D rotation = rotationPerMove * angularMove[i];
 
-			std::cout << "Rotate amount : " << rotation << "\n";
+			//std::cout << "Rotate amount : " << rotation << "\n";
 
 			rigidbody[i]->orientation.RotateByVector(rotation);
 		}

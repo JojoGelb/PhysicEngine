@@ -54,6 +54,8 @@ public:
 	ParticleForceRegistry* GetParticleForceRegistry();
 	RigidBodyForceRegistry* GetRigidBodyForceRegistry();
 
+	bool pause = false;
+
 private:
 
 	void UpdateParticles(double frameTime, double t);

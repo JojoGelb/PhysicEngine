@@ -90,6 +90,7 @@ void MathPhysicsEngine::Init()
 
 void MathPhysicsEngine::Update(double t,double frameTime)
 {
+	if (pause) return;
 	UpdateParticles(frameTime, t);
 	
 	UpdateRigidBodies(frameTime, t);
@@ -164,6 +165,7 @@ void MathPhysicsEngine::Shutdown()
 
 void MathPhysicsEngine::SetFinalStates(const double alpha)
 {
+	if (pause) return;
 	for (Particle* p : particles) {
 		p->finalState = p->currentState * alpha + p->previousState * (1.0 - alpha);
 		p->transform->position = p->finalState.position;

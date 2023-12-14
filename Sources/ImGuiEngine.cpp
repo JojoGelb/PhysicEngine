@@ -233,6 +233,10 @@ void ImGuiEngine::ShowEngineImGui()
 
     ImGui::Begin("Objects List");
 
+    if (ImGui::Button("Pause/Restart Physics motor")) {
+        MathPhysicsEngine::GetInstance()->pause = !MathPhysicsEngine::GetInstance()->pause;
+    }
+
     ImGui::Text("famerate : %.5f", framerate);
 
     static std::vector<Vector3D> force(200);
