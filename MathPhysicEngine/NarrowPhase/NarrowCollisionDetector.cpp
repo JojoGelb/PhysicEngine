@@ -92,6 +92,14 @@ unsigned NarrowCollisionDetector::SphereAndBox(const Sphere& sphere, const Box& 
     return 1;
 }
 
+unsigned NarrowCollisionDetector::BoxAndBox(const Box& sphere1, const Sphere& sphere2,
+    RigidBodyContact* rigidbodyContact) const {
+
+    return 0;
+}
+
+
+
 
 bool NarrowCollisionDetector::OverlapOnAxis(
 const Box &one,
@@ -103,7 +111,7 @@ const Vector3D &axis
     double oneProject = one.TransformToAxis(axis);
     double twoProject = two.TransformToAxis(axis);
     // Find the vector between the two centers.
-    Vector3D toCenter = two.GetPosition().z - one.GetPosition().z;
+    Vector3D toCenter = two.GetPosition() - one.GetPosition();
     // Project this onto the axis.
     double distance = abs(toCenter.DotProduct(axis));
     // Check for overlap.
@@ -131,32 +139,24 @@ void NarrowCollisionDetector::DetectCollisions(const std::vector<PotentialCollis
             if (potentialCollision.rigidBodies[0]->collisionPrimitive->shape == CollisionShape::SPHERE &&
                 potentialCollision.rigidBodies[1]->collisionPrimitive->shape == CollisionShape::SPHERE)
             {
-                //std::cout << "Sphere and Sphere" << std::endl;
-				//do sphere && sphere detection
 				auto i = SphereAndSphere(*((Sphere*)potentialCollision.rigidBodies[0]->collisionPrimitive),
                     *((Sphere*)potentialCollision.rigidBodies[1]->collisionPrimitive), rigidbodyContact);
-                //std::cout << i << std::endl;
 			}
 			//if sphere && box
             else if (potentialCollision.rigidBodies[0]->collisionPrimitive->shape == CollisionShape::SPHERE &&
                 potentialCollision.rigidBodies[1]->collisionPrimitive->shape == CollisionShape::BOX)
             {
-                //std::cout << "Sphere and Box" << std::endl;
 				//do sphere && box detection
                 auto i = SphereAndBox(*((Sphere*)potentialCollision.rigidBodies[0]->collisionPrimitive),
                     					*((Box*)potentialCollision.rigidBodies[1]->collisionPrimitive), rigidbodyContact);
-				//std::cout << i << std::endl;
             }
             //if box && sphere
             else if (potentialCollision.rigidBodies[0]->collisionPrimitive->shape == CollisionShape::BOX &&
                 potentialCollision.rigidBodies[1]->collisionPrimitive->shape == CollisionShape::SPHERE)
             {
-                //std::cout << "Box and Sphere" << std::endl;
 				//do sphere && box detection
                 auto i = SphereAndBox(*((Sphere*)potentialCollision.rigidBodies[1]->collisionPrimitive),
                     										*((Box*)potentialCollision.rigidBodies[0]->collisionPrimitive), rigidbodyContact);
-			
-               // std::cout << i << std::endl;
             }
 
             if (rigidbodyContact->rigidbody[0] == nullptr) {
