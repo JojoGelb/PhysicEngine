@@ -12,6 +12,7 @@ GameObject::GameObject(std::string _name, Transform _transform): name(_name), tr
 GameObject::~GameObject()
 {
 	for (Component* comp : components) {
+		comp->gameObject = nullptr;
 		comp->Shutdown();
 		delete comp;
 	}

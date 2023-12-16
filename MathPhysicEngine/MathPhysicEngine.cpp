@@ -129,7 +129,8 @@ void MathPhysicsEngine::UpdateRigidBodies(double frameTime, double t)
 	}
 
 	//Calculate potential collisions : Broad Phase
-	std::vector<PotentialCollision> potentialCollision = grid.GetPotentialCollisions(rigidBodies);
+	potentialCollision.clear();
+	potentialCollision = grid.GetPotentialCollisions(rigidBodies);
 
 	if(potentialCollision.size() <= 0) {
 		return;

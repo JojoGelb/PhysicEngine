@@ -164,6 +164,7 @@ void NarrowCollisionDetector::DetectCollisions(const std::vector<PotentialCollis
                 continue;
             }
 			
+            rigidbodyContact->restitution = RigidBody::contactRestitution;
             rigidbodiesContact.push_back(rigidbodyContact);
  
 		}
