@@ -1,9 +1,11 @@
 #include "RigidbodyContactResolver.h"
+#include "../Sources/GameObject.h"
 #include <limits>
 #include <iostream>
 void RigidbodyContactResolver::ResolveContacts(std::vector<RigidBodyContact*>& contactArray, float frameTime)
 {
 	unsigned int iterationUsed = 0;
+	//std::cout << "Resolve contacts ===============\n";
 	while (iterationUsed < iteration) {
 
 		float min = 0;
@@ -25,6 +27,7 @@ void RigidbodyContactResolver::ResolveContacts(std::vector<RigidBodyContact*>& c
 		//nothing left to be done: smallest separating velocity > 0
 		if (maxIndex == contactArray.size()) break;
 
+		std::cout << "---\nResolve contact: " << contactArray.at(maxIndex)->rigidbody[0]->gameObject->GetName() << " - " << contactArray.at(maxIndex)->rigidbody[1]->gameObject->GetName() << std::endl;
 		contactArray.at(maxIndex)->Resolve(frameTime);
 
 		iterationUsed++;

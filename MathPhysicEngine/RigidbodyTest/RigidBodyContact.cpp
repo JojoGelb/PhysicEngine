@@ -4,7 +4,7 @@ void RigidBodyContact::Resolve(float duration)
 {
 	ResolveVelocity(duration);
 
-	ResolveInterpenetration();
+	//ResolveInterpenetration();
 }
 
 float RigidBodyContact::CalculateSeparatingVelocity()

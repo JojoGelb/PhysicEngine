@@ -1,6 +1,7 @@
 #include "MathPhysicEngine.h"
 #include <iostream>
 #include "Collisions/NaiveParticleContactGenerator.h"
+#include "../Sources/GameObject.h"
 
 
 MathPhysicsEngine::MathPhysicsEngine() : grid(2.9f)
@@ -145,6 +146,16 @@ void MathPhysicsEngine::UpdateRigidBodies(double frameTime, double t)
 
 	//TODO: Clean out precedent rbContacts array values before adding new ones
 	narrowCollisionDetector.DetectCollisions(potentialCollision, rigidbodiesContact);
+
+	if (rigidbodiesContact.size() > 0) {
+
+		std::cout << "*******************new rigidbody update run *******************\n";
+
+		for (int i = 0; i < rigidbodiesContact.size(); i++) {
+			std::cout << rigidbodiesContact.at(i)->rigidbody[0]->gameObject->GetName() << " - " << rigidbodiesContact.at(i)->rigidbody[1]->gameObject->GetName() << "\n";
+		}
+		pause = true;
+	}
 
 	//Collision Resolution
 	if(rigidbodiesContact.size() > 0) {

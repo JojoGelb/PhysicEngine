@@ -813,9 +813,9 @@ void ImGuiEngine::TestIteration4()
         gameObjects->push_back(go);
     }
     
-    if(ImGui::Button("Test collision on static no bouncing, side fall")) {
+    if(ImGui::Button("Test collision on static less bouncing, side fall")) {
 
-        RigidBody::contactRestitution = 0.1f;
+        RigidBody::contactRestitution = 1.0f;
 
         for (int i = 0; i < gameObjects->size(); i++)
             gameObjects->at(i)->SetShouldDelete();
@@ -840,8 +840,8 @@ void ImGuiEngine::TestIteration4()
         );
         go->AddComponent(rigidbody);
 
-        //CollisionPrimitive* collisionPrimitive = new Box(Vector3D(1.0f, 1.0f, 1.0f));
-        CollisionPrimitive* collisionPrimitive = new Sphere(1.0f);
+        CollisionPrimitive* collisionPrimitive = new Box(Vector3D(1.0f, 1.0f, 1.0f));
+        //CollisionPrimitive* collisionPrimitive = new Sphere(1.0f);
         collisionPrimitive->rigidBody = rigidbody;
         collisionPrimitive->UpdateTransformMatrix();
 
@@ -852,7 +852,7 @@ void ImGuiEngine::TestIteration4()
         gameObjects->push_back(go);
 
         go = new GameObject("rigidBody 2");
-        go->transform.position = Vector3D(1, 10, 20);
+        go->transform.position = Vector3D(1.2f, 10, 20);
 
         rigidbody = new RigidBody(
             modeleInertiaTensor,
@@ -863,8 +863,8 @@ void ImGuiEngine::TestIteration4()
         math->GetRigidBodyForceRegistry()->AddForce(rigidbody, rigidBodyGravity);
         go->AddComponent(rigidbody);
 
-        //collisionPrimitive = new Box(Vector3D(1.0f, 1.0f, 1.0f));
-        collisionPrimitive = new Sphere(1.0f);
+        collisionPrimitive = new Box(Vector3D(1.0f, 1.0f, 1.0f));
+        //collisionPrimitive = new Sphere(1.0f);
         collisionPrimitive->rigidBody = rigidbody;
         collisionPrimitive->UpdateTransformMatrix();
 
@@ -950,7 +950,7 @@ void ImGuiEngine::TestIteration4()
     {
 
         for (int i = 0; i < gameObjects->size(); i++)
-            gameObjects->at(i)->shouldDelete = true;
+            gameObjects->at(i)->SetShouldDelete();
 
         MathPhysicsEngine* math = MathPhysicsEngine::GetInstance();
         GameObject* go = new GameObject("rigidBody1");
@@ -1014,7 +1014,7 @@ void ImGuiEngine::TestIteration4()
     {
 
         for (int i = 0; i < gameObjects->size(); i++)
-            gameObjects->at(i)->shouldDelete = true;
+            gameObjects->at(i)->SetShouldDelete();
 
         MathPhysicsEngine* math = MathPhysicsEngine::GetInstance();
         GameObject* go = new GameObject("rigidBody1");
