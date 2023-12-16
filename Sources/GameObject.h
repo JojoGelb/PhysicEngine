@@ -26,11 +26,15 @@ public:
 
 	const std::string & GetName() const { return name; }
 
-	bool shouldDelete = false;
-
 	Transform transform;
 
+	bool IsShouldDelete() { return shouldDelete; }
+	void SetShouldDelete() { shouldDelete = true; for (Component* comp : components) comp->gameObject = nullptr;}
+
 private:
+
+	bool shouldDelete = false;
+
 	std::string name;
 
 	std::vector<Component*> components;

@@ -70,6 +70,8 @@ public:
 
 	Bounding* boundingVolume;
 
+	static double contactRestitution;
+
 	RigidBody(const std::string _inertiaTensorSelection = "cuboid", const Vector3D& _velocity = { 0.0f }, const Vector3D& _linearAcceleration = { 0.0f }, const Quaternion& _orientation = { 1.0f,0.0f,0.0f,0.0f }, const Matrix33& _inverseInertiaTensor = { 0.0f }, float _linearDamping = 0.999f, float _gravity = 1.0f, float _inversedMass = 1.0f, float _angularDamping = 0.999f, Bounding* _boundingVolume = nullptr);
 	~RigidBody();
 

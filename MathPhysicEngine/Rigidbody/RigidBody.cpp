@@ -2,6 +2,8 @@
 #include "../MathPhysicEngine.h"
 #include "../BroadPhase/BoundingSphere.h"
 
+double RigidBody::contactRestitution = 1.0f;
+
 RigidBodyState::RigidBodyState()
 {
 	

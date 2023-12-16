@@ -518,12 +518,180 @@ void ImGuiEngine::TestIteration4()
     ImGui::Begin("Phase 4 Test RIGIDBODY panel");
     ImGui::SetNextItemOpen(true, ImGuiCond_Once);
 
-    if (ImGui::Button("Test Gravity"))
-    {
+    //if (ImGui::Button("Test Broad phase"))
 
+    static bool isBox = false;
+    static bool isSphere = true;
+     
+    ImGui::Checkbox("Set Box", &isBox);
+    ImGui::Checkbox("Set Sphere", &isSphere);
+
+    if (ImGui::TreeNode("Broad Phase"))
+    {
+        ImGui::Text("Potential collisions number:  %d", MathPhysicsEngine::GetInstance()->potentialCollision.size());
+        
+        if(ImGui::Button("Test Broad Phase 1: no touching")) {
+            modelePath = "Models/colored_cube.obj";
+            modeleInertiaTensor = "cuboid";
+
+            for (int i = 0; i < gameObjects->size(); i++)
+                gameObjects->at(i)->SetShouldDelete();
+
+            MathPhysicsEngine* math = MathPhysicsEngine::GetInstance();
+
+            for(int x = -1; x<2; x++ ) {
+                for(int y = -1; y<2; y++) {
+                    GameObject* go = new GameObject("rigidBody x:" + std::to_string(x) + " y:" + std::to_string(y));
+                    go->transform.position = Vector3D(1.45 + 2.9 * x,  1.45 + 2.9 * y, 20);
+                    RigidBody* rigidbody = new RigidBody(
+                        modeleInertiaTensor,
+                        Vector3D(0, 0, 0),
+                        Vector3D(0.0f, 0.0f, 0.0f),
+                        { 1, 0, 0, 0 },
+                        Matrix33(0.0f),
+                        0.0001f, //damping
+                        0.f //gravity
+                    );
+                    go->AddComponent(rigidbody);
+                    VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
+                    go->AddComponent(v);
+                    CollisionPrimitive* collisionPrimitive = new Sphere(1.0f);
+                    collisionPrimitive->rigidBody = rigidbody;
+                    collisionPrimitive->UpdateTransformMatrix();
+
+                    rigidbody->collisionPrimitive = collisionPrimitive;
+                    gameObjects->push_back(go);
+                }
+            }
+        }
+
+        if(ImGui::Button("Test Broad Phase 2: no touching with rotation")) {
+            modelePath = "Models/colored_cube.obj";
+            modeleInertiaTensor = "cuboid";
+
+            for (int i = 0; i < gameObjects->size(); i++)
+                gameObjects->at(i)->SetShouldDelete();
+
+            for(int x = -1; x<2; x++ ) {
+                for(int y = -1; y<2; y++) {
+                    GameObject* go = new GameObject("rigidBody x:" + std::to_string(x) + " y:" + std::to_string(y));
+                    go->transform.position = Vector3D(1.45 + 2.9 * x,  1.45 + 2.9 * y, 20);
+                    RigidBody* rigidbody = new RigidBody(
+                        modeleInertiaTensor,
+                        Vector3D(0, 0, 0),
+                        Vector3D(0.0f, 0.0f, 0.0f),
+                        { 1, 0, 0, 0 },
+                        Matrix33(0.0f),
+                        0.0001f, //damping
+                        0.f //gravity
+                    );
+                    rigidbody->orientation = Quaternion(0.3826834, 0, 0, 0.9238795);
+                    go->AddComponent(rigidbody);
+                    VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
+                    go->AddComponent(v);
+                    CollisionPrimitive* collisionPrimitive = new Sphere(1.0f);
+                    collisionPrimitive->rigidBody = rigidbody;
+                    collisionPrimitive->UpdateTransformMatrix();
+
+                    rigidbody->collisionPrimitive = collisionPrimitive;
+                    gameObjects->push_back(go);
+                }
+            }
+        }
+
+        if(ImGui::Button("Test Broad Phase 2: touching: move on x axis")) {
+            modelePath = "Models/colored_cube.obj";
+            modeleInertiaTensor = "cuboid";
+
+            modelePath = "Models/colored_cube.obj";
+            modeleInertiaTensor = "cuboid";
+
+            for (int i = 0; i < gameObjects->size(); i++)
+                gameObjects->at(i)->SetShouldDelete();
+
+            for(int x = -1; x<2; x++ ) {
+                for(int y = -1; y<2; y++) {
+                    GameObject* go = new GameObject("rigidBody x:" + std::to_string(x) + " y:" + std::to_string(y));
+                    go->transform.position = Vector3D(2.9 * x, 1.45f + 2.9 * y, 20);
+                    RigidBody* rigidbody = new RigidBody(
+                        modeleInertiaTensor,
+                        Vector3D(0, 0, 0),
+                        Vector3D(0.0f, 0.0f, 0.0f),
+                        { 1, 0, 0, 0 },
+                        Matrix33(0.0f),
+                        0.0001f, //damping
+                        0.f //gravity
+                    );
+                    rigidbody->orientation = Quaternion(0.3826834, 0, 0, 0.9238795);
+                    go->AddComponent(rigidbody);
+                    VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
+                    go->AddComponent(v);
+                    CollisionPrimitive* collisionPrimitive = new Sphere(1.0f);
+                    collisionPrimitive->rigidBody = rigidbody;
+                    collisionPrimitive->UpdateTransformMatrix();
+
+                    rigidbody->collisionPrimitive = collisionPrimitive;
+
+                    gameObjects->push_back(go);
+                }
+            }
+        }
+
+        if(ImGui::Button("Test Broad Phase 2: touching: move on x & y axis")) {
+            modelePath = "Models/colored_cube.obj";
+            modeleInertiaTensor = "cuboid";
+
+            modelePath = "Models/colored_cube.obj";
+            modeleInertiaTensor = "cuboid";
+
+            for (int i = 0; i < gameObjects->size(); i++)
+                gameObjects->at(i)->SetShouldDelete();
+
+            for(int x = -1; x<2; x++ ) {
+                for(int y = -1; y<2; y++) {
+                    GameObject* go = new GameObject("rigidBody x:" + std::to_string(x) + " y:" + std::to_string(y));
+                    go->transform.position = Vector3D(2.9 * x, 2.9 * y, 20);
+                    RigidBody* rigidbody = new RigidBody(
+                        modeleInertiaTensor,
+                        Vector3D(0, 0, 0),
+                        Vector3D(0.0f, 0.0f, 0.0f),
+                        { 1, 0, 0, 0 },
+                        Matrix33(0.0f),
+                        0.0001f, //damping
+                        0.f //gravity
+                    );
+                    rigidbody->orientation = Quaternion(0.3826834, 0, 0, 0.9238795);
+                    go->AddComponent(rigidbody);
+                    VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
+                    go->AddComponent(v);
+                    CollisionPrimitive* collisionPrimitive = new Sphere(1.0f);
+                    collisionPrimitive->rigidBody = rigidbody;
+                    collisionPrimitive->UpdateTransformMatrix();
+
+                    rigidbody->collisionPrimitive = collisionPrimitive;
+
+                    gameObjects->push_back(go);
+                }
+            }
+        }
+
+        ImGui::TreePop();
+    }
+
+
+    if (ImGui::Button("Test Regular collision"))
+    {
+        RigidBody::contactRestitution = 1.0f;
         for (int i = 0; i < gameObjects->size(); i++)
-            gameObjects->at(i)->shouldDelete = true;
-        // gameObjects->clear();
+            gameObjects->at(i)->SetShouldDelete();
+
+        if(isBox) {
+            modelePath = "Models/colored_cube.obj";
+            modeleInertiaTensor = "cuboid";
+        } else if(isSphere) {
+            modelePath = "Models/sphere.obj";
+            modeleInertiaTensor = "sphere";
+        }
 
         MathPhysicsEngine* math = MathPhysicsEngine::GetInstance();
         GameObject* go = new GameObject("rigidBody");
@@ -539,12 +707,14 @@ void ImGuiEngine::TestIteration4()
         RigidBodyGravity* rigidBodyGravity = new RigidBodyGravity({ 0.0f, -10.0f, 0.0f });
         math->GetRigidBodyForceRegistry()->AddForce(rigidbody, rigidBodyGravity);
         go->AddComponent(rigidbody);
+        
+        CollisionPrimitive* collisionPrimitive;
+        if(isBox) collisionPrimitive = new Box(Vector3D(1.0f, 1.0f, 1.0f));
+        else collisionPrimitive = new Sphere(1.0f);
+        collisionPrimitive->rigidBody = rigidbody;
+        collisionPrimitive->UpdateTransformMatrix();
 
-        Sphere* box = new Sphere(1.0f);
-        box->rigidBody = rigidbody;
-        box->UpdateTransformMatrix();
-
-        rigidbody->collisionPrimitive = box;
+        rigidbody->collisionPrimitive = collisionPrimitive;
 
         VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
         go->AddComponent(v);
@@ -563,21 +733,31 @@ void ImGuiEngine::TestIteration4()
         math->GetRigidBodyForceRegistry()->AddForce(rigidbody, rigidBodyGravity);
         go->AddComponent(rigidbody);
 
-        Sphere *s = new Sphere(1.0f);
-        s->rigidBody = rigidbody;
-        s->UpdateTransformMatrix();
 
-        rigidbody->collisionPrimitive = s;
+        if(isBox) collisionPrimitive = new Box(Vector3D(1.0f, 1.0f, 1.0f));
+        else collisionPrimitive = new Sphere(1.0f);
+        collisionPrimitive->rigidBody = rigidbody;
+        collisionPrimitive->UpdateTransformMatrix();
+
+        rigidbody->collisionPrimitive = collisionPrimitive;
 
         v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
         go->AddComponent(v);
         gameObjects->push_back(go);
     }
 
-    
-    if(ImGui::Button("Test collision velocity")) {
+    if(ImGui::Button("Test collision on static element")) {
+        RigidBody::contactRestitution = 1.0f;
         for (int i = 0; i < gameObjects->size(); i++)
-            gameObjects->at(i)->shouldDelete = true;
+            gameObjects->at(i)->SetShouldDelete();
+
+        if(isBox) {
+            modelePath = "Models/colored_cube.obj";
+            modeleInertiaTensor = "cuboid";
+        } else if(isSphere) {
+            modelePath = "Models/sphere.obj";
+            modeleInertiaTensor = "sphere";
+        }
 
         MathPhysicsEngine* math = MathPhysicsEngine::GetInstance();
         GameObject* go = new GameObject("rigidBody");
@@ -596,11 +776,13 @@ void ImGuiEngine::TestIteration4()
         );
         go->AddComponent(rigidbody);
 
-        Sphere* sphere = new Sphere(1.0f);
-        sphere->rigidBody = rigidbody;
-        sphere->UpdateTransformMatrix();
+        CollisionPrimitive* collisionPrimitive;
+        if(isBox) collisionPrimitive = new Box(Vector3D(1.0f, 1.0f, 1.0f));
+        else collisionPrimitive = new Sphere(1.0f);
+        collisionPrimitive->rigidBody = rigidbody;
+        collisionPrimitive->UpdateTransformMatrix();
 
-        rigidbody->collisionPrimitive = sphere;
+        rigidbody->collisionPrimitive = collisionPrimitive;
 
         VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
         go->AddComponent(v);
@@ -619,16 +801,80 @@ void ImGuiEngine::TestIteration4()
         math->GetRigidBodyForceRegistry()->AddForce(rigidbody, rigidBodyGravity);
         go->AddComponent(rigidbody);
 
-        Sphere *s = new Sphere(1.0f);
-        s->rigidBody = rigidbody;
-        s->UpdateTransformMatrix();
+        if(isBox) collisionPrimitive = new Box(Vector3D(1.0f, 1.0f, 1.0f));
+        else collisionPrimitive = new Sphere(1.0f);
+        collisionPrimitive->rigidBody = rigidbody;
+        collisionPrimitive->UpdateTransformMatrix();
 
-        rigidbody->collisionPrimitive = s;
+        rigidbody->collisionPrimitive = collisionPrimitive;
 
         v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
         go->AddComponent(v);
         gameObjects->push_back(go);
     }
+    
+    if(ImGui::Button("Test collision on static no bouncing, side fall")) {
+
+        RigidBody::contactRestitution = 0.1f;
+
+        for (int i = 0; i < gameObjects->size(); i++)
+            gameObjects->at(i)->SetShouldDelete();
+
+        modelePath = "Models/colored_cube.obj";
+        modeleInertiaTensor = "cuboid";
+
+        MathPhysicsEngine* math = MathPhysicsEngine::GetInstance();
+        GameObject* go = new GameObject("rigidBody");
+        go->transform.position = Vector3D(0, 0, 20);
+
+        RigidBody* rigidbody = new RigidBody(
+            modeleInertiaTensor,
+            Vector3D(0, 0, 0),
+            Vector3D(0.0f, 0.0f, 0.0f),
+            { 1, 0, 0, 0 },
+            Matrix33(0.0f),
+            0.0001f, //damping
+            0.f, //gravity
+            0.0001f, //inversed mass
+            0.999f //angular damping
+        );
+        go->AddComponent(rigidbody);
+
+        //CollisionPrimitive* collisionPrimitive = new Box(Vector3D(1.0f, 1.0f, 1.0f));
+        CollisionPrimitive* collisionPrimitive = new Sphere(1.0f);
+        collisionPrimitive->rigidBody = rigidbody;
+        collisionPrimitive->UpdateTransformMatrix();
+
+        rigidbody->collisionPrimitive = collisionPrimitive;
+
+        VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
+        go->AddComponent(v);
+        gameObjects->push_back(go);
+
+        go = new GameObject("rigidBody 2");
+        go->transform.position = Vector3D(1, 10, 20);
+
+        rigidbody = new RigidBody(
+            modeleInertiaTensor,
+            Vector3D(0, 0, 0),
+            Vector3D(0.0f, 0.0f, 0.0f),
+            { 1, 0, 0, 0 });
+        RigidBodyGravity* rigidBodyGravity = new RigidBodyGravity({ 0.0f, -10.0f, 0.0f });
+        math->GetRigidBodyForceRegistry()->AddForce(rigidbody, rigidBodyGravity);
+        go->AddComponent(rigidbody);
+
+        //collisionPrimitive = new Box(Vector3D(1.0f, 1.0f, 1.0f));
+        collisionPrimitive = new Sphere(1.0f);
+        collisionPrimitive->rigidBody = rigidbody;
+        collisionPrimitive->UpdateTransformMatrix();
+
+        rigidbody->collisionPrimitive = collisionPrimitive;
+
+        v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
+        go->AddComponent(v);
+        gameObjects->push_back(go);
+    }
+    
     
     static float positionTestCollision1[3] = { 0.0f, 0.0f, 0.0f };
     ImGui::InputFloat3("position 1", positionTestCollision1);
@@ -636,11 +882,11 @@ void ImGuiEngine::TestIteration4()
     static float positionTestCollision2[3] = { 3.0f, 0.0f, 0.0f };
     ImGui::InputFloat3("position 2", positionTestCollision2);
 
-    if (ImGui::Button("Test collision spheres"))
+    if (ImGui::Button("Test potential collision"))
     {
 
         for (int i = 0; i < gameObjects->size(); i++)
-            gameObjects->at(i)->shouldDelete = true;
+            gameObjects->at(i)->SetShouldDelete();
 
         MathPhysicsEngine* math = MathPhysicsEngine::GetInstance();
         GameObject* go = new GameObject("rigidBody1");
@@ -851,7 +1097,7 @@ void ImGuiEngine::TestIteration3()
         {
 
             for (int i = 0; i < gameObjects->size(); i++)
-                gameObjects->at(i)->shouldDelete = true;
+                gameObjects->at(i)->SetShouldDelete();
             // gameObjects->clear();
 
             MathPhysicsEngine *math = MathPhysicsEngine::GetInstance();
@@ -877,7 +1123,7 @@ void ImGuiEngine::TestIteration3()
         {
 
             for (int i = 0; i < gameObjects->size(); i++)
-                gameObjects->at(i)->shouldDelete = true;
+                gameObjects->at(i)->SetShouldDelete();
 
             MathPhysicsEngine *math = MathPhysicsEngine::GetInstance();
             GameObject *go = new GameObject("damping rigidBody");
@@ -906,7 +1152,7 @@ void ImGuiEngine::TestIteration3()
         if (ImGui::Button("Test ROD?")) {
 
 
-            for (int i = 0; i < gameObjects->size(); i++) gameObjects->at(i)->shouldDelete = true;
+            for (int i = 0; i < gameObjects->size(); i++) gameObjects->at(i)->SetShouldDelete();
 
             GameObject* go = new GameObject("Heavy non gravity block");
             MathPhysicsEngine* math = MathPhysicsEngine::GetInstance();
@@ -952,7 +1198,7 @@ void ImGuiEngine::TestIteration3()
         static int cable = 2;
         ImGui::InputInt("Cable Numbers", &cable);
         if (ImGui::Button("Test Cable?")) {
-            for (int i = 0; i < gameObjects->size(); i++) gameObjects->at(i)->shouldDelete = true;
+            for (int i = 0; i < gameObjects->size(); i++) gameObjects->at(i)->SetShouldDelete();
 
             RigidBodyGravity* rigidBodyGravity = new RigidBodyGravity({ 0.0f,-10.0f,0.0f });
 
@@ -1030,7 +1276,7 @@ void ImGuiEngine::TestIteration3()
             {
 
                 for (int i = 0; i < gameObjects->size(); i++)
-                    gameObjects->at(i)->shouldDelete = true;
+                    gameObjects->at(i)->SetShouldDelete();
 
                 GameObject *go = new GameObject("spring block 1");
                 MathPhysicsEngine *math = MathPhysicsEngine::GetInstance();
@@ -1111,7 +1357,7 @@ void ImGuiEngine::TestIteration3()
             {
 
                 for (int i = 0; i < gameObjects->size(); i++)
-                    gameObjects->at(i)->shouldDelete = true;
+                    gameObjects->at(i)->SetShouldDelete();
 
                 GameObject *go = new GameObject("anchored");
                 MathPhysicsEngine *math = MathPhysicsEngine::GetInstance();
@@ -1188,7 +1434,7 @@ void ImGuiEngine::TestIteration2()
         {
 
             for (int i = 0; i < gameObjects->size(); i++)
-                gameObjects->at(i)->shouldDelete = true;
+                gameObjects->at(i)->SetShouldDelete();
             // gameObjects->clear();
 
             MathPhysicsEngine *math = MathPhysicsEngine::GetInstance();
@@ -1213,7 +1459,7 @@ void ImGuiEngine::TestIteration2()
         {
 
             for (int i = 0; i < gameObjects->size(); i++)
-                gameObjects->at(i)->shouldDelete = true;
+                gameObjects->at(i)->SetShouldDelete();
 
             MathPhysicsEngine *math = MathPhysicsEngine::GetInstance();
             GameObject *go = new GameObject("Friction particle");
@@ -1245,7 +1491,7 @@ void ImGuiEngine::TestIteration2()
             {
 
                 for (int i = 0; i < gameObjects->size(); i++)
-                    gameObjects->at(i)->shouldDelete = true;
+                    gameObjects->at(i)->SetShouldDelete();
 
                 GameObject *go = new GameObject("anchord block");
                 MathPhysicsEngine *math = MathPhysicsEngine::GetInstance();
@@ -1275,7 +1521,7 @@ void ImGuiEngine::TestIteration2()
             {
 
                 for (int i = 0; i < gameObjects->size(); i++)
-                    gameObjects->at(i)->shouldDelete = true;
+                    gameObjects->at(i)->SetShouldDelete();
 
                 GameObject *go = new GameObject("spring block 1");
                 MathPhysicsEngine *math = MathPhysicsEngine::GetInstance();
@@ -1306,7 +1552,7 @@ void ImGuiEngine::TestIteration2()
             {
 
                 for (int i = 0; i < gameObjects->size(); i++)
-                    gameObjects->at(i)->shouldDelete = true;
+                    gameObjects->at(i)->SetShouldDelete();
 
                 GameObject *go = new GameObject("elastic bungee block 1");
                 MathPhysicsEngine *math = MathPhysicsEngine::GetInstance();
@@ -1338,7 +1584,7 @@ void ImGuiEngine::TestIteration2()
             {
 
                 for (int i = 0; i < gameObjects->size(); i++)
-                    gameObjects->at(i)->shouldDelete = true;
+                    gameObjects->at(i)->SetShouldDelete();
 
                 GameObject *go = new GameObject("main block");
                 MathPhysicsEngine *math = MathPhysicsEngine::GetInstance();
@@ -1415,7 +1661,7 @@ void ImGuiEngine::TestIteration2()
         {
 
             for (int i = 0; i < gameObjects->size(); i++)
-                gameObjects->at(i)->shouldDelete = true;
+                gameObjects->at(i)->SetShouldDelete();
 
             MathPhysicsEngine *math = MathPhysicsEngine::GetInstance();
             GameObject *go = new GameObject("Left particle");
@@ -1456,7 +1702,7 @@ void ImGuiEngine::TestIteration2()
         {
 
             for (int i = 0; i < gameObjects->size(); i++)
-                gameObjects->at(i)->shouldDelete = true;
+                gameObjects->at(i)->SetShouldDelete();
 
             GameObject *go = new GameObject("Heavy non gravity block");
             MathPhysicsEngine *math = MathPhysicsEngine::GetInstance();
@@ -1492,7 +1738,7 @@ void ImGuiEngine::TestIteration2()
         {
 
             for (int i = 0; i < gameObjects->size(); i++)
-                gameObjects->at(i)->shouldDelete = true;
+                gameObjects->at(i)->SetShouldDelete();
 
             GameObject *go = new GameObject("Heavy non gravity block");
             MathPhysicsEngine *math = MathPhysicsEngine::GetInstance();
@@ -1527,7 +1773,7 @@ void ImGuiEngine::TestIteration2()
         if (ImGui::Button("Test Cable"))
         {
             for (int i = 0; i < gameObjects->size(); i++)
-                gameObjects->at(i)->shouldDelete = true;
+                gameObjects->at(i)->SetShouldDelete();
             GameObject *go;
             Particle *particle;
             VisualGameObject *v;
