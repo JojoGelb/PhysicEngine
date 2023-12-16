@@ -33,7 +33,8 @@ public:
 
 	Vector3D TransformDirection(const Vector3D& vector);
 
-	
+	Vector3D getAxisVector(unsigned index) const;
+
 	Vector3D GetPosition() const;
 
 };

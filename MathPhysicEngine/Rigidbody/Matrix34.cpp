@@ -210,6 +210,12 @@ Vector3D Matrix34::transformInverse(const Vector3D &vector) const
 }
 
 
+Vector3D Matrix34::getAxisVector(unsigned index) const
+{
+	return Vector3D(values[index], values[index + 4], values[index + 8]);
+
+}
+
 Vector3D Matrix34::GetPosition() const
 {
 	return Vector3D(values[3], values[7], values[11]);

@@ -9,8 +9,8 @@ halfSize(_halfSize)
 double Box::TransformToAxis( const Vector3D &axis) const
 {
     return
-    this->halfSize.x * abs(axis.DotProduct(GetPosition().x)) +
-    this->halfSize.y *  abs(axis.DotProduct(GetPosition().y)) +
-    this->halfSize.z *  abs(axis.DotProduct(GetPosition().z));
+    this->halfSize.x * abs(axis.DotProduct(getAxis(0))) +
+    this->halfSize.y *  abs(axis.DotProduct(getAxis(1))) +
+    this->halfSize.z *  abs(axis.DotProduct(getAxis(2)));
 }
 

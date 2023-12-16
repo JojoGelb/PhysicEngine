@@ -55,5 +55,42 @@ public:
 
 	friend Vector3D operator*(double scalar, const Vector3D& vector);
 
+
+	void SetAtIndex(unsigned index, double value) {
+		switch (index)
+		{
+		case 0:
+			x = value;
+			break;
+		case 1:
+			y = value;
+			break;
+		case 2:
+			z = value;
+			break;
+		default:
+			break;
+		}
+	}
+
+
+	double GetAtIndex(unsigned index) const {
+		switch (index)
+		{
+		case 0:
+			return x;
+			break;
+		case 1:
+			return y;
+			break;
+		case 2:
+			return z;
+			break;
+		default:
+			return 0.0f;
+			break;
+		}
+	}
+
 };
 

@@ -18,7 +18,7 @@ public:
     
     Vector3D GetPosition() const;
     void UpdateTransformMatrix();
-
+    Vector3D getAxis(unsigned index) const;
     //result of the combination of the rigidbody's transform
     //and the offset of the primitive
     Matrix34* transform;
