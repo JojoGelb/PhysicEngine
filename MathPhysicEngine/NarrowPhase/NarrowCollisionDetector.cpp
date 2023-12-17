@@ -4,6 +4,7 @@
 #include <iostream>
 #include <cassert>
 
+
 class Box;
 
 unsigned NarrowCollisionDetector::SphereAndSphere(const Sphere& sphere1, const Sphere& sphere2,
@@ -419,7 +420,32 @@ unsigned NarrowCollisionDetector::BoxAndBox(const Box& one, const Box& two,
 #undef CHECK_OVERLAP
 
 
+unsigned NarrowCollisionDetector::SphereAndHalfSpace(
+    const Sphere& sphere,
+    const Plane& plane,
+    RigidBodyContact* rigidbodyContact
+) const
+{
+    // Cache the sphere position.
+    Vector3D position = sphere.getAxis(3);
+    // Find the distance from the plane.
+    double ballDistance =
+        plane.direction.DotProduct(position) -
+        sphere.radius;
+    if (ballDistance >= 0) return 0;
+    // Create the contact - it has a normal in the plane direction.
 
+    rigidbodyContact->contactNormal = plane.direction;
+    rigidbodyContact->penetration = -ballDistance;
+    rigidbodyContact->contactPoint =
+        position - plane.direction * (ballDistance + sphere.radius);
+    // Write the appropriate data.
+    rigidbodyContact->rigidbody[0] = sphere.rigidBody;
+    rigidbodyContact->rigidbody[1] = NULL;
+    rigidbodyContact->restitution = 1.0;
+
+    return 1;
+}
 
 
 
@@ -462,7 +488,7 @@ void NarrowCollisionDetector::DetectCollisions(const std::vector<PotentialCollis
             if (potentialCollision.rigidBodies[0]->collisionPrimitive->shape == CollisionShape::SPHERE &&
                 potentialCollision.rigidBodies[1]->collisionPrimitive->shape == CollisionShape::SPHERE)
             {
-				auto i = SphereAndSphere(*((Sphere*)potentialCollision.rigidBodies[0]->collisionPrimitive),
+				SphereAndSphere(*((Sphere*)potentialCollision.rigidBodies[0]->collisionPrimitive),
                     *((Sphere*)potentialCollision.rigidBodies[1]->collisionPrimitive), rigidbodyContact);
 			}
 			//if sphere && box
@@ -470,7 +496,7 @@ void NarrowCollisionDetector::DetectCollisions(const std::vector<PotentialCollis
                 potentialCollision.rigidBodies[1]->collisionPrimitive->shape == CollisionShape::BOX)
             {
 				//do sphere && box detection
-                auto i = SphereAndBox(*((Sphere*)potentialCollision.rigidBodies[0]->collisionPrimitive),
+                SphereAndBox(*((Sphere*)potentialCollision.rigidBodies[0]->collisionPrimitive),
                     					*((Box*)potentialCollision.rigidBodies[1]->collisionPrimitive), rigidbodyContact);
             }
             //if box && sphere
@@ -478,7 +504,7 @@ void NarrowCollisionDetector::DetectCollisions(const std::vector<PotentialCollis
                 potentialCollision.rigidBodies[1]->collisionPrimitive->shape == CollisionShape::SPHERE)
             {
 				//do sphere && box detection
-                auto i = SphereAndBox(*((Sphere*)potentialCollision.rigidBodies[1]->collisionPrimitive),
+                SphereAndBox(*((Sphere*)potentialCollision.rigidBodies[1]->collisionPrimitive),
                     										*((Box*)potentialCollision.rigidBodies[0]->collisionPrimitive), rigidbodyContact);
             }
             //if box && box
@@ -486,8 +512,22 @@ void NarrowCollisionDetector::DetectCollisions(const std::vector<PotentialCollis
                 potentialCollision.rigidBodies[1]->collisionPrimitive->shape == CollisionShape::BOX)
             {
                 //do box && box detection
-                auto i = BoxAndBox(*((Box*)potentialCollision.rigidBodies[1]->collisionPrimitive),
+               BoxAndBox(*((Box*)potentialCollision.rigidBodies[1]->collisionPrimitive),
                     *((Box*)potentialCollision.rigidBodies[0]->collisionPrimitive), rigidbodyContact);
+            }
+            else if (potentialCollision.rigidBodies[0]->collisionPrimitive->shape == CollisionShape::SPHERE &&
+                potentialCollision.rigidBodies[1]->collisionPrimitive->shape == CollisionShape::PLANE)
+            {
+                //do sphere && plane detection
+               SphereAndHalfSpace(*((Sphere*)potentialCollision.rigidBodies[0]->collisionPrimitive),
+                    					*((Plane*)potentialCollision.rigidBodies[1]->collisionPrimitive), rigidbodyContact);
+            }
+            else if (potentialCollision.rigidBodies[1]->collisionPrimitive->shape == CollisionShape::SPHERE &&
+                potentialCollision.rigidBodies[0]->collisionPrimitive->shape == CollisionShape::PLANE)
+            {
+                //do sphere && plane detection
+                SphereAndHalfSpace(*((Sphere*)potentialCollision.rigidBodies[1]->collisionPrimitive),
+                    *((Plane*)potentialCollision.rigidBodies[0]->collisionPrimitive), rigidbodyContact);
             }
 
 
@@ -503,8 +543,4 @@ void NarrowCollisionDetector::DetectCollisions(const std::vector<PotentialCollis
        
 	}
 
-   
-    
-    //if sphere && box
-    //do sphere && box detection
 }

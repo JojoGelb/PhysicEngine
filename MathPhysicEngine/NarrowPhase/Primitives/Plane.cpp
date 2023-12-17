@@ -1,7 +1,7 @@
 ﻿#include "Plane.h"
 
-Plane::Plane(const Vector3D& _normal):
-normal(_normal)
+Plane::Plane(const Vector3D& _direction):
+direction(_direction)
 {
     shape = PLANE;
 }
