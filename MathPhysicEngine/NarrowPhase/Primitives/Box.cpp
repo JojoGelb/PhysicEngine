@@ -3,7 +3,7 @@
 Box::Box(const Vector3D& _halfSize):
 halfSize(_halfSize)
 {
-    shape = BOX;
+    shape = CollisionShape::BOX;
 }
 
 double Box::TransformToAxis( const Vector3D &axis) const

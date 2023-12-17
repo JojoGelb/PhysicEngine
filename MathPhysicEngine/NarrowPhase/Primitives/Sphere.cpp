@@ -3,5 +3,5 @@
 Sphere::Sphere(double _radius):
 radius(_radius)
 {
-    shape = SPHERE;
+    shape = CollisionShape::SPHERE;
 }

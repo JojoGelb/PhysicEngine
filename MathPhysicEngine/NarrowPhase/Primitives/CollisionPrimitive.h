@@ -4,7 +4,7 @@
 #include "../../Rigidbody/RigidBody.h"
 #include "../../Rigidbody/Matrix34.h"
 
-enum CollisionShape { SPHERE,BOX,PLANE  };
+enum class CollisionShape { SPHERE,BOX,PLANE  };
 
 class CollisionPrimitive
 {

@@ -56,6 +56,35 @@ void ImGuiEngine::Update(float frameTime)
     }
 }
 
+CollisionPrimitive* ImGuiEngine::ChooseShape(CollisionShape shape)
+{
+    CollisionPrimitive* primitive = new Sphere(1.0f);
+
+    switch (shape)
+    {
+    case CollisionShape::SPHERE :
+		modelePath = "Models/sphere.obj";
+		modeleInertiaTensor = "sphere";
+        primitive = new Sphere(1.0f);
+
+		break;
+    case CollisionShape::BOX :
+        modelePath = "Models/colored_cube.obj";
+        modeleInertiaTensor = "cuboid";
+        primitive = new Box({ 1.0f,1.0f,1.0f });
+        break;
+    case CollisionShape::PLANE :
+        modelePath = "Models/quad model.obj";
+		modeleInertiaTensor = "cuboid";
+        primitive = new Plane({ 1.0f,0.0f,0.0f });
+		break;
+    default:
+        break;
+    }
+
+    return primitive;
+}
+
 void ImGuiEngine::ShowDemoImGui()
 {
     // 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
@@ -592,9 +621,91 @@ void ImGuiEngine::TestIteration4()
 
     static bool isBox = false;
     static bool isSphere = true;
+
+    static CollisionShape shapeUp = CollisionShape::SPHERE;
+    static CollisionShape shapeDown = CollisionShape::SPHERE;
+
      
     ImGui::Checkbox("Set Box", &isBox);
     ImGui::Checkbox("Set Sphere", &isSphere);
+
+   // bool showDropdown = false;
+    //const char* items[] = { "Option 1", "Option 2", "Option 3" };
+   // int selectedItem = -1;
+
+
+    const char* items[] = { "Sphere", "Box", "Plane" };
+    static const char* current_itemUp = items[0];
+  
+
+
+    ImGui::Text("Choose UP shape");
+    if (ImGui::BeginCombo("##t", current_itemUp)) // The second parameter is the label previewed before opening the combo.
+    {
+        for (int n = 0; n < IM_ARRAYSIZE(items); n++)
+        {
+            bool is_selected = (current_itemUp == items[n]); // You can store your selection however you want, outside or inside your objects
+            if (ImGui::Selectable(items[n], is_selected) )
+            {
+                current_itemUp = items[n];
+
+                switch (n)
+                {
+                case 0:
+                    shapeUp = CollisionShape::SPHERE;
+
+                    break;
+                case 1:
+                    shapeUp = CollisionShape::BOX;
+                    break;
+                default:
+                    break;
+                }
+
+                if (is_selected) {
+                    ImGui::SetItemDefaultFocus();                     // You may set the initial focus when opening the combo (scrolling + for keyboard navigation support)
+                }
+
+            }
+        }
+        ImGui::EndCombo();
+    }
+
+
+    static const char* current_itemDown = items[0];
+
+    ImGui::Spacing();
+    ImGui::Text("Choose DOWN shape");
+    if (ImGui::BeginCombo("##combo2", current_itemDown)) // The second parameter is the label previewed before opening the combo.
+    {
+        for (int n = 0; n < IM_ARRAYSIZE(items); n++)
+        {
+            bool is_selected = (current_itemDown == items[n]); // You can store your selection however you want, outside or inside your objects
+            if (ImGui::Selectable(items[n], is_selected))
+            {
+                current_itemDown = items[n];
+
+                switch (n)
+                {
+                case 0:
+                    shapeDown = CollisionShape::SPHERE;
+
+                    break;
+                case 1:
+                    shapeDown = CollisionShape::BOX;
+                    break;
+                default:
+                    break;
+                }
+
+                if (is_selected) {
+                    ImGui::SetItemDefaultFocus();                     // You may set the initial focus when opening the combo (scrolling + for keyboard navigation support)
+                }
+
+            }
+        }
+        ImGui::EndCombo();
+    }
 
     if (ImGui::TreeNode("Broad Phase"))
     {
@@ -755,13 +866,7 @@ void ImGuiEngine::TestIteration4()
         for (int i = 0; i < gameObjects->size(); i++)
             gameObjects->at(i)->SetShouldDelete();
 
-        if(isBox) {
-            modelePath = "Models/colored_cube.obj";
-            modeleInertiaTensor = "cuboid";
-        } else if(isSphere) {
-            modelePath = "Models/sphere.obj";
-            modeleInertiaTensor = "sphere";
-        }
+        CollisionPrimitive* collisionPrimitive = ChooseShape(shapeUp);
 
         MathPhysicsEngine* math = MathPhysicsEngine::GetInstance();
         GameObject* go = new GameObject("rigidBody");
@@ -778,17 +883,15 @@ void ImGuiEngine::TestIteration4()
         math->GetRigidBodyForceRegistry()->AddForce(rigidbody, rigidBodyGravity);
         go->AddComponent(rigidbody);
         
-        CollisionPrimitive* collisionPrimitive;
-        if(isBox) collisionPrimitive = new Box(Vector3D(1.0f, 1.0f, 1.0f));
-        else collisionPrimitive = new Sphere(1.0f);
         collisionPrimitive->rigidBody = rigidbody;
         collisionPrimitive->UpdateTransformMatrix();
-
         rigidbody->collisionPrimitive = collisionPrimitive;
 
         VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
         go->AddComponent(v);
         gameObjects->push_back(go);
+
+        collisionPrimitive = ChooseShape(shapeDown);
 
         go = new GameObject("rigidBody 2");
         go->transform.position = Vector3D(10, 0, 20);
@@ -803,12 +906,8 @@ void ImGuiEngine::TestIteration4()
         math->GetRigidBodyForceRegistry()->AddForce(rigidbody, rigidBodyGravity);
         go->AddComponent(rigidbody);
 
-
-        if(isBox) collisionPrimitive = new Box(Vector3D(1.0f, 1.0f, 1.0f));
-        else collisionPrimitive = new Sphere(1.0f);
         collisionPrimitive->rigidBody = rigidbody;
         collisionPrimitive->UpdateTransformMatrix();
-
         rigidbody->collisionPrimitive = collisionPrimitive;
 
         v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
@@ -821,13 +920,8 @@ void ImGuiEngine::TestIteration4()
         for (int i = 0; i < gameObjects->size(); i++)
             gameObjects->at(i)->SetShouldDelete();
 
-        if(isBox) {
-            modelePath = "Models/colored_cube.obj";
-            modeleInertiaTensor = "cuboid";
-        } else if(isSphere) {
-            modelePath = "Models/sphere.obj";
-            modeleInertiaTensor = "sphere";
-        }
+
+        CollisionPrimitive* collisionPrimitive = ChooseShape(shapeDown);
 
         MathPhysicsEngine* math = MathPhysicsEngine::GetInstance();
         GameObject* go = new GameObject("rigidBody");
@@ -846,17 +940,15 @@ void ImGuiEngine::TestIteration4()
         );
         go->AddComponent(rigidbody);
 
-        CollisionPrimitive* collisionPrimitive;
-        if(isBox) collisionPrimitive = new Box(Vector3D(1.0f, 1.0f, 1.0f));
-        else collisionPrimitive = new Sphere(1.0f);
         collisionPrimitive->rigidBody = rigidbody;
         collisionPrimitive->UpdateTransformMatrix();
-
         rigidbody->collisionPrimitive = collisionPrimitive;
 
         VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
         go->AddComponent(v);
         gameObjects->push_back(go);
+
+        collisionPrimitive = ChooseShape(shapeUp);
 
         go = new GameObject("rigidBody 2");
         go->transform.position = Vector3D(0, 10, 20);

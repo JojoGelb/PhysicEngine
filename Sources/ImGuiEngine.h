@@ -8,6 +8,7 @@
 #include <KeyboardInput.h>
 #include "GameObject.h"
 #include "../MathPhysicEngine/Vecteur3D.h"
+#include "../MathPhysicEngine/NarrowPhase/Primitives/CollisionPrimitive.h"
 
 
 class ImGuiEngine
@@ -48,6 +49,7 @@ public:
 	~ImGuiEngine();
 
 	void Update(float frameTime);
+	CollisionPrimitive* ChooseShape(CollisionShape shape);
 	Vector3D testT;
 
 };
