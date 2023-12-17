@@ -81,7 +81,7 @@ unsigned NarrowCollisionDetector::SphereAndBox(const Sphere& sphere, const Box& 
 
 
     //RigidBodyContact* contact = collisionData->contacts;
-    rigidbodyContact->contactNormal = (center - closestPtWorld);
+    rigidbodyContact->contactNormal = (closestPtWorld - center );
     rigidbodyContact->contactNormal.Normalize();
     rigidbodyContact->contactPoint = closestPtWorld;
     rigidbodyContact->penetration = sphere.radius - sqrt(dist);
