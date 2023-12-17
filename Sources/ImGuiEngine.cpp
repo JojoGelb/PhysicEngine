@@ -945,7 +945,7 @@ void ImGuiEngine::TestIteration4()
             0.0001f, //inversed mass
             0.999f //angular damping
         );
-        rigidbody->orientation = Quaternion(0.2705981, -0.2705981, 0.6532815, 0.6532815);
+        rigidbody->orientation = Quaternion(0.9238795, 0, -0.3826834,0);
         go->AddComponent(rigidbody);
 
         collisionPrimitive->rigidBody = rigidbody;
