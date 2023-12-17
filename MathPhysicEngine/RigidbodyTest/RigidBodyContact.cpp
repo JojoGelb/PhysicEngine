@@ -23,30 +23,40 @@ void RigidBodyContact::ResolveVelocity(float duration)
 {
 
 	Vector3D u1 = GetSpeedAtContactPoint(rigidbody[0]);
-
+	//std::cout << "u1: " << u1 << std::endl;
 	// Calculate vector between center of mass and point of contact
 	Vector3D r1 = contactPoint - rigidbody[0]->transform->position;
+	//std::cout << "r1: " << r1 << std::endl;
 	Vector3D urel = u1;
 	Vector3D rb2EquationPart = Vector3D();
 
 	Vector3D r2;
 
+	Vector3D rb1EquationPart = (rigidbody[0]->GetInverseInertiaTensorWorld() * r1.CrossProduct(contactNormal)).CrossProduct(r1);
+	//std::cout << "rb1EquationPart: " << rb1EquationPart << std::endl;
 	if (rigidbody[1])
 	{
 		Vector3D u2 = GetSpeedAtContactPoint(rigidbody[1]);
 		r2 = contactPoint - rigidbody[1]->transform->position;
+		//std::cout << "r2: " << r2 << std::endl;
 		urel -= u2;
 		Vector3D rb2EquationPart = ((rigidbody[1]->GetInverseInertiaTensorWorld() * r2.CrossProduct(contactNormal)).CrossProduct(r2));
+		//std::cout << "rb2EquationPart: " << rb2EquationPart << std::endl;
 	}
+
+	/*std::cout << "urel: " << urel.DotProduct(contactNormal) << std::endl;
+	std::cout << "smal sum " << (rigidbody[0]->GetInversedMass() + rigidbody[1]->GetInversedMass()) * contactNormal << std::endl;
+	std::cout << "Dot product " << urel.DotProduct(contactNormal) << std::endl;*/
+
+
 
 	// Calculate impulse
 	double k = ((restitution + 1) * urel.DotProduct(contactNormal)) /
 				 ((rigidbody[0]->GetInversedMass() + rigidbody[1]->GetInversedMass()) * contactNormal +
-				  (rigidbody[0]->GetInverseInertiaTensorWorld() * r1.CrossProduct(contactNormal)).CrossProduct(r1) +
-				  rb2EquationPart).DotProduct(contactNormal);
+				  rb1EquationPart + rb2EquationPart).DotProduct(contactNormal);
 
 
-	std::cout << "k: " << k << std::endl;
+	std::cout << "Impulse k: " << k << std::endl;
 
 	// Calculate new velocity
 	rigidbody[0]->velocity = rigidbody[0]->velocity - k *contactNormal / rigidbody[0]->GetMass();

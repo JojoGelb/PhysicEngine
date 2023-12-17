@@ -31,7 +31,7 @@ unsigned NarrowCollisionDetector::SphereAndSphere(const Sphere& sphere1, const S
     //Create the contact
     //RigidBodyContact* contact = collisionData->contacts;
     rigidbodyContact->contactNormal = normal;
-    rigidbodyContact->contactPoint = position1 + midline * 0.5f;
+    rigidbodyContact->contactPoint = position2 + midline * 0.5f;
     rigidbodyContact->penetration = sphere1.radius + sphere2.radius - distance;
     rigidbodyContact->rigidbody[0] = sphere1.rigidBody;
     rigidbodyContact->rigidbody[1] = sphere2.rigidBody;
@@ -237,7 +237,10 @@ void fillPointFaceBoxBox(
     // Create the contact data
     rigidbodyContact->contactNormal = normal;
     rigidbodyContact->penetration = pen;
-    rigidbodyContact->contactPoint = *two.transform * vertex;
+
+    Vector3D test = Vector3D(vertex.x * normal.x, vertex.y * normal.y, vertex.z * normal.z);
+
+    rigidbodyContact->contactPoint = *two.transform * test;
     rigidbodyContact->rigidbody[0] = one.rigidBody;
     rigidbodyContact->rigidbody[1] = two.rigidBody;
     rigidbodyContact->restitution = 1.0f;//TODO use true restitution
