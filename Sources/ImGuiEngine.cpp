@@ -265,6 +265,7 @@ void ImGuiEngine::ShowEngineImGui()
     if (ImGui::Button("Pause/Restart Physics motor")) {
         MathPhysicsEngine::GetInstance()->pause = !MathPhysicsEngine::GetInstance()->pause;
     }
+    ImGui::Checkbox("pause on collision", &MathPhysicsEngine::GetInstance()->pauseOnCollision);
 
     ImGui::Text("famerate : %.5f", framerate);
 

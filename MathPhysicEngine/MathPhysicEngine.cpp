@@ -156,7 +156,8 @@ void MathPhysicsEngine::UpdateRigidBodies(double frameTime, double t)
 			std::cout << "Penetration: " << rigidbodiesContact.at(i)->penetration << "\n";
 			std::cout << "Normal: " << rigidbodiesContact.at(i)->contactNormal << "\n";
 		}
-		pause = true;
+		if(pauseOnCollision)
+			pause = true;
 	}
 
 	//Collision Resolution

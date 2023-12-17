@@ -55,6 +55,8 @@ public:
 	RigidBodyForceRegistry* GetRigidBodyForceRegistry();
 
 	bool pause = false;
+	bool pauseOnCollision = true;
+
 	std::vector<PotentialCollision> potentialCollision;
 
 	std::vector<RigidBodyContact*> rigidbodiesContact;
