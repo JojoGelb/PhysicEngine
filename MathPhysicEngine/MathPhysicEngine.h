@@ -57,6 +57,8 @@ public:
 	bool pause = false;
 	std::vector<PotentialCollision> potentialCollision;
 
+	std::vector<RigidBodyContact*> rigidbodiesContact;
+
 private:
 
 	void UpdateParticles(double frameTime, double t);
@@ -82,7 +84,6 @@ private:
 
 	//Rigidbody Contacts
 	RigidbodyContactResolver rigidbodyContactResolver;
-	std::vector<RigidBodyContact*> rigidbodiesContact;
 
 	//RigidBody forces
 	RigidBodyForceRegistry* rigidBodyForceRegistry;

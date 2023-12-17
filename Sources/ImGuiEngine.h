@@ -33,6 +33,7 @@ private:
 	void TestIteration2();
 	void TestIteration3();
 	void TestIteration4();
+	void ContactsList();
 	void TesGraphicMotor();
 
 	float framerate;

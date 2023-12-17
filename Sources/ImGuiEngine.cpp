@@ -464,9 +464,79 @@ void ImGuiEngine::ShowEngineImGui()
     //TestIteration2();
     //TestIteration3();
     TestIteration4();
+    ContactsList();
     //TesGraphicMotor();
 }
 
+
+void ImGuiEngine::ContactsList() {
+    ImGui::Begin("Contacts List");
+
+    /*
+    static std::vector<Vector3D> force(200);
+    static std::vector<float> restLength(200);
+    static std::vector<float[4]> orientationVector(200);
+
+    static std::vector<float> springConstant(200);
+    static std::vector<int> index(200);
+    */
+
+    if (!MathPhysicsEngine::GetInstance()->rigidbodiesContact.empty()) 
+    {
+        for (int i = 0; i < MathPhysicsEngine::GetInstance()->rigidbodiesContact.size(); i++)
+        {
+            auto rigidbodyContact = MathPhysicsEngine::GetInstance()->rigidbodiesContact.at(i);
+
+            //if (ImGui::TreeNode((rigidbodyContact->rigidbody[0]->gameObject->GetName() + " - " + rigidbodyContact->rigidbody[1]->gameObject->GetName()).c_str()))
+            if (ImGui::TreeNode((" contact number " + std::to_string(i)+" :").c_str()))
+            {
+                /*
+                if (!rigidbodyContact->rigidbody[0]->gameObject->GetName().empty() && !rigidbodyContact->rigidbody[1]->gameObject->GetName().empty()) 
+                {
+                    ImGui::Text((rigidbodyContact->rigidbody[0]->gameObject->GetName() + " - " + rigidbodyContact->rigidbody[1]->gameObject->GetName()).c_str());
+                }*/
+                ImGui::Text(" contact normal: %.2f, %.2f, %.2f ", rigidbodyContact->contactNormal.x, rigidbodyContact->contactNormal.y, rigidbodyContact->contactNormal.z);
+                ImGui::Text(" contact point: %.2f, %.2f, %.2f ", rigidbodyContact->contactPoint.x, rigidbodyContact->contactPoint.y, rigidbodyContact->contactPoint.z);
+                ImGui::Text(" penetration: %.4f", rigidbodyContact->penetration);
+
+                /*
+                    if (ImGui::TreeNode("ORIENTATION"))
+                    {
+
+                        ImGui::InputFloat("ori w", &orientationVector[0][i]);
+                        ImGui::InputFloat("ori i", &orientationVector[1][i]);
+                        ImGui::InputFloat("ori j", &orientationVector[2][i]);
+                        ImGui::InputFloat("ori k", &orientationVector[3][i]);
+
+                        ImGui::Spacing();
+
+                        if (ImGui::Button("Apply"))
+                        {
+
+                            gameObjects->at(index[i])->GetComponentOfType<RigidBody>()->SetOrientation(orientationVector[0][i], orientationVector[1][i], orientationVector[2][i], orientationVector[3][i]);
+                            // Particle* other = new Particle();
+                            // Vector3D anchoredPos = gameObjects->at(index[i])->GetComponentOfType<Particle>()->position;
+                            // ParticleAnchoredSpring* particleAnchoredSpringApply = new ParticleAnchoredSpring(anchoredPos, restLength[i], springConstant[i]);
+
+                            // MathPhysicsEngine::GetInstance()->GetParticleForceRegistry()->AddForce(particle, particleAnchoredSpringApply);
+                        }
+
+                        ImGui::TreePop();
+                    }
+
+
+                */
+                ImGui::TreePop();
+            }
+
+
+            ImGui::Spacing();
+
+        }
+    }
+    
+    ImGui::End();
+}
 void ImGuiEngine::TesGraphicMotor()
 {
     ImGui::Begin("Test GraphicMotor");
