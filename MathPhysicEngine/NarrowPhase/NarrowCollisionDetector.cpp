@@ -427,11 +427,10 @@ unsigned NarrowCollisionDetector::SphereAndHalfSpace(
 ) const
 {
     // Cache the sphere position.
-    Vector3D position = sphere.getAxis(3);
+    Vector3D position = sphere.GetPosition();
     // Find the distance from the plane.
-    double ballDistance =
-        plane.direction.DotProduct(position) -
-        sphere.radius;
+    double ballDistance = plane.direction.DotProduct(position) -sphere.radius - plane.offset;
+
     if (ballDistance >= 0) return 0;
     // Create the contact - it has a normal in the plane direction.
 
@@ -441,14 +440,11 @@ unsigned NarrowCollisionDetector::SphereAndHalfSpace(
         position - plane.direction * (ballDistance + sphere.radius);
     // Write the appropriate data.
     rigidbodyContact->rigidbody[0] = sphere.rigidBody;
-    rigidbodyContact->rigidbody[1] = NULL;
+    rigidbodyContact->rigidbody[1] = plane.rigidBody;
     rigidbodyContact->restitution = 1.0;
 
     return 1;
 }
-
-
-
 
 bool NarrowCollisionDetector::OverlapOnAxis(
 const Box &one,

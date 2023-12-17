@@ -76,7 +76,7 @@ CollisionPrimitive* ImGuiEngine::ChooseShape(CollisionShape shape)
     case CollisionShape::PLANE :
         modelePath = "Models/quad model.obj";
 		modeleInertiaTensor = "cuboid";
-        primitive = new Plane({ 1.0f,0.0f,0.0f });
+        primitive = new Plane({0.0f,1.0f,0.0f },-8);
 		break;
     default:
         break;
@@ -658,6 +658,9 @@ void ImGuiEngine::TestIteration4()
                 case 1:
                     shapeUp = CollisionShape::BOX;
                     break;
+                case 2:
+                    shapeUp = CollisionShape::PLANE;
+                    break;
                 default:
                     break;
                 }
@@ -694,6 +697,9 @@ void ImGuiEngine::TestIteration4()
                 case 1:
                     shapeDown = CollisionShape::BOX;
                     break;
+                case 2:
+                    shapeDown = CollisionShape::PLANE;
+					break;
                 default:
                     break;
                 }
@@ -925,7 +931,7 @@ void ImGuiEngine::TestIteration4()
 
         MathPhysicsEngine* math = MathPhysicsEngine::GetInstance();
         GameObject* go = new GameObject("rigidBody");
-        go->transform.position = Vector3D(0, 0, 20);
+        go->transform.position = Vector3D(0, -8, 20);
 
         RigidBody* rigidbody = new RigidBody(
             modeleInertiaTensor,
@@ -963,8 +969,6 @@ void ImGuiEngine::TestIteration4()
         math->GetRigidBodyForceRegistry()->AddForce(rigidbody, rigidBodyGravity);
         go->AddComponent(rigidbody);
 
-        if(isBox) collisionPrimitive = new Box(Vector3D(1.0f, 1.0f, 1.0f));
-        else collisionPrimitive = new Sphere(1.0f);
         collisionPrimitive->rigidBody = rigidbody;
         collisionPrimitive->UpdateTransformMatrix();
 
