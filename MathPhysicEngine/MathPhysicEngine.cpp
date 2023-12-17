@@ -154,7 +154,7 @@ void MathPhysicsEngine::UpdateRigidBodies(double frameTime, double t)
 		for (int i = 0; i < rigidbodiesContact.size(); i++) {
 			std::cout << rigidbodiesContact.at(i)->rigidbody[0]->gameObject->GetName() << " - " << rigidbodiesContact.at(i)->rigidbody[1]->gameObject->GetName() << "\n";
 		}
-		//pause = true;
+		pause = true;
 	}
 
 	//Collision Resolution
