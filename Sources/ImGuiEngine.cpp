@@ -773,7 +773,8 @@ void ImGuiEngine::TestIteration4()
             Vector3D(10, 10, 0),
             Vector3D(0.0f, 0.0f, 0.0f),
             { 1, 0, 0, 0 });
-        rigidbody->angularVelocity = Vector3D(0, 0, -1.0f);
+        rigidbody->orientation = Quaternion(0.3826834, 0, 0, 0.9238795);
+        //rigidbody->angularVelocity = Vector3D(0, 0, -1.0f);
         RigidBodyGravity* rigidBodyGravity = new RigidBodyGravity({ 0.0f, -10.0f, 0.0f });
         math->GetRigidBodyForceRegistry()->AddForce(rigidbody, rigidBodyGravity);
         go->AddComponent(rigidbody);
@@ -799,7 +800,7 @@ void ImGuiEngine::TestIteration4()
             Vector3D(-10, 10, 0),
             Vector3D(0.0f, 0.0f, 0.0f),
             { 1, 0, 0, 0 });
-        rigidbody->angularVelocity = Vector3D(0, 0, 1.0f);
+        //rigidbody->angularVelocity = Vector3D(0, 0, 1.0f);
         math->GetRigidBodyForceRegistry()->AddForce(rigidbody, rigidBodyGravity);
         go->AddComponent(rigidbody);
 
@@ -844,6 +845,7 @@ void ImGuiEngine::TestIteration4()
             0.0001f, //inversed mass
             0.999f //angular damping
         );
+        rigidbody->orientation = Quaternion(0.2705981, -0.2705981, 0.6532815, 0.6532815);
         go->AddComponent(rigidbody);
 
         CollisionPrimitive* collisionPrimitive;
@@ -866,7 +868,7 @@ void ImGuiEngine::TestIteration4()
             Vector3D(0, 0, 0),
             Vector3D(0.0f, 0.0f, 0.0f),
             { 1, 0, 0, 0 });
-        rigidbody->angularVelocity = Vector3D(0, 0, 1.0f);
+        //rigidbody->angularVelocity = Vector3D(0, 0, 1.0f);
         RigidBodyGravity* rigidBodyGravity = new RigidBodyGravity({ 0.0f, -10.0f, 0.0f });
         math->GetRigidBodyForceRegistry()->AddForce(rigidbody, rigidBodyGravity);
         go->AddComponent(rigidbody);
