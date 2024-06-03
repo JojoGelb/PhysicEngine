@@ -482,7 +482,7 @@ void NarrowCollisionDetector::DetectCollisions(const std::vector<PotentialCollis
         {
             //Verify collisions and create contacts lists
             RigidBodyContact* rigidbodyContact =new RigidBodyContact();
-
+            if (potentialCollision.rigidBodies[0]->collisionPrimitive == nullptr || potentialCollision.rigidBodies[1]->collisionPrimitive == nullptr) return;
 			//if sphere && sphere
             if (potentialCollision.rigidBodies[0]->collisionPrimitive->shape == CollisionShape::SPHERE &&
                 potentialCollision.rigidBodies[1]->collisionPrimitive->shape == CollisionShape::SPHERE)

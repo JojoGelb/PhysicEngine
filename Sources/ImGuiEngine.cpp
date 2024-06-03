@@ -491,8 +491,8 @@ void ImGuiEngine::ShowEngineImGui()
     }
     ImGui::End();
 
-    //TestIteration2();
-    //TestIteration3();
+    TestIteration2();
+    TestIteration3();
     TestIteration4();
     ContactsList();
     //TesGraphicMotor();
@@ -1361,7 +1361,6 @@ void ImGuiEngine::TestIteration3()
             MathPhysicsEngine *math = MathPhysicsEngine::GetInstance();
             GameObject *go = new GameObject("damping rigidBody");
             go->transform.position = Vector3D(0, 0, 5);
-            go->transform.rotation = Vector3D(0, 0, 20);
             RigidBody *rigidBody = new RigidBody(
                 modeleInertiaTensor,
                 Vector3D(0, 0, 0),
@@ -1372,117 +1371,13 @@ void ImGuiEngine::TestIteration3()
                 1.0f,
                 1.0f,
                 0.95f);
-
+            rigidBody->angularVelocity = Vector3D(0, 0, -20.0f);
             go->AddComponent(rigidBody);
 
             VisualGameObject *v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
             go->AddComponent(v);
             gameObjects->push_back(go);
         }
-
-        /*static int rod = 2;
-        ImGui::InputInt("rod Numbers", &rod);
-        if (ImGui::Button("Test ROD?")) {
-
-
-            for (int i = 0; i < gameObjects->size(); i++) gameObjects->at(i)->SetShouldDelete();
-
-            GameObject* go = new GameObject("Heavy non gravity block");
-            MathPhysicsEngine* math = MathPhysicsEngine::GetInstance();
-            RigidBodyGravity* rigidBodyGravity = new RigidBodyGravity({ 0.0f,-10.0f,0.0f });
-
-            RigidBody* rb = new RigidBody(
-                modeleInertiaTensor,
-                Vector3D(0, 0, 20), //position
-                Vector3D(0, 0, 0), //velocite
-                Vector3D(0, 0, 0), //acceleration line
-                Vector3D(0,0,0), //rotation
-                Quaternion(1,0,0,0), //orientation
-                Matrix33(), //invers tensor
-                0, //linear damp
-                0.0f, //gravity
-                .000001f, //invers mass
-                0); //angular damping
-            go->AddComponent(rb);
-            VisualGameObject* v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
-            go->AddComponent(v);
-            gameObjects->push_back(go);
-
-            for (int i = 0; i < rod; i++) {
-
-                GameObject* go2 = new GameObject("Rod Extremity " + std::to_string(i));
-
-
-                RigidBody* r2 = new RigidBody(modeleInertiaTensor,Vector3D(0.1, 5 * (i + 1), 20), Vector3D(0, 0, 0), Vector3D(0, 0, 0), 1, 0.999f, 1);
-                go2->AddComponent(r2);
-                math->GetRigidBodyForceRegistry()->AddForce(r2, rigidBodyGravity);
-                VisualGameObject* v2 = VisualGameObject::CreatePtrVisualGameObject(modelePath);
-                go2->AddComponent(v2);
-
-                gameObjects->push_back(go2);
-
-                //math->TestRigidbodyRodCollisionSetup(r2, rb, 5);
-
-                rb = r2;
-            }
-
-        }
-
-        static int cable = 2;
-        ImGui::InputInt("Cable Numbers", &cable);
-        if (ImGui::Button("Test Cable?")) {
-            for (int i = 0; i < gameObjects->size(); i++) gameObjects->at(i)->SetShouldDelete();
-
-            RigidBodyGravity* rigidBodyGravity = new RigidBodyGravity({ 0.0f,-10.0f,0.0f });
-
-            GameObject* go;
-            VisualGameObject* v;
-            MathPhysicsEngine* math = MathPhysicsEngine::GetInstance();
-
-            go = new GameObject("Heavy non gravity block");
-
-            RigidBody* rb = new RigidBody(
-                modeleInertiaTensor,
-                Vector3D(0, 0, 20), //position
-                Vector3D(0, 0, 0), //velocite
-                Vector3D(0, 0, 0), //acceleration line
-                Vector3D(0, 0, 0), //rotation
-                Quaternion(1, 0, 0, 0), //orientation
-                Matrix33(), //invers tensor
-                0, //linear damp
-                0.0f, //gravity
-                .000001f, //invers mass
-                0); //angular damping
-            go->AddComponent(rb);
-            v = VisualGameObject::CreatePtrVisualGameObject(modelePath);
-            go->AddComponent(v);
-            gameObjects->push_back(go);
-
-
-
-            std::random_device rd;
-            std::mt19937 gen(rd());
-            std::uniform_real_distribution<float> dis(-5.0f, 5.0f);
-
-            for (int i = 0; i < cable; i++) {
-
-                GameObject* go2 = new GameObject("Cable extremity " + std::to_string(i));
-
-                float posx = dis(gen);
-                float posy = dis(gen);
-
-                RigidBody* r2 = new RigidBody(modeleInertiaTensor, Vector3D(posx, posy, 20), Vector3D(0, 0, 0), Vector3D(0, 0, 0), 1, 1, 1);
-                go2->AddComponent(r2);
-                math->GetRigidBodyForceRegistry()->AddForce(r2, rigidBodyGravity);
-                VisualGameObject* v2 = VisualGameObject::CreatePtrVisualGameObject(modelePath);
-                go2->AddComponent(v2);
-
-                gameObjects->push_back(go2);
-
-                math->TestRigidbodyCableCollisionSetup(r2, rb, 10);
-            }
-
-        }*/
 
 
         //ImGui::TreePop();
@@ -1642,10 +1537,10 @@ void ImGuiEngine::TestIteration3()
                 MathPhysicsEngine::GetInstance()->GetRigidBodyForceRegistry()->AddForce(rbSpringAnchored2, rigidBodyGravity2);
             }
 
-          
+            ImGui::TreePop();
         }
         
-        ImGui::TreePop();
+
 
     }
     
